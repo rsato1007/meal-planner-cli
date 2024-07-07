@@ -1,0 +1,17 @@
+{
+  "name": "meal-planner-cli",
+  "version": "0.0.1",
+  "description": "CLI Meal Planner.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.14.10"
+  }
+}
