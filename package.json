@@ -11,7 +11,7 @@
     "start": "tsc && node dist/index.js",
     "crcli": "npm link && tsc && node dist/index.js",
     "rmcli": "npm unlink && rm $(which mealplan)",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && node dist/tests/index.test.js"
   },
   "keywords": [],
   "author": "",
