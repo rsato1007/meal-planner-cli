@@ -6,6 +6,7 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 ## Current Organization Thoughts
 - Possibly a folder named repositories to build a solid API to interact with.
 - Services folder: this would perform all necessary business logic.
+- Let's review dependency injection because I am confused by something
 
 # Code Components to Consider
 ## Persistent Storage
