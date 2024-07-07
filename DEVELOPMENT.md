@@ -2,9 +2,10 @@
 The goal is to develop a plan for my code so it has a chance of being well written.
 
 # Current Status
-- Currently, building out basic features.
-    - Writing out a class to handle differents
-    - Writing out a class to store planned meals
+- I've built out some basic models and am starting to think about what my folder should be structured for clean organization.
+## Current Organization Thoughts
+- Possibly a folder named repositories to build a solid API to interact with.
+- Services folder: this would perform all necessary business logic.
 
 # Code Components to Consider
 ## Persistent Storage
