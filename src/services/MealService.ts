@@ -19,19 +19,20 @@ export default class MealService {
         this.meal.info[metaKey]++;
     }
 
-    // Probably can be cleaned up a bit.
     public removeMeal(mealName: string) {
         // Find what dish type the meal is in:
         let dishType: string | ItemKey = "";
+        let idx: number = -1;
         Object.keys(this.meal.items).forEach((key) => {
-            if (this.meal.items[key as ItemKey].includes(mealName)) {
+            idx = this.meal.items[key as ItemKey].indexOf(mealName);
+            if (idx >= 0) {
                 dishType = key;
+                return;
             };
         });
         if (dishType === "") {
-            throw Error("MEAL NOT FOUND");
+            throw new Error("MEAL NOT FOUND");
         }
-        const idx = this.meal.items[dishType as ItemKey].indexOf(mealName);
 
         this.meal.items[dishType as ItemKey].splice(idx, 1);
 
@@ -39,5 +40,18 @@ export default class MealService {
         this.meal.info[metaKey]--;
 
         return true;
+    }
+
+    public updateMeal(oldMeal: string, newMeal: string) {
+        // Find what dish type the meal is in:
+        let dishType: string | ItemKey = "";
+        Object.keys(this.meal.items).forEach((key) => {
+            if (this.meal.items[key as ItemKey].includes(oldMeal)) {
+                dishType = key;
+            };
+        });
+        if (dishType === "") {
+            throw Error("MEAL NOT FOUND");
+        }
     }
 }
