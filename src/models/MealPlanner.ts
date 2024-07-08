@@ -1,4 +1,4 @@
-import Meal from "./Meal";
+import Meal from "./Meal.js";
 
 /**
  * Model for meals in a day.
@@ -47,5 +47,7 @@ export default class MealPlanner {
             saturday: new DailyMeals(),
             sunday: new DailyMeals()
         };
+
+        console.log("Meal Planner Created Successfully");
     }
 }

@@ -14,32 +14,33 @@ export interface IMeal {
 /**
  * Meta data about an individual meal.
  */
-export interface MetaMeal {
+export interface IMealInfo {
     numAppetizers: number,
     numEntrees: number,
     numSides: number,
     numDesserts: number
 }
 
+// Mapped Type
+export type ItemKey = keyof IMeal;
+
 export default class Meal {
-    public meal: IMeal;
-    public meta: MetaMeal;
+    public items: IMeal;
+    public info: IMealInfo;
 
     constructor() {
-        this.meal = {
+        this.items = {
             appetizers: [],
             entrees: [],
             sides: [],
             desserts: []
         };
 
-        this.meta = {
+        this.info = {
             numAppetizers: 0,
             numEntrees: 0,
             numSides: 0,
             numDesserts: 0
         };
-
-        console.log("Meal object created successfully");
     }
 }
