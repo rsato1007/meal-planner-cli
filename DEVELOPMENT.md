@@ -2,11 +2,7 @@
 The goal is to develop a plan for my code so it has a chance of being well written.
 
 # Current Status
-- I've built out some basic models and am starting to think about what my folder should be structured for clean organization.
-## Current Organization Thoughts
-- Possibly a folder named repositories to build a solid API to interact with.
-- Services folder: this would perform all necessary business logic.
-- Let's review dependency injection because I am confused by something
+- Meal Service is basically done, now I need to start building out DailyMeals service. After that will be MealPlannerService, then we'll start building some actual commands and scripts.
 
 # Code Components to Consider
 ## Persistent Storage
