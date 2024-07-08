@@ -10,6 +10,6 @@ import MealService from "./services/MealService.js";
 
 let newMeal = new Meal();
 let service = new MealService(newMeal);
-service.addMeal('appetizers', 'Deviled Eggs');
+service.addMeal("appetizers", "Deviled Eggs");
 
 console.log("Meal: ", newMeal.items["appetizers"][0]);

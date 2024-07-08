@@ -18,7 +18,7 @@ it('should remove a meal', () => {
     meal.info.numEntrees++;
 
     let service = new MealService(meal);
-    service.removeMeal("entrees", "Nachos");
+    service.removeMeal("Nachos");
     assert.strictEqual(0, meal.items["entrees"].length);
     assert.strictEqual(0, meal.info.numEntrees);
 })

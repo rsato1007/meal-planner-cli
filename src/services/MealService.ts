@@ -2,6 +2,9 @@ import Meal, {ItemKey, IMealInfo} from "../models/Meal.js";
 
 /**
  * Handles all business logic for Meals object
+ * 
+ * @remarks
+ * - Part of me think I can remove the dishType to allow for a cleaner interface.
  */
 export default class MealService {
     private meal: Meal;
@@ -16,13 +19,21 @@ export default class MealService {
         this.meal.info[metaKey]++;
     }
 
-    public removeMeal(dishType: ItemKey, mealName: string) {
-        const idx = this.meal.items[dishType].indexOf(mealName);
-        if (idx === -1) {
-            return false; // Meal not found
+    // Probably can be cleaned up a bit.
+    public removeMeal(mealName: string) {
+        // Find what dish type the meal is in:
+        let dishType: string | ItemKey = "";
+        Object.keys(this.meal.items).forEach((key) => {
+            if (this.meal.items[key as ItemKey].includes(mealName)) {
+                dishType = key;
+            };
+        });
+        if (dishType === "") {
+            throw Error("MEAL NOT FOUND");
         }
+        const idx = this.meal.items[dishType as ItemKey].indexOf(mealName);
 
-        this.meal.items[dishType].splice(idx, 1);
+        this.meal.items[dishType as ItemKey].splice(idx, 1);
 
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]--;
