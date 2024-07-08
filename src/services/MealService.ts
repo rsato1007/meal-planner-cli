@@ -13,7 +13,7 @@ export default class MealService {
         this.meal = meal;
     }
 
-    public addMeal(dishType: ItemKey, mealName: string) {
+    public add(dishType: ItemKey, mealName: string) {
         this.meal.items[dishType].push(mealName);
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]++;
@@ -21,7 +21,7 @@ export default class MealService {
         return mealName;
     }
 
-    public removeMeal(mealName: string) {
+    public remove(mealName: string) {
         // Find what dish type the meal is in:
         let dishType: string | ItemKey = "";
         let idx: number = -1;
@@ -44,7 +44,7 @@ export default class MealService {
         return true;
     }
 
-    public updateMeal(oldMeal: string, newMeal: string) {
+    public update(oldMeal: string, newMeal: string) {
         // Find what dish type the meal is in:
         let dishType: string | ItemKey = "";
         let idx: number = -1;
@@ -64,7 +64,23 @@ export default class MealService {
         return newMeal;
     }
 
-    public getAllItems() {
+    public getByType(type: ItemKey) {
+        return this.meal.items[type];
+    }
+
+    public getAll() {
         return this.meal.items;
+    }
+    
+    public removeByType(type: ItemKey) {
+        this.meal.items[type] = [];
+        return true;
+    }
+    
+    public removeAll() {
+        Object.keys(this.meal).forEach((key) => {
+            this.meal.items[key as ItemKey] = [];
+        });
+        return true;
     }
 }

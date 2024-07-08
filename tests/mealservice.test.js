@@ -7,7 +7,7 @@ import MealService from "../dist/services/MealService.js";
 it('should add a meal', () => {
     let meal = new Meal();
     let mealService = new MealService(meal);
-    mealService.addMeal("appetizers", "Deviled Eggs");
+    mealService.add("appetizers", "Deviled Eggs");
     assert.strictEqual("Deviled Eggs", meal.items["appetizers"][0]);
     assert.strictEqual(1, meal.info.numAppetizers);
 });
@@ -18,7 +18,7 @@ it('should remove a meal', () => {
     meal.info.numEntrees++;
 
     let service = new MealService(meal);
-    service.removeMeal("Nachos");
+    service.remove("Nachos");
     assert.strictEqual(0, meal.items["entrees"].length);
     assert.strictEqual(0, meal.info.numEntrees);
 })
