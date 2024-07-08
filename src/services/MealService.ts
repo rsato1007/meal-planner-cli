@@ -17,19 +17,21 @@ export default class MealService {
         this.meal.items[dishType].push(mealName);
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]++;
+
+        return mealName;
     }
 
     public removeMeal(mealName: string) {
         // Find what dish type the meal is in:
         let dishType: string | ItemKey = "";
         let idx: number = -1;
-        Object.keys(this.meal.items).forEach((key) => {
+        for (const key of Object.keys(this.meal.items)) {
             idx = this.meal.items[key as ItemKey].indexOf(mealName);
             if (idx >= 0) {
                 dishType = key;
-                return;
-            };
-        });
+                break;
+            }
+        }
         if (dishType === "") {
             throw new Error("MEAL NOT FOUND");
         }
@@ -45,13 +47,24 @@ export default class MealService {
     public updateMeal(oldMeal: string, newMeal: string) {
         // Find what dish type the meal is in:
         let dishType: string | ItemKey = "";
-        Object.keys(this.meal.items).forEach((key) => {
-            if (this.meal.items[key as ItemKey].includes(oldMeal)) {
+        let idx: number = -1;
+        for (const key of Object.keys(this.meal.items)) {
+            idx = this.meal.items[key as ItemKey].indexOf(oldMeal);
+            if (idx >= 0) {
                 dishType = key;
-            };
-        });
-        if (dishType === "") {
-            throw Error("MEAL NOT FOUND");
+                break;
+            }
         }
+        if (dishType === "") {
+            throw new Error("MEAL NOT FOUND");
+        }
+
+        this.meal.items[dishType as ItemKey][idx] = newMeal;
+
+        return newMeal;
+    }
+
+    public getAllItems() {
+        return this.meal.items;
     }
 }

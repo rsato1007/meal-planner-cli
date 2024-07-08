@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-console.log("Hello World");
-
 /**
  * TESTING MY CODE TO ENSURE IT WORKS
  */
@@ -11,5 +9,10 @@ import MealService from "./services/MealService.js";
 let newMeal = new Meal();
 let service = new MealService(newMeal);
 service.addMeal("appetizers", "Deviled Eggs");
+service.addMeal("entrees", "BBQ Ribs");
 
-console.log("Meal: ", newMeal.items["appetizers"][0]);
+service.removeMeal("Deviled Eggs");
+
+service.updateMeal("BBQ Ribs", "Smoked Brisket");
+
+console.log("Final Meals: ", service.getAllItems());
