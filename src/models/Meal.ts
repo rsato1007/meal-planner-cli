@@ -6,6 +6,7 @@
  */
 export interface IMeal {
     appetizers: string[],
+    drinks: string[],
     entrees: string[],
     sides: string[],
     desserts: string[]
@@ -16,6 +17,7 @@ export interface IMeal {
  */
 export interface IMealInfo {
     numAppetizers: number,
+    numDrinks: number,
     numEntrees: number,
     numSides: number,
     numDesserts: number
@@ -31,6 +33,7 @@ export default class Meal {
     constructor() {
         this.dishes = {
             appetizers: [],
+            drinks: [],
             entrees: [],
             sides: [],
             desserts: []
@@ -38,6 +41,7 @@ export default class Meal {
 
         this.info = {
             numAppetizers: 0,
+            numDrinks: 0,
             numEntrees: 0,
             numSides: 0,
             numDesserts: 0
