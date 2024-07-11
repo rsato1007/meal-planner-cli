@@ -1,7 +1,9 @@
-import Meal, {ItemKey, IMealInfo} from "../models/Meal.js";
+import Meal, {DishKey, IMealInfo} from "../models/Meal.js";
 
 /**
  * Handles all business logic for Meals object.
+ * @remarks
+ * - Possibly consider building methods for meal.info object.
  */
 export default class MealService {
     private meal: Meal;
@@ -11,39 +13,39 @@ export default class MealService {
     }
 
     /**
-     * Adds a meal to the meal object.
+     * Adds a dish to the meal object.
      * @param dishType 
-     * @param mealName 
+     * @param dishName 
      * @returns 
      */
-    public add(dishType: ItemKey, mealName: string) {
-        this.meal.items[dishType].push(mealName);
+    public addDish(dishType: DishKey, dishName: string) {
+        this.meal.dishes[dishType].push(dishName);
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]++;
 
-        return mealName;
+        return dishName;
     }
 
     /**
-     * Allows user to add multiple meals at a time.
+     * Allows user to add multiple dishes at a time.
      * @param dishType 
-     * @param mealArr 
+     * @param dishArr 
      */
-    public addMany(dishType: ItemKey, mealArr: string[]) {
-        this.meal.items[dishType] = [...this.meal.items[dishType], ...mealArr];
+    public addManyDishes(dishType: DishKey, dishArr: string[]) {
+        this.meal.dishes[dishType] = [...this.meal.dishes[dishType], ...dishArr];
     }
 
     /**
-     * Removes a meal from the meal object.
-     * @param mealName 
+     * Removes a dish from the meal object.
+     * @param dishName 
      * @returns 
      */
-    public remove(mealName: string) {
-        // Find what dish type the meal is in:
-        let dishType: string | ItemKey = "";
+    public removeDish(dishName: string) {
+        // Find what dish type the dish is in:
+        let dishType: string | DishKey = "";
         let idx: number = -1;
-        for (const key of Object.keys(this.meal.items)) {
-            idx = this.meal.items[key as ItemKey].indexOf(mealName);
+        for (const key of Object.keys(this.meal.dishes)) {
+            idx = this.meal.dishes[key as DishKey].indexOf(dishName);
             if (idx >= 0) {
                 dishType = key;
                 break;
@@ -53,7 +55,7 @@ export default class MealService {
             throw new Error("MEAL NOT FOUND");
         }
 
-        this.meal.items[dishType as ItemKey].splice(idx, 1);
+        this.meal.dishes[dishType as DishKey].splice(idx, 1);
 
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]--;
@@ -62,78 +64,78 @@ export default class MealService {
     }
     
     /**
-     * Allows user to remove many meals at a time.
-     * @param mealsArr 
+     * Allows user to remove many dishes at a time.
+     * @param dishArr 
      * @returns 
      */
-    public removeMany(mealsArr: string[]) {
-        mealsArr.forEach((meal: string) => {
-            this.remove(meal);
+    public removeManyDishes(dishArr: string[]) {
+        dishArr.forEach((meal: string) => {
+            this.removeDish(meal);
         })
 
         return true;
     }
 
     /**
-     * Finds the original meal in the object and updates it with the new meal.
-     * @param oldMeal 
-     * @param newMeal 
+     * Finds the original dish in the object and updates it with the new dish.
+     * @param oldDish 
+     * @param newDish 
      * @returns 
      */
-    public update(oldMeal: string, newMeal: string) {
-        // Find what dish type the meal is in:
-        let dishType: string | ItemKey = "";
+    public updateDish(oldDish: string, newDish: string) {
+        // Find what dish type the dish is in:
+        let dishType: string | DishKey = "";
         let idx: number = -1;
-        for (const key of Object.keys(this.meal.items)) {
-            idx = this.meal.items[key as ItemKey].indexOf(oldMeal);
+        for (const key of Object.keys(this.meal.dishes)) {
+            idx = this.meal.dishes[key as DishKey].indexOf(oldDish);
             if (idx >= 0) {
                 dishType = key;
                 break;
             }
         }
         if (dishType === "") {
-            throw new Error("MEAL NOT FOUND");
+            throw new Error("DISH NOT FOUND");
         }
 
-        this.meal.items[dishType as ItemKey][idx] = newMeal;
+        this.meal.dishes[dishType as DishKey][idx] = newDish;
 
-        return newMeal;
+        return newDish;
     }
 
     /**
-     * Finds all meals in a type (e.g., all appetizers)
+     * Finds all dishes in a type (e.g., all appetizers)
      * @param type 
      * @returns 
      */
-    public getByType(type: ItemKey) {
-        return this.meal.items[type];
+    public getDishesByDishType(type: DishKey) {
+        return this.meal.dishes[type];
     }
 
     /**
-     * Retrieves all meals in the meal object.
+     * Retrieves all dishes in the meal object.
      * @returns 
      */
-    public getAll() {
-        return this.meal.items;
+    public getAllDishes() {
+        return this.meal.dishes;
     }
     
     /**
-     * Removes all meals in a type (e.g., all entrees).
+     * Removes all dishes in a type (e.g., all entrees).
      * @param type 
      * @returns 
      */
-    public removeByType(type: ItemKey) {
-        this.meal.items[type] = [];
+    public removeDishesByDishType(type: DishKey) {
+        this.meal.dishes[type] = [];
         return true;
     }
     
     /**
-     * Removes all meals in the meal object.
+     * Removes all dishes in the meal object.
      * @returns 
      */
-    public removeAll() {
+    public removeAllDishes() {
         Object.keys(this.meal).forEach((key) => {
-            this.meal.items[key as ItemKey] = [];
+            this.meal.dishes[key as DishKey] = [];
         });
         return true;
     }

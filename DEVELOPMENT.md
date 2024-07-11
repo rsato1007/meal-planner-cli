@@ -6,6 +6,8 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 
 - Another thing to consider is some validation in each method to avoid issues (for example, passing an invalid type, null, etc.);
 
+- Also just thought about accounting for drinks in my meal model.
+
 # Code Components to Consider
 ## Persistent Storage
 - Starting off, we need to ensure the data is persistent. I was thinking either .txt or .json file.

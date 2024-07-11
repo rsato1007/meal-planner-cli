@@ -22,14 +22,14 @@ export interface IMealInfo {
 }
 
 // Mapped Type
-export type ItemKey = keyof IMeal;
+export type DishKey = keyof IMeal;
 
 export default class Meal {
-    public items: IMeal;
+    public dishes: IMeal;
     public info: IMealInfo;
 
     constructor() {
-        this.items = {
+        this.dishes = {
             appetizers: [],
             entrees: [],
             sides: [],

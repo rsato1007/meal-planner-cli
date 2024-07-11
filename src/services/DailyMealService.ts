@@ -22,21 +22,21 @@ export default class DailyMealsService {
         this.dailyMeals = dailyMeals;
     }
 
-    public getByTime(type: MealTypeKey) {
+    public getMealsByTime(type: MealTypeKey) {
         const mealsByType = this.dailyMeals[type];
         return new MealService(mealsByType);
     }
 
-    public getALL() {
+    public getALLMealsForDay() {
         return this.dailyMeals;
     }
 
-    public removeByTime(type: MealTypeKey) {
+    public removeMealsByTime(type: MealTypeKey) {
         this.dailyMeals[type] = new Meal();
         return true;
     }
 
-    public removeAll() {
+    public removeMealsForDay() {
         this.dailyMeals = new DailyMeals();
         return this.dailyMeals;
     }
