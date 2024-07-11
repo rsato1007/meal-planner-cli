@@ -25,6 +25,15 @@ export default class MealService {
     }
 
     /**
+     * Allows user to add multiple meals at a time.
+     * @param dishType 
+     * @param mealArr 
+     */
+    public addMany(dishType: ItemKey, mealArr: string[]) {
+        this.meal.items[dishType] = [...this.meal.items[dishType], ...mealArr];
+    }
+
+    /**
      * Removes a meal from the meal object.
      * @param mealName 
      * @returns 
@@ -48,6 +57,19 @@ export default class MealService {
 
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]--;
+
+        return true;
+    }
+    
+    /**
+     * Allows user to remove many meals at a time.
+     * @param mealsArr 
+     * @returns 
+     */
+    public removeMany(mealsArr: string[]) {
+        mealsArr.forEach((meal: string) => {
+            this.remove(meal);
+        })
 
         return true;
     }

@@ -4,6 +4,8 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 # Current Status
 - Meal Service is basically done, now I need to start building out DailyMeals service. After that will be MealPlannerService, then we'll start building some actual commands and scripts.
 
+- Another thing to consider is some validation in each method to avoid issues (for example, passing an invalid type, null, etc.);
+
 # Code Components to Consider
 ## Persistent Storage
 - Starting off, we need to ensure the data is persistent. I was thinking either .txt or .json file.
