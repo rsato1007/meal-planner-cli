@@ -13,19 +13,23 @@ export interface IMealPlanner {
     sunday: DailyMeals
 }
 
-export default class MealPlanner {
-    public planner: IMealPlanner;
+export default class MealPlanner implements IMealPlanner {
+    public monday;
+    public tuesday;
+    public wednesday;
+    public thursday;
+    public friday;
+    public saturday;
+    public sunday;
 
     constructor() {
-        this.planner = {
-            monday: new DailyMeals(),
-            tuesday: new DailyMeals(),
-            wednesday: new DailyMeals(),
-            thursday: new DailyMeals(),
-            friday: new DailyMeals(),
-            saturday: new DailyMeals(),
-            sunday: new DailyMeals()
-        };
+        this.monday = new DailyMeals();
+        this.tuesday = new DailyMeals();
+        this.wednesday = new DailyMeals();
+        this.thursday = new DailyMeals()
+        this.friday = new DailyMeals()
+        this.saturday = new DailyMeals()
+        this.sunday = new DailyMeals()
 
         console.log("Meal Planner Created Successfully");
     }
