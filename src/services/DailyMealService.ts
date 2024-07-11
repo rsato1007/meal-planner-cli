@@ -22,16 +22,16 @@ export default class DailyMealsService {
         this.dailyMeals = dailyMeals;
     }
 
-    public getMealsByTime(type: MealTypeKey) {
+    public getDishesByTime(type: MealTypeKey) {
         const mealsByType = this.dailyMeals[type];
         return new MealService(mealsByType);
     }
 
-    public getALLMealsForDay() {
+    public getALLMealssForDay() {
         return this.dailyMeals;
     }
 
-    public removeMealsByTime(type: MealTypeKey) {
+    public removeDishesByTime(type: MealTypeKey) {
         this.dailyMeals[type] = new Meal();
         return true;
     }

@@ -8,5 +8,5 @@ import { DailyMeals } from "./models/DailyMeals.js";
 let mon = new DailyMealsService(new DailyMeals());
 
 mon
-    .getMealsByTime('breakfast')
+    .getDishesByTime('breakfast')
     .addDish("appetizers", "Bloody Marys")
