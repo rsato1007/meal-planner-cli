@@ -2,15 +2,21 @@
 /**
  * TESTING MY CODE TO ENSURE IT WORKS
  */
+import DailyMealsService from "./services/DailyMealService.js";
+import { DailyMeals } from "./models/DailyMeals.js";
 
-import Meal from "./models/Meal.js";
-import MealService from "./services/MealService.js";
+let dm = new DailyMealsService(new DailyMeals());
+dm
+    .getByType("dinner")
+    .add('appetizers', 'nachos')
+    
+dm
+    .getByType("dinner")
+    .add("entrees", "Green Enchiladas")
 
-let newMeal = new Meal();
-let service = new MealService(newMeal);
-service.add("appetizers", "Deviled Eggs");
-service.add("entrees", "BBQ Ribs");
-service.add("appetizers", "Cheese and Crakers");
-service.update("BBQ Ribs", "Smoked Brisket");
+dm
+    .getByType("breakfast")
+    .add("entrees", "waffles")
 
-console.log("Appetizers: ", service.getByType("appetizers"));
+console.log(dm
+    .getALL()["breakfast"]["items"])

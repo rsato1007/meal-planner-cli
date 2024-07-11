@@ -1,4 +1,4 @@
-import Meal from "./Meal";
+import Meal from "./Meal.js";
 /**
  * Model for meals in a day.
  */
@@ -8,14 +8,16 @@ export interface IDailyMeals {
     dinner: Meal
 }
 
-export class DailyMeals {
-    public dailyMeals: IDailyMeals;
+export type MealTypeKey = keyof IDailyMeals;
+
+export class DailyMeals implements IDailyMeals {
+    public breakfast;
+    public lunch;
+    public dinner;
 
     constructor() {
-        this.dailyMeals = {
-            breakfast: new Meal(),
-            lunch: new Meal(),
-            dinner: new Meal()
-        };
+        this.breakfast = new Meal(),
+        this.lunch = new Meal(),
+        this. dinner = new Meal()
     }
 }
