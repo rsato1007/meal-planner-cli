@@ -16,6 +16,8 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 - Also it's time to start to thinking about putting types/interfaces into a dedicated file.
     - Plus this would allow me to rethink them as needed.
 
+- No validation for flag option input, consider writing a simple function to handle that.
+
 # Code Components to Consider
 ## Persistent Storage
 - Starting off, we need to ensure the data is persistent. I was thinking either .txt or .json file.

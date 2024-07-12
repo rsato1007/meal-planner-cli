@@ -1,13 +1,6 @@
 import Meal, { DishKey, IMealInfo, InfoKey } from "../models/Meal.js";
 import { validateCondition } from "../utils/errorHandling.js";
 
-interface IMeta {
-    properties: {
-        dishes: DishKey[]
-        info: InfoKey[]
-    }
-}
-
 /**
  * Handles all business logic for Meals object.
  * @remarks
@@ -17,7 +10,7 @@ interface IMeta {
  */
 export default class MealService {
     private meal: Meal;
-    static meta: IMeta = {
+    static meta = {
         properties: {
             dishes: ["appetizers", "desserts", "drinks", "entrees", "sides"],
             info: ["numAppetizers", "numDesserts", "numDrinks", "numEntrees", "numSides"]

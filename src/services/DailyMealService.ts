@@ -3,12 +3,6 @@ import MealService from "./MealService.js";
 import { MealTypeKey } from "../models/DailyMeals.js";
 import Meal from "../models/Meal.js";
 
-interface IMeta {
-    properties: {
-        "meal-times": ["breakfast", "lunch", "dinner"]
-    }
-}
-
 /**
  * Handles all business logic for DailyMeals object.
  * 
@@ -24,7 +18,7 @@ interface IMeta {
 export default class DailyMealsService {
     private dailyMeals: DailyMeals;
 
-    public static meta: IMeta = {
+    public static meta = {
         properties: {
             "meal-times": ["breakfast", "lunch", "dinner"] 
         }
