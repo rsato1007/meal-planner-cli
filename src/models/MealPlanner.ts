@@ -13,6 +13,8 @@ export interface IMealPlanner {
     sunday: DailyMeals
 }
 
+export type DayKey = keyof IMealPlanner;
+
 export default class MealPlanner implements IMealPlanner {
     public monday;
     public tuesday;

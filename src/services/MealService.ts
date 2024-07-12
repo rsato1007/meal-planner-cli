@@ -4,6 +4,7 @@ import Meal, {DishKey, IMealInfo} from "../models/Meal.js";
  * Handles all business logic for Meals object.
  * @remarks
  * - Possibly consider building methods for meal.info object.
+ * - Look to refactor both update and removal to use meal.info to be more efficient in its operations
  */
 export default class MealService {
     private meal: Meal;
