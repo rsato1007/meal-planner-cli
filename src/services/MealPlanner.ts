@@ -1,29 +1,57 @@
 import { DailyMeals } from "../models/DailyMeals.js";
-import MealPlanner, {DayKey} from "../models/MealPlanner.js";
+import MealPlanner, { DayKey } from "../models/MealPlanner.js";
 import DailyMealsService from "./DailyMealService.js";
 
-export default class MealPlannerService  {
+export default class MealPlannerService {
     private planner: MealPlanner;
 
     constructor(planner: MealPlanner) {
         this.planner = planner;
     }
 
-    public getMealsByDay(day: DayKey) {
+    /**
+     * Gets the DailyMealsService for a specific day.
+     * @param day The day of the week (e.g., Monday, Tuesday)
+     * @returns A DailyMealsService instance for the specified day
+     */
+    public getMealsByDay(day: DayKey): DailyMealsService {
         return new DailyMealsService(this.planner[day]);
     }
 
-    public getALLDays() {
+    /**
+     * Retrieves the meal planner for all days.
+     * @returns The MealPlanner instance
+     */
+    public getAllDays(): MealPlanner {
         return this.planner;
     }
 
-    public removeMealsByDay(day: DayKey) {
-        this.planner[day] = new DailyMeals();
-        return true;
+    /**
+     * Removes all meals for a specific day.
+     * @param day The day of the week (e.g., Monday, Tuesday)
+     * @returns boolean indicating success or failure
+     */
+    public removeMealsByDay(day: DayKey): boolean {
+        try {
+            this.planner[day] = new DailyMeals();
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to remove meals by day: ", e);
+            return false;
+        }
     }
 
-    public resetPlanner() {
-        this.planner = new MealPlanner();
-        return true;
+    /**
+     * Resets the meal planner.
+     * @returns boolean indicating success or failure
+     */
+    public resetPlanner(): boolean {
+        try {
+            this.planner = new MealPlanner();
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to reset meal planner: ", e);
+            return false;
+        }
     }
 }

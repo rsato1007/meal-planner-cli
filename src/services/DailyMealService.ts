@@ -1,6 +1,6 @@
 import { DailyMeals } from "../models/DailyMeals.js";
 import MealService from "./MealService.js";
-import { MealTypeKey } from "../models/DailyMeals.js"
+import { MealTypeKey } from "../models/DailyMeals.js";
 import Meal from "../models/Meal.js";
 
 /**
@@ -22,22 +22,49 @@ export default class DailyMealsService {
         this.dailyMeals = dailyMeals;
     }
 
-    public getDishesByTime(time: MealTypeKey) {
-        const mealsByType = this.dailyMeals[time];
-        return new MealService(mealsByType);
+    /**
+     * Gets the MealService for a specific time of day.
+     * @param time The time of day (e.g., breakfast, lunch, dinner)
+     * @returns A MealService instance for the specified time of day
+     */
+    public getDishesByTime(time: MealTypeKey): MealService {
+        return new MealService(this.dailyMeals[time]);
     }
 
-    public getALLMealsForDay() {
+    /**
+     * Retrieves all meals for the day.
+     * @returns The DailyMeals instance
+     */
+    public getAllMealsForDay(): DailyMeals {
         return this.dailyMeals;
     }
 
-    public removeDishesByTime(time: MealTypeKey) {
-        this.dailyMeals[time] = new Meal();
-        return true;
+    /**
+     * Removes all dishes for a specific time of day.
+     * @param time The time of day (e.g., breakfast, lunch, dinner)
+     * @returns boolean indicating success or failure
+     */
+    public removeDishesByTime(time: MealTypeKey): boolean {
+        try {
+            this.dailyMeals[time] = new Meal();
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to remove dishes by time: ", e);
+            return false;
+        }
     }
 
-    public removeMealsForDay() {
-        this.dailyMeals = new DailyMeals();
-        return this.dailyMeals;
+    /**
+     * Removes all meals for the day.
+     * @returns The new DailyMeals instance
+     */
+    public removeMealsForDay(): DailyMeals {
+        try {
+            this.dailyMeals = new DailyMeals();
+            return this.dailyMeals;
+        } catch (e: unknown) {
+            console.error("Unable to remove all meals for the day: ", e);
+            return this.dailyMeals; // Return the current state even if there's an error
+        }
     }
 }
