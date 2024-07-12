@@ -53,7 +53,30 @@ const program = new Command();
             console.log("Meal Added Successfully!");
         });
 
-    // program.command('remove')
+    /**
+     * I would approach this by allowing users to specify meal type, entree type, day etc. and by allowing these to be blank.
+     * Allow the system to find the removed meal if needed. For now, we'll start by requiring everything.
+     */
+    program.command('remove')
+        .description('Remove a dish from your meal planner')
+        .argument('<string>', 'name of dish to remove')
+        .option(defaults[0][0], defaults[0][1])
+        .option(defaults[1][0], defaults[1][1])
+        .action(async (str: string, options: any) => {
+            options['mealType'] = "entrees"; // Avoids needing to add this
+            console.log("Reviewing input for validity.");
+            await wait(2000);
+            options = await validateOptionsInput(options);
+            console.log("Let's see what information we still need to add the meal.");
+            await wait(2000);
+            options =  await getMissingOptions(options);
+            planner
+                .getMealsByDay(options.day)
+                .getDishesByTime(options.time)
+                .removeDish(str)
+            await updateFile(planner.getAllDays());
+            console.log("Meal Removed Successfully!");
+        });
 
     // program.command('update')
 

@@ -2,7 +2,7 @@
 The goal is to develop a plan for my code so it has a chance of being well written.
 
 # Current Status
-- Overall: currently working on building out a couple simple commands while ensuring valid repsonses are provided.
+- Overall: Finished up simple validation methods for add, working on other abilities.
 
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
     - As an extension of this, consider refactoring existing removal code to use the info property to determine if we can skip a property or not.
@@ -15,8 +15,6 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 
 - Also it's time to start to thinking about putting types/interfaces into a dedicated file.
     - Plus this would allow me to rethink them as needed.
-
-- No validation for flag option input, consider writing a simple function to handle that.
 
 # Code Components to Consider
 ## Persistent Storage
