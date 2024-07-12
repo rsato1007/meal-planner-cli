@@ -16,7 +16,7 @@ const question = (query: string): Promise<string> => new Promise((resolve) => {
     });
 });
 
-interface addOptions {
+export interface addOptions {
     day?: string;
     time?: string;
     "mealType"?: string;
@@ -28,7 +28,7 @@ const CHOICES = {
         choices: MealPlannerService.meta.properties.days
     },
     "time": {
-        query: "What meal time should I add this dish to? ",
+        query: "Is this a dish for breakfast, lunch, or dinner? ",
         choices: DailyMealsService.meta.properties['meal-times']
     },
     "mealType": {

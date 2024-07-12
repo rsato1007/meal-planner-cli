@@ -35,7 +35,6 @@ export default class MealService {
      * @returns The name of the added dish
      */
     public addDish(dishType: DishKey, dishName: string): string | void {
-        console.log(dishType);
         validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
 
         try {

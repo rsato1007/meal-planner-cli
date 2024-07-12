@@ -16,7 +16,7 @@ export const createOrGetDataFile = async (): Promise<MealPlanner> => {
         console.log('Data file already exists, importing data.');
     } catch {
         await fs.writeFile(filePath, JSON.stringify(new MealPlanner(), null, 2), 'utf-8');
-        console.log('Blank data file created.');
+        console.log('New data file created.');
     }
 
     const data = await fs.readFile(filePath, 'utf-8');
