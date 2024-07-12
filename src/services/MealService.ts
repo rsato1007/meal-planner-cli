@@ -21,7 +21,7 @@ export default class MealService {
      * @returns The name of the added dish
      */
     public addDish(dishType: DishKey, dishName: string): string | void {
-        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
+        validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
 
         try {
             this.meal.dishes[dishType].push(dishName);
@@ -41,7 +41,7 @@ export default class MealService {
      * @returns The updated array of dishes of the specified type
      */
     public addManyDishes(dishType: DishKey, dishArr: string[]): string[] | void {
-        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
+        validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
 
         try {
             this.meal.dishes[dishType] = [...this.meal.dishes[dishType], ...dishArr];
@@ -140,7 +140,7 @@ export default class MealService {
      * @returns An array of dish names
      */
     public getDishesByDishType(dishType: DishKey): string[] {
-        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID TYPE");
+        validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID TYPE");
         return this.meal.dishes[dishType];
     }
 
@@ -158,7 +158,7 @@ export default class MealService {
      * @returns boolean indicating success or failure
      */
     public removeDishesByDishType(dishType: DishKey): boolean {
-        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
+        validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
         try {
             const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
             this.meal.info[metaKey] -= this.meal.dishes[dishType].length;
