@@ -5,14 +5,10 @@ import { Command } from 'commander';
 
 import MealPlannerService from '../services/MealPlanner.js';
 import { createOrGetDataFile, updateFile } from './script.js';
+import { getMissingOptions } from '../utils/cliUtils.js';
 
 const program = new Command();
 
-// interface addOptions {
-//     day: string | null,
-//     time: string | null,
-//     "meal-type": string | null
-// }
 (async () => {
     // Allows me to add default options that consistent and reduce redundancy.
     const defaults = [
@@ -26,7 +22,7 @@ const program = new Command();
     program
     .name('mealplan')
     .description('CLI tool to allow users to plan meals.')
-    .version('0.6.0')
+    .version('0.9.0')
 
     program.command('add')
         .description('Add a dish to your meal planner')
@@ -35,16 +31,13 @@ const program = new Command();
         .option(defaults[1][0], defaults[1][1])
         .option(defaults[2][0], defaults[2][1])
         .action(async (str: string, options: any) => {
-            // Handle situation where not all flags were selected
-            // Use the options object to create add the meal in question.
-
-            console.log(options);
-            planner
-                .getMealsByDay(options.day)
-                .getDishesByTime(options.time)
-                .addDish(options['mealType'], str)
-            await updateFile(planner.getAllDays());
-            console.log("Meal Added Successfully!");
+            options =  await getMissingOptions(options);
+            // planner
+            //     .getMealsByDay(options.day)
+            //     .getDishesByTime(options.time)
+            //     .addDish(options['mealType'], str)
+            // await updateFile(planner.getAllDays());
+            // console.log("Meal Added Successfully!");
         });
 
     // program.command('remove')

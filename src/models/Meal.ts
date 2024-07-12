@@ -19,6 +19,7 @@ export interface IMealInfo {
 
 // Mapped Type
 export type DishKey = keyof IMeal;
+export type InfoKey = keyof IMealInfo
 
 /**
  * Model to represent an individual meal and dishes comprising it.

@@ -1,5 +1,12 @@
-import Meal, { DishKey, IMealInfo } from "../models/Meal.js";
+import Meal, { DishKey, IMealInfo, InfoKey } from "../models/Meal.js";
 import { validateCondition } from "../utils/errorHandling.js";
+
+interface IMeta {
+    properties: {
+        dishes: DishKey[]
+        info: InfoKey[]
+    }
+}
 
 /**
  * Handles all business logic for Meals object.
@@ -9,9 +16,22 @@ import { validateCondition } from "../utils/errorHandling.js";
  */
 export default class MealService {
     private meal: Meal;
+    static meta: IMeta = {
+        properties: {
+            dishes: ["appetizers", "desserts", "drinks", "entrees", "sides"],
+            info: ["numAppetizers", "numDesserts", "numDrinks", "numEntrees", "numSides"]
+        }
+    };
 
     constructor(meal: Meal) {
         this.meal = meal;
+    }
+
+    static getTypeNames() {
+        {
+            items: []
+            info: []
+        }
     }
 
     /**

@@ -23,6 +23,11 @@ export const createOrGetDataFile = async (): Promise<MealPlanner> => {
     return JSON.parse(data);
 };
 
+/**
+ * Using current data for planner instance to update file so changes can be persistent.
+ * @param planner Meal Planner instance
+ * @returns Promise that returns meal planner instance once done.
+ */
 export const updateFile = async (planner: MealPlanner): Promise<MealPlanner> => {
     const filePath = path.resolve(process.cwd(), 'data', 'data.json');
     await fs.writeFile(filePath, JSON.stringify(planner, null, 2), 'utf-8');
