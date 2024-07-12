@@ -5,7 +5,7 @@ import { Command } from 'commander';
 
 import MealPlannerService from '../services/MealPlanner.js';
 import { createOrGetDataFile, updateFile } from './script.js';
-import { validOptionsInput, getMissingOptions } from '../utils/cliUtils.js';
+import { validateOptionsInput, getMissingOptions } from '../utils/cliUtils.js';
 
 const program = new Command();
 
@@ -31,8 +31,10 @@ const program = new Command();
         .option(defaults[1][0], defaults[1][1])
         .option(defaults[2][0], defaults[2][1])
         .action(async (str: string, options: any) => {
-            options = await validOptionsInput(options);
+            options = await validateOptionsInput(options);
             options =  await getMissingOptions(options);
+
+            console.log("FINAL OPTIONS: ", options);
             // planner
             //     .getMealsByDay(options.day)
             //     .getDishesByTime(options.time)

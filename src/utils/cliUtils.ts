@@ -1,16 +1,15 @@
 import readline from 'node:readline';
-import { resolve } from 'node:path';
 
 import MealService from '../services/MealService.js';
 import MealPlannerService from '../services/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
+import { wait } from './misc.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-// Promise wrapper for readline.question
 const question = (query: string): Promise<string> => new Promise((resolve) => {
     rl.question(query, (answer) => {
         resolve(answer);
@@ -20,7 +19,7 @@ const question = (query: string): Promise<string> => new Promise((resolve) => {
 interface addOptions {
     day?: string;
     time?: string;
-    "meal-type"?: string;
+    "mealType"?: string;
 }
 
 const CHOICES = {
@@ -32,7 +31,7 @@ const CHOICES = {
         query: "What meal time should I add this dish to? ",
         choices: DailyMealsService.meta.properties['meal-times']
     },
-    "meal-type": {
+    "mealType": {
         query: "What type of meal am I adding? ",
         choices: MealService.meta.properties["dishes"]
     }
@@ -40,15 +39,25 @@ const CHOICES = {
 
 type choiceKey = keyof typeof CHOICES;
 
-export const validOptionsInput = async (obj: addOptions): Promise<addOptions> => {
+/**
+ * Reviews input to ensure it's not invalid.
+ * @param obj - selected choice for each option (day, time, and meal type)
+ * @returns - updated object for options selected with invalid input
+ */
+export const validateOptionsInput = async (obj: addOptions): Promise<addOptions> => {
     let cleanedObj: addOptions = {};
 
-    (Object.keys(obj) as choiceKey[]).forEach((key: choiceKey) => {
+    for (const key of Object.keys(obj) as choiceKey[]) {
         const value = obj[key];
         if (value && CHOICES[key].choices.includes(value)) {
             cleanedObj[key] = value;
+        } else {
+            console.log("INVALID INPUT FOR: ", key);
+            await wait(2000);
+            cleanedObj[key] = await getValidChoice(CHOICES[key]);
         }
-    });
+    }
+
     return cleanedObj;
 }
 
@@ -69,7 +78,7 @@ const getValidChoice = async (obj: any): Promise<string> => {
         }
     }
 
-    return resolve(res)
+    return res;
 }
 
 /**
@@ -89,8 +98,8 @@ export const getMissingOptions = async (options: addOptions) => {
     if (!completedOptions.hasOwnProperty("time")) {
         completedOptions.time = await getValidChoice(CHOICES["time"]);
     }
-    if (!completedOptions.hasOwnProperty("meal-type")) {
-        completedOptions['meal-type'] = await getValidChoice(CHOICES["meal-type"]);
+    if (!completedOptions.hasOwnProperty("mealType")) {
+        completedOptions['mealType'] = await getValidChoice(CHOICES["mealType"]);
     }
 
     rl.close();
