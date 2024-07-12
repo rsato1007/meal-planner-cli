@@ -2,7 +2,7 @@
 The goal is to develop a plan for my code so it has a chance of being well written.
 
 # Current Status
-- Overall: I have some basic classes set up, now it is time to start writing out some basic scripts and commands.
+- Overall: currently working on building out a couple simple commands while ensuring valid repsonses are provided.
 
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
     - As an extension of this, consider refactoring existing removal code to use the info property to determine if we can skip a property or not.
@@ -12,6 +12,9 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 - Also consider doing a config file where the code reads it to allow some customization (think where to store files, whether to archive or delete old files, etc.)
 
 - also would like to build a file that holds current state for meal planner. Think for example, not needing to pass a flag everytime you want to add to Monday's meals or appetizers for Sunday dinner, etc.
+
+- Also it's time to start to thinking about putting types/interfaces into a dedicated file.
+    - Plus this would allow me to rethink them as needed.
 
 # Code Components to Consider
 ## Persistent Storage

@@ -12,6 +12,7 @@ interface IMeta {
  * Handles all business logic for Meals object.
  * @remarks
  * - Possibly consider building methods for meal.info object.
+ * - Also think about how to improve our static property.
  * - Look to refactor both update and removal to use meal.info to be more efficient in its operations
  */
 export default class MealService {
