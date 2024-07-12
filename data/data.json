@@ -5,6 +5,8 @@
         "appetizers": [],
         "drinks": [],
         "entrees": [
+          "Waffles",
+          "Waffles",
           "Waffles"
         ],
         "sides": [],
@@ -13,7 +15,7 @@
       "info": {
         "numAppetizers": 0,
         "numDrinks": 0,
-        "numEntrees": 1,
+        "numEntrees": 3,
         "numSides": 0,
         "numDesserts": 0
       }
@@ -23,6 +25,8 @@
         "appetizers": [],
         "drinks": [],
         "entrees": [
+          "Buffalo Chicken Salad",
+          "Buffalo Chicken Salad",
           "Buffalo Chicken Salad"
         ],
         "sides": [],
@@ -31,7 +35,7 @@
       "info": {
         "numAppetizers": 0,
         "numDrinks": 0,
-        "numEntrees": 1,
+        "numEntrees": 3,
         "numSides": 0,
         "numDesserts": 0
       }
@@ -41,7 +45,10 @@
         "appetizers": [],
         "drinks": [],
         "entrees": [
-          "Teriyaki Chicken"
+          "Teriyaki Chicken",
+          "Teriyaki Chicken",
+          "Teriyaki Chicken",
+          "Coq Au Vin"
         ],
         "sides": [],
         "desserts": []
@@ -49,7 +56,7 @@
       "info": {
         "numAppetizers": 0,
         "numDrinks": 0,
-        "numEntrees": 1,
+        "numEntrees": 4,
         "numSides": 0,
         "numDesserts": 0
       }
