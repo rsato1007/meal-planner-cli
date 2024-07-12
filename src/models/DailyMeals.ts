@@ -1,7 +1,5 @@
 import Meal from "./Meal.js";
-/**
- * Model for meals in a day.
- */
+
 export interface IDailyMeals {
     breakfast: Meal,
     lunch: Meal,
@@ -10,6 +8,9 @@ export interface IDailyMeals {
 
 export type MealTypeKey = keyof IDailyMeals;
 
+/**
+ * Model to represent meals planned for a day.
+ */
 export class DailyMeals implements IDailyMeals {
     public breakfast;
     public lunch;

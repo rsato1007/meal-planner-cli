@@ -1,5 +1,6 @@
 import { DailyMeals } from "../models/DailyMeals.js";
 import MealPlanner, {DayKey} from "../models/MealPlanner.js";
+import DailyMealsService from "./DailyMealService.js";
 
 export default class MealPlannerService  {
     private planner: MealPlanner;
@@ -9,7 +10,7 @@ export default class MealPlannerService  {
     }
 
     public getMealsByDay(day: DayKey) {
-        return this.planner[day];
+        return new DailyMealsService(this.planner[day]);
     }
 
     public getALLDays() {

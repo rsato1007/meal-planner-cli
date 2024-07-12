@@ -1,8 +1,5 @@
 import { DailyMeals } from "./DailyMeals";
 
-/**
- * Model for MealPlanner in a week.
- */
 export interface IMealPlanner {
     monday: DailyMeals,
     tuesday: DailyMeals,
@@ -15,6 +12,9 @@ export interface IMealPlanner {
 
 export type DayKey = keyof IMealPlanner;
 
+/**
+ * Model to represent meal planner for the week.
+ */
 export default class MealPlanner implements IMealPlanner {
     public monday;
     public tuesday;

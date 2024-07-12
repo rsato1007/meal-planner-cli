@@ -2,11 +2,12 @@
 /**
  * TESTING MY CODE TO ENSURE IT WORKS
  */
-import DailyMealsService from "./services/DailyMealService.js";
-import { DailyMeals } from "./models/DailyMeals.js";
+import MealPlannerService from "./services/MealPlanner.js";
+import MealPlanner from "./models/MealPlanner.js";
+const planner = new MealPlannerService(new MealPlanner());
 
-let mon = new DailyMealsService(new DailyMeals());
+planner
+    .getMealsByDay("monday")
+    .getDishesByTime("breakfast")
+    .addDish("appetizers", "Mushroom Thingy")
 
-mon
-    .getDishesByTime('breakfast')
-    .addDish("appetizers", "Bloody Marys")

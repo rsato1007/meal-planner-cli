@@ -1,4 +1,5 @@
 import Meal, {DishKey, IMealInfo} from "../models/Meal.js";
+import { validateCondition } from "../utils/errorHandling.js";
 
 /**
  * Handles all business logic for Meals object.
@@ -15,11 +16,10 @@ export default class MealService {
 
     /**
      * Adds a dish to the meal object.
-     * @param dishType 
-     * @param dishName 
-     * @returns 
      */
-    public addDish(dishType: DishKey, dishName: string) {
+    public addDish(dishType: DishKey, dishName: string): string {
+        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
+
         this.meal.dishes[dishType].push(dishName);
         const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
         this.meal.info[metaKey]++;
@@ -33,7 +33,11 @@ export default class MealService {
      * @param dishArr 
      */
     public addManyDishes(dishType: DishKey, dishArr: string[]) {
+        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
+
         this.meal.dishes[dishType] = [...this.meal.dishes[dishType], ...dishArr];
+
+        return this.meal.dishes[dishType];
     }
 
     /**
@@ -108,8 +112,9 @@ export default class MealService {
      * @param type 
      * @returns 
      */
-    public getDishesByDishType(type: DishKey) {
-        return this.meal.dishes[type];
+    public getDishesByDishType(dishType: DishKey) {
+        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID TYPE");
+        return this.meal.dishes[dishType];
     }
 
     /**
@@ -125,8 +130,9 @@ export default class MealService {
      * @param type 
      * @returns 
      */
-    public removeDishesByDishType(type: DishKey) {
-        this.meal.dishes[type] = [];
+    public removeDishesByDishType(dishType: DishKey) {
+        validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
+        this.meal.dishes[dishType] = [];
         return true;
     }
     

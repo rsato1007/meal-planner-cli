@@ -13,6 +13,8 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 
 - Also consider doing a config file where the code reads it to allow some customization (think where to store files, whether to archive or delete old files, etc.)
 
+- also would like to build a file that holds current state for meal planner. Think for example, not needing to pass a flag everytime you want to add to Monday's meals or appetizers for Sunday dinner, etc.
+
 # Code Components to Consider
 ## Persistent Storage
 - Starting off, we need to ensure the data is persistent. I was thinking either .txt or .json file.
