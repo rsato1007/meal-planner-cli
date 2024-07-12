@@ -2,11 +2,16 @@
 The goal is to develop a plan for my code so it has a chance of being well written.
 
 # Current Status
-- Meal Service is basically done, now I need to start building out DailyMeals service. After that will be MealPlannerService, then we'll start building some actual commands and scripts.
+- I have the basics for DailyMealService built out, now I'll build out MealPlannerService and start doing some simple refactoring.
 
 - Another thing to consider is some validation in each method to avoid issues (for example, passing an invalid type, null, etc.);
 
-- Also just thought about accounting for drinks in my meal model.
+- Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
+    - As an extension of this, consider refactoring existing removal code to use the info property to determine if we can skip a property or not.
+
+- Another possibility is building a statistic object for my mealplanner, daily meal, etc. Might not be necessary, but worth completating.
+
+- Also consider doing a config file where the code reads it to allow some customization (think where to store files, whether to archive or delete old files, etc.)
 
 # Code Components to Consider
 ## Persistent Storage
