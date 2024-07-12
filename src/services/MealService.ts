@@ -1,4 +1,4 @@
-import Meal, {DishKey, IMealInfo} from "../models/Meal.js";
+import Meal, { DishKey, IMealInfo } from "../models/Meal.js";
 import { validateCondition } from "../utils/errorHandling.js";
 
 /**
@@ -16,134 +16,176 @@ export default class MealService {
 
     /**
      * Adds a dish to the meal object.
+     * @param dishType The type of the dish
+     * @param dishName The name of the dish
+     * @returns The name of the added dish
      */
-    public addDish(dishType: DishKey, dishName: string): string {
+    public addDish(dishType: DishKey, dishName: string): string | void {
         validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
 
-        this.meal.dishes[dishType].push(dishName);
-        const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-        this.meal.info[metaKey]++;
+        try {
+            this.meal.dishes[dishType].push(dishName);
+            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
+            this.meal.info[metaKey]++;
 
-        return dishName;
+            return dishName;
+        } catch (e: unknown) {
+            console.error("Unable to add dish: ", e);
+        }
     }
 
     /**
      * Allows user to add multiple dishes at a time.
-     * @param dishType 
-     * @param dishArr 
+     * @param dishType The type of the dishes
+     * @param dishArr An array of dish names to add
+     * @returns The updated array of dishes of the specified type
      */
-    public addManyDishes(dishType: DishKey, dishArr: string[]) {
+    public addManyDishes(dishType: DishKey, dishArr: string[]): string[] | void {
         validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
 
-        this.meal.dishes[dishType] = [...this.meal.dishes[dishType], ...dishArr];
+        try {
+            this.meal.dishes[dishType] = [...this.meal.dishes[dishType], ...dishArr];
+            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
+            this.meal.info[metaKey] += dishArr.length;
 
-        return this.meal.dishes[dishType];
+            return this.meal.dishes[dishType];
+        } catch (e: unknown) {
+            console.error("Unable to add multiple dishes: ", e);
+        }
     }
 
     /**
      * Removes a dish from the meal object.
-     * @param dishName 
-     * @returns 
+     * @param dishName The name of the dish to remove
+     * @returns boolean indicating success or failure
      */
-    public removeDish(dishName: string) {
-        // Find what dish type the dish is in:
-        let dishType: string | DishKey = "";
-        let idx: number = -1;
-        for (const key of Object.keys(this.meal.dishes)) {
-            idx = this.meal.dishes[key as DishKey].indexOf(dishName);
-            if (idx >= 0) {
-                dishType = key;
-                break;
+    public removeDish(dishName: string): boolean {
+        try {
+            let dishType: string | DishKey = "";
+            let idx: number = -1;
+            for (const key of Object.keys(this.meal.dishes)) {
+                idx = this.meal.dishes[key as DishKey].indexOf(dishName);
+                if (idx >= 0) {
+                    dishType = key;
+                    break;
+                }
             }
+            if (dishType === "") {
+                throw new Error(`Dish "${dishName}" not found in any meal.`);
+            }
+
+            this.meal.dishes[dishType as DishKey].splice(idx, 1);
+
+            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
+            this.meal.info[metaKey]--;
+
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to remove dish: ", e);
+            return false;
         }
-        if (dishType === "") {
-            throw new Error("MEAL NOT FOUND");
-        }
-
-        this.meal.dishes[dishType as DishKey].splice(idx, 1);
-
-        const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-        this.meal.info[metaKey]--;
-
-        return true;
     }
-    
+
     /**
      * Allows user to remove many dishes at a time.
-     * @param dishArr 
-     * @returns 
+     * @param dishArr An array of dish names to remove
+     * @returns boolean indicating success or failure
      */
-    public removeManyDishes(dishArr: string[]) {
-        dishArr.forEach((meal: string) => {
-            this.removeDish(meal);
-        })
-
-        return true;
+    public removeManyDishes(dishArr: string[]): boolean {
+        try {
+            for (const dishName of dishArr) {
+                if (!this.removeDish(dishName)) {
+                    throw new Error(`Failed to remove dish "${dishName}"`);
+                }
+            }
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to remove dishes: ", e);
+            return false;
+        }
     }
 
     /**
      * Finds the original dish in the object and updates it with the new dish.
-     * @param oldDish 
-     * @param newDish 
-     * @returns 
+     * @param oldDish The name of the dish to update
+     * @param newDish The new name of the dish
+     * @returns The new name of the dish
      */
-    public updateDish(oldDish: string, newDish: string) {
-        // Find what dish type the dish is in:
-        let dishType: string | DishKey = "";
-        let idx: number = -1;
-        for (const key of Object.keys(this.meal.dishes)) {
-            idx = this.meal.dishes[key as DishKey].indexOf(oldDish);
-            if (idx >= 0) {
-                dishType = key;
-                break;
+    public updateDish(oldDish: string, newDish: string): string | void {
+        try {
+            let dishType: string | DishKey = "";
+            let idx: number = -1;
+            for (const key of Object.keys(this.meal.dishes)) {
+                idx = this.meal.dishes[key as DishKey].indexOf(oldDish);
+                if (idx >= 0) {
+                    dishType = key;
+                    break;
+                }
             }
-        }
-        if (dishType === "") {
-            throw new Error("DISH NOT FOUND");
-        }
+            if (dishType === "") {
+                throw new Error(`Dish "${oldDish}" not found.`);
+            }
 
-        this.meal.dishes[dishType as DishKey][idx] = newDish;
+            this.meal.dishes[dishType as DishKey][idx] = newDish;
 
-        return newDish;
+            return newDish;
+        } catch (e: unknown) {
+            console.error("Unable to update dish: ", e);
+        }
     }
 
     /**
-     * Finds all dishes in a type (e.g., all appetizers)
-     * @param type 
-     * @returns 
+     * Finds all dishes in a type (e.g., all appetizers).
+     * @param dishType The type of the dishes
+     * @returns An array of dish names
      */
-    public getDishesByDishType(dishType: DishKey) {
+    public getDishesByDishType(dishType: DishKey): string[] {
         validateCondition(this.meal.hasOwnProperty(dishType), "INVALID TYPE");
         return this.meal.dishes[dishType];
     }
 
     /**
      * Retrieves all dishes in the meal object.
-     * @returns 
+     * @returns An object containing all dishes
      */
-    public getAllDishes() {
+    public getAllDishes(): { [key in DishKey]: string[] } {
         return this.meal.dishes;
     }
-    
+
     /**
      * Removes all dishes in a type (e.g., all entrees).
-     * @param type 
-     * @returns 
+     * @param dishType The type of the dishes to remove
+     * @returns boolean indicating success or failure
      */
-    public removeDishesByDishType(dishType: DishKey) {
+    public removeDishesByDishType(dishType: DishKey): boolean {
         validateCondition(this.meal.hasOwnProperty(dishType), "INVALID DISH TYPE");
-        this.meal.dishes[dishType] = [];
-        return true;
+        try {
+            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
+            this.meal.info[metaKey] -= this.meal.dishes[dishType].length;
+            this.meal.dishes[dishType] = [];
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to remove dishes by type: ", e);
+            return false;
+        }
     }
-    
+
     /**
      * Removes all dishes in the meal object.
-     * @returns 
+     * @returns boolean indicating success or failure
      */
-    public removeAllDishes() {
-        Object.keys(this.meal).forEach((key) => {
-            this.meal.dishes[key as DishKey] = [];
-        });
-        return true;
+    public removeAllDishes(): boolean {
+        try {
+            for (const key of Object.keys(this.meal.dishes)) {
+                const dishType = key as DishKey;
+                const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
+                this.meal.info[metaKey] = 0;
+                this.meal.dishes[dishType] = [];
+            }
+            return true;
+        } catch (e: unknown) {
+            console.error("Unable to remove all dishes: ", e);
+            return false;
+        }
     }
 }
