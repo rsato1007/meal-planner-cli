@@ -1,7 +1,10 @@
-import { DailyMeals } from "../models/DailyMeals.js";
+import DailyMeals from "../models/DailyMeals.js";
 import MealPlanner, { DayKey } from "../models/MealPlanner.js";
 import DailyMealsService from "./DailyMealService.js";
 
+/**
+ * Handles all business logic for Meal Planner
+ */
 export default class MealPlannerService {
     private planner: MealPlanner;
 

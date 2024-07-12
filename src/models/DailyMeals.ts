@@ -11,7 +11,7 @@ export type MealTypeKey = keyof IDailyMeals;
 /**
  * Model to represent meals planned for a day.
  */
-export class DailyMeals implements IDailyMeals {
+export default class DailyMeals implements IDailyMeals {
     public breakfast;
     public lunch;
     public dinner;

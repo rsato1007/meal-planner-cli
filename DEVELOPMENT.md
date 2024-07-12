@@ -2,9 +2,7 @@
 The goal is to develop a plan for my code so it has a chance of being well written.
 
 # Current Status
-- I have the basics for DailyMealService built out, now I'll build out MealPlannerService and start doing some simple refactoring.
-
-- Another thing to consider is some validation in each method to avoid issues (for example, passing an invalid type, null, etc.);
+- Overall: I have some basic classes set up, now it is time to start writing out some basic scripts and commands.
 
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
     - As an extension of this, consider refactoring existing removal code to use the info property to determine if we can skip a property or not.

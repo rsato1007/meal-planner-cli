@@ -1,4 +1,4 @@
-import { DailyMeals } from "./DailyMeals";
+import DailyMeals from "./DailyMeals.js";
 
 export interface IMealPlanner {
     monday: DailyMeals,

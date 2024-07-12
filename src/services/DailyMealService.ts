@@ -1,4 +1,4 @@
-import { DailyMeals } from "../models/DailyMeals.js";
+import DailyMeals from "../models/DailyMeals.js";
 import MealService from "./MealService.js";
 import { MealTypeKey } from "../models/DailyMeals.js";
 import Meal from "../models/Meal.js";
