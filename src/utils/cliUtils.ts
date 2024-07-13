@@ -4,6 +4,7 @@ import MealService from '../services/MealService.js';
 import MealPlannerService from '../services/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
 import { wait } from './misc.js';
+import { IDailyMeals } from '../models/DailyMeals.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -105,4 +106,18 @@ export const getMissingOptions = async (options: addOptions) => {
     rl.close();
 
     return completedOptions;
+}
+
+export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
+    let mealRemoved = false;
+    // For loops play nicer with break statements in my experience.
+    for (let i = 0; i < DailyMealsService.meta.properties['meal-times'].length; i++) {
+        const time = DailyMealsService.meta.properties['meal-times'][i];
+        const result = meals.getDishesByTime(time as keyof IDailyMeals).removeDish(dish);
+        if (result) {
+            mealRemoved = true;
+            break;
+        }
+    }
+    return mealRemoved;
 }

@@ -85,14 +85,14 @@ export default class MealService {
                 }
             }
             if (dishType === "") {
-                throw new Error(`Dish "${dishName}" not found in any meal.`);
+                return false;
             }
-
+    
             this.meal.dishes[dishType as DishKey].splice(idx, 1);
-
+    
             const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
             this.meal.info[metaKey]--;
-
+    
             return true;
         } catch (e: unknown) {
             console.error("Unable to remove dish: ", e);

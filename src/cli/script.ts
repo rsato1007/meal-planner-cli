@@ -29,7 +29,13 @@ export const createOrGetDataFile = async (): Promise<MealPlanner> => {
  * @returns Promise that returns meal planner instance once done.
  */
 export const updateFile = async (planner: MealPlanner): Promise<MealPlanner> => {
-    const filePath = path.resolve(process.cwd(), 'data', 'data.json');
-    await fs.writeFile(filePath, JSON.stringify(planner, null, 2), 'utf-8');
-    return planner;
+    try {
+        const filePath = path.resolve(process.cwd(), 'data', 'data.json');
+        await fs.writeFile(filePath, JSON.stringify(planner, null, 2), 'utf-8');
+        console.log('File updated successfully');
+        return planner;
+    } catch (error) {
+        console.error('Error updating file:', error);
+        throw error;
+    }
 };
