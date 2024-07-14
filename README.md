@@ -18,7 +18,9 @@ Historically I utilized an excel spreadsheet to plan out my meals, but this proj
 
 - Additional commands:
     - remove many dishes at a time: the user would be able to specify (using a flag/argument) what meals they wanted removed. For example: mealplan remove-many -d sunday would remove all dishes from Sunday
+    - reset: similar to remove, but would reset the whole planner.
     - add many: possibly do an add many command to make adding multiple easier. However, this feature is may not be implemented.
+    - update: ability for program to update a specified dish to a new dish.
 
 - Additional QOL:
     - Ability to type shorthand for commands. For example: thursday can be simplified to th, sunday could be su (or even u), etc.
