@@ -2,11 +2,10 @@
     Commander documentation: https://www.npmjs.com/package/commander
 */
 import { Command } from 'commander';
-import whyIsNodeRunning from 'why-is-node-running'
 import MealPlannerService from '../services/MealPlanner.js';
 import { createOrGetDataFile, updateFile } from './script.js';
-import { validateOptionsInput, getMissingOptions, removeMealFromDay } from '../utils/cliUtils.js';
-import { wait } from '../utils/misc.js';
+import { validateOptionsInput, getMissingOptions} from '../utils/cliUtils.js';
+import { shutdown, wait } from '../utils/misc.js';
 import { IMealPlanner } from '../models/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
 import { IDailyMeals } from '../models/DailyMeals.js';
@@ -193,9 +192,11 @@ const program = new Command();
             // Format and log data
             console.log("Data collected, formattting now!");
             await wait(2000);
-            setImmediate(() => whyIsNodeRunning())
+
             console.log("Here's your requested information: ", data);
-        
+
+            shutdown();
+
         } catch (error) {
             console.error("An error occurred during the remove operation:", error);
         } finally {
