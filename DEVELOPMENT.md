@@ -1,8 +1,8 @@
 # START HERE
-The goal is to develop a plan for my code so it has a chance of being well written.
+This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- Overall: Finished up simple validation methods for add, working on other abilities.
+- Overall: Finished up simple validation methods for add and wrote remove functionality. Now I would like to be able to update a meal and program a real basic show option. 
 
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
     - As an extension of this, consider refactoring existing removal code to use the info property to determine if we can skip a property or not.
@@ -16,6 +16,7 @@ The goal is to develop a plan for my code so it has a chance of being well writt
 - Also it's time to start to thinking about putting types/interfaces into a dedicated file.
     - Plus this would allow me to rethink them as needed.
 
+- As a side note, would like to revisit 
 # Code Components to Consider
 ## Persistent Storage
 - Starting off, we need to ensure the data is persistent. I was thinking either .txt or .json file.

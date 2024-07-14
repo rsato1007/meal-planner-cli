@@ -142,9 +142,68 @@ const program = new Command();
     // program.command('update')
 
     /*
-        Be mindful how you show the data!
+        Some things to consider: 
+            (1) How simple and restrictive we can be starting off 
+            (2) How to display the information in a good visual style.
+            (3) How to avoid showing days, times, and meal types with nothing in there.
     */
-    // program.command('show')
+    program.command('show')
+    .description('Displays recipes based on specified description. Currently unable to show the entire planner')
+    .option(defaults[0][0], defaults[0][1])
+    .option(defaults[1][0], defaults[1][1])
+    .option(defaults[2][0], defaults[2][1])
+    .action(async (options: any) => {
+        try {
+            let data;
+            // Review flags to determine what to show
+            if (options.hasOwnProperty("day") && options.hasOwnProperty("time") && options.hasOwnProperty("mealType")) {
+                // Make sure input is valid
+                console.log("Reviewing input for validity.");
+                await wait(2000);
+                options = await validateOptionsInput(options);
+                // get data;
+                data = planner
+                        .getMealsByDay(options.day)
+                        .getDishesByTime(options.time)
+                        .getDishesByDishType(options.mealType);
+            } else if (options.hasOwnProperty("day") && options.hasOwnProperty("time")) {
+                // Make sure input is valid
+                console.log("Reviewing input for validity.");
+                await wait(2000);
+                options.mealType = "entrees";
+                options = await validateOptionsInput(options);
+                // get data;
+                data = planner
+                        .getMealsByDay(options.day)
+                        .getDishesByTime(options.time);
+            } else if (options.hasOwnProperty("day")) {
+                // Make sure input is valid
+                console.log("Reviewing input for validity.");
+                await wait(2000);
+                options.mealType = "entrees";
+                options.time = "breakfast";
+                options = await validateOptionsInput(options);
+                // get data;
+                data = planner
+                        .getMealsByDay(options.day);
+            } else {
+                console.log("You must do one of the following to get information: specify all three, specify day and time, or just specify day");
+                return;
+            }
+            // Format and log data
+            console.log("Data collected, formattting now!");
+            await wait(2000);
+            setImmediate(() => whyIsNodeRunning())
+            console.log("Here's your requested information: ", data);
+        
+        } catch (error) {
+            console.error("An error occurred during the remove operation:", error);
+        } finally {
+            // Till we can figure out what's causing the process to keep running, we are keeping this in.
+            console.log("Exiting process");
+            process.exit();
+        }
+    });
 
     /*
         For our default setting situation
