@@ -188,8 +188,7 @@ const program = new Command();
                 data = planner
                         .getMealsByDay(options.day);
             } else {
-                console.log("You must do one of the following to get information: specify all three, specify day and time, or just specify day");
-                return;
+                data = planner;
             }
             // Format and log data
             console.log("Data collected, formattting now!");

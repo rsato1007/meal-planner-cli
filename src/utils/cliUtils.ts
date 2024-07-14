@@ -6,6 +6,7 @@ import DailyMealsService from '../services/DailyMealService.js';
 import { wait } from './misc.js';
 import { IDailyMeals } from '../models/DailyMeals.js';
 import { IMeal } from '../models/Meal.js';
+import { IMealPlanner } from '../models/MealPlanner.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -127,9 +128,17 @@ export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
  * Displays a console log with requested data.
  * Ohh maybe I can make this recursive!
  */
-export const formatMealData = (data: DailyMealsService | MealService | string[]) => {
+export const formatMealData = (data: MealPlannerService | DailyMealsService | MealService | string[]) => {
     // First we have to determine what data was provded
-    if (data instanceof DailyMealsService) {
+    if (data instanceof MealPlannerService) {
+        const days = MealPlannerService.meta.properties.days;
+        days.forEach((day) => {
+            console.log("------------------------");
+            console.log(`Planned Meals for ${day.charAt(0).toUpperCase() + day.slice(1)}: `);
+            console.log("------------------------");
+            formatMealData(data.getMealsByDay(day as keyof IMealPlanner));
+        })
+    } else if (data instanceof DailyMealsService) {
         DailyMealsService.meta.properties['meal-times'].forEach((time: string) => {
             const formattedString = time.replace(" MealService", "");
             const dishes = data.getDishesByTime(time as keyof IDailyMeals)["meal"]["dishes"];
