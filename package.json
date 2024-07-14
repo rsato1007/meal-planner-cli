@@ -1,6 +1,6 @@
 {
   "name": "meal-planner-cli",
-  "version": "0.9.0",
+  "version": "0.9.5",
   "description": "CLI tool to allow users to plan meals.",
   "main": "index.js",
   "bin": {

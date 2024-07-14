@@ -30,7 +30,7 @@ const program = new Command();
     program
     .name('mealplan')
     .description('CLI tool to allow users to plan meals.')
-    .version('0.9.0')
+    .version('0.9.5')
 
     /**
      * Look towards refactoring types on this command. It might take some extensive refactoring and thinking as a heads up.
