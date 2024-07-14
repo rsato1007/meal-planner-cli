@@ -4,7 +4,7 @@
 import { Command } from 'commander';
 import MealPlannerService from '../services/MealPlanner.js';
 import { createOrGetDataFile, updateFile } from './script.js';
-import { validateOptionsInput, getMissingOptions} from '../utils/cliUtils.js';
+import { validateOptionsInput, getMissingOptions, formatMealData} from '../utils/cliUtils.js';
 import { shutdown, wait } from '../utils/misc.js';
 import { IMealPlanner } from '../models/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
@@ -129,6 +129,8 @@ const program = new Command();
             } else {
                 console.log("Couldn't find meal, no removal completed");
             }
+
+            shutdown();
         } catch (error) {
             console.error("An error occurred during the remove operation:", error);
         } finally {
@@ -193,12 +195,12 @@ const program = new Command();
             console.log("Data collected, formattting now!");
             await wait(2000);
 
-            console.log("Here's your requested information: ", data);
+            formatMealData(data);
 
             shutdown();
 
         } catch (error) {
-            console.error("An error occurred during the remove operation:", error);
+            console.error("An error occurred during the operation:", error);
         } finally {
             // Till we can figure out what's causing the process to keep running, we are keeping this in.
             console.log("Exiting process");

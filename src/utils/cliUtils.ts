@@ -5,6 +5,7 @@ import MealPlannerService from '../services/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
 import { wait } from './misc.js';
 import { IDailyMeals } from '../models/DailyMeals.js';
+import { IMeal } from '../models/Meal.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -120,4 +121,32 @@ export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
         }
     }
     return mealRemoved;
+}
+
+/**
+ * Displays a console log with requested data.
+ * Ohh maybe I can make this recursive!
+ */
+export const formatMealData = (data: DailyMealsService | MealService | string[]) => {
+    // First we have to determine what data was provded
+    if (data instanceof DailyMealsService) {
+        DailyMealsService.meta.properties['meal-times'].forEach((time: string) => {
+            const formattedString = time.replace(" MealService", "");
+            const dishes = data.getDishesByTime(time as keyof IDailyMeals)["meal"]["dishes"];
+            console.log(`Planned ${formattedString.charAt(0).toUpperCase() + formattedString.slice(1)} Items: `)
+            for (const key in dishes) {
+                if (dishes[key as keyof IMeal].length > 0) {
+                    console.log(`   ${key.charAt(0).toUpperCase() + key.slice(1)}: ${dishes[key as keyof IMeal].join(", ")}`);
+                }
+            }
+        })
+    } else if (data instanceof MealService) {
+        MealService.meta.properties.dishes.forEach((mealType) => {
+            if (data.getDishesByDishType(mealType as keyof IMeal).length > 0) {
+                console.log(`Planned ${mealType.charAt(0).toUpperCase() + mealType.slice(1)} Items: ${data.getDishesByDishType(mealType as keyof IMeal).join(", ")}`);
+            }
+        })
+    } else if (Array.isArray(data) && data.every(item => typeof item === 'string')) {
+        console.log(`Planned Dishes: ${data.join(", ")}`);
+    }
 }
