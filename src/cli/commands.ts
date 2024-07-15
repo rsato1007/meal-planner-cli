@@ -4,7 +4,7 @@
 import { Command } from 'commander';
 
 import MealPlannerService from '../services/MealPlanner.js';
-import { createOrGetDataFile, updateFile } from './script.js';
+import { createOrGetDataFile, updateFile } from '../utils/fileUtils.js';
 import { validateOptionsInput, getMissingOptions, formatMealData} from '../utils/cliUtils.js';
 import { shutdown } from '../utils/misc.js';
 import { IMealPlanner } from '../models/MealPlanner.js';
