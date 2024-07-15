@@ -1,5 +1,5 @@
 /**
- * Useful for when you want the CLI to display a message, wait a second or two, then continue displaying other information.
+ * Improves UX by allowing developer log a message than waiting before moving on.
  * @param ms - Miliseconds
  * @returns Promise that returns nothing.
  */

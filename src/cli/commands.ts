@@ -2,10 +2,11 @@
     Commander documentation: https://www.npmjs.com/package/commander
 */
 import { Command } from 'commander';
+
 import MealPlannerService from '../services/MealPlanner.js';
 import { createOrGetDataFile, updateFile } from './script.js';
 import { validateOptionsInput, getMissingOptions, formatMealData} from '../utils/cliUtils.js';
-import { shutdown, wait } from '../utils/misc.js';
+import { shutdown } from '../utils/misc.js';
 import { IMealPlanner } from '../models/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
 import { IDailyMeals } from '../models/DailyMeals.js';
@@ -19,12 +20,8 @@ const program = new Command();
         ['-t --time <value>', 'Specifying what meal time you want to add the dish to'],
         ['-m --meal-type <value>', 'Specifying what type of dish you are adding (e.g., appetizers, entrees, etc.)']
     ]
-    console.log("Seeing if data file exists");
-    await wait(1500);
     const dataFile = await createOrGetDataFile();
-    console.log("Data loaded successfully");
 
-    await wait(1500);
     const planner = new MealPlannerService(dataFile);
 
     program
@@ -42,11 +39,7 @@ const program = new Command();
         .option(defaults[1][0], defaults[1][1])
         .option(defaults[2][0], defaults[2][1])
         .action(async (str: string, options: any) => {
-            console.log("Reviewing input for validity.");
-            await wait(2000);
             options = await validateOptionsInput(options);
-            console.log("Let's see what information we still need to add the meal.");
-            await wait(2000);
             options =  await getMissingOptions(options);
             planner
                 .getMealsByDay(options.day)
@@ -76,17 +69,13 @@ const program = new Command();
             let mealRemoved = false;
 
             if (options.hasOwnProperty('day') && options.hasOwnProperty('time')) {
-                console.log("Reviewing input for validity.");
-                await wait(2000);
                 options = await validateOptionsInput(options);
-                await wait(2000);
                 options = await getMissingOptions(options);
                 planner
                     .getMealsByDay(options.day)
                     .getDishesByTime(options.time)
                     .removeDish(str);
                 await updateFile(planner.getAllDays());
-                console.log("File updated");
                 console.log("Meal Removed Successfully!");
             } else if (options.day) {
                 // Default time to breakfast if only day is specified
@@ -156,43 +145,27 @@ const program = new Command();
     .action(async (options: any) => {
         try {
             let data;
-            // Review flags to determine what to show
             if (options.hasOwnProperty("day") && options.hasOwnProperty("time") && options.hasOwnProperty("mealType")) {
-                // Make sure input is valid
-                console.log("Reviewing input for validity.");
-                await wait(2000);
                 options = await validateOptionsInput(options);
-                // get data;
                 data = planner
                         .getMealsByDay(options.day)
                         .getDishesByTime(options.time)
                         .getDishesByDishType(options.mealType);
             } else if (options.hasOwnProperty("day") && options.hasOwnProperty("time")) {
-                // Make sure input is valid
-                console.log("Reviewing input for validity.");
-                await wait(2000);
                 options.mealType = "entrees";
                 options = await validateOptionsInput(options);
-                // get data;
                 data = planner
                         .getMealsByDay(options.day)
                         .getDishesByTime(options.time);
             } else if (options.hasOwnProperty("day")) {
-                // Make sure input is valid
-                console.log("Reviewing input for validity.");
-                await wait(2000);
                 options.mealType = "entrees";
                 options.time = "breakfast";
                 options = await validateOptionsInput(options);
-                // get data;
                 data = planner
                         .getMealsByDay(options.day);
             } else {
                 data = planner;
             }
-            // Format and log data
-            console.log("Data collected, formattting now!");
-            await wait(2000);
 
             formatMealData(data);
 
