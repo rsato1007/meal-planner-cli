@@ -1,2 +1,5 @@
 #!/usr/bin/env node
-console.log("Testing");
+/**
+ * TESTING MY CODE TO ENSURE IT WORKS
+ */
+import "./cli/commands.js";
