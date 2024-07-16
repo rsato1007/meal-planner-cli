@@ -2,4 +2,4 @@
 /**
  * TESTING MY CODE TO ENSURE IT WORKS
  */
-import "./cli/commands.js";
+import "./cli/main.js";

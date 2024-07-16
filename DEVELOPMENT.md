@@ -2,8 +2,7 @@
 This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- Overall: The absolute most basic commands have been successfully coded. While an update ability would be nice for MVP, we can achieve the same results using add then remove.
-    - Now that the basics commands are done, I think I want to review and refactor as needed.
+- Overall: Reviewing code for refactoring opportunities then I plan to move onto QOL life improvements.
 
 # Additional Thoughts
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
@@ -17,6 +16,8 @@ This section allows me to capture my thoughts while coding this project for futu
 
 - Also it's time to start to thinking about putting types/interfaces into a dedicated file.
     - Plus this would allow me to rethink them as needed.
+    - All commands don't take advantage of IMealOptions as there would be additional refactoring needed.
+    - Also naming conventions for types need to improve.
 
 # Code Components to Consider
 ## Additional Comamnds:
