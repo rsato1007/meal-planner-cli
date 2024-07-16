@@ -158,6 +158,10 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
     }
 }
 
+/**
+ * @remarks
+ * - Look at refactoring types for better use of TypeScript's system.
+ */
 export const translateInput = (options: IMealOptions) => {
     let updatedOptions: IMealOptions = {};
     const mapItems = (arr: any) => {
