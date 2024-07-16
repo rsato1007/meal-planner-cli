@@ -7,6 +7,7 @@ import { wait } from './misc.js';
 import { IDailyMeals } from '../models/DailyMeals.js';
 import { IMeal } from '../models/Meal.js';
 import { IMealPlanner } from '../models/MealPlanner.js';
+import { IMealOptions } from '../../types/commands.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -18,12 +19,6 @@ const question = (query: string): Promise<string> => new Promise((resolve) => {
         resolve(answer);
     });
 });
-
-export interface addOptions {
-    day?: string;
-    time?: string;
-    "mealType"?: string;
-}
 
 const CHOICES = {
     "day": {
@@ -47,8 +42,8 @@ type choiceKey = keyof typeof CHOICES;
  * @param obj - selected choice for each option (day, time, and meal type)
  * @returns - updated object for options selected with invalid input
  */
-export const validateOptionsInput = async (obj: addOptions): Promise<addOptions> => {
-    let cleanedObj: addOptions = {};
+export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOptions> => {
+    let cleanedObj: IMealOptions = {};
 
     for (const key of Object.keys(obj) as choiceKey[]) {
         const value = obj[key];
@@ -92,7 +87,7 @@ const getValidChoice = async (obj: any): Promise<string> => {
  * - We need to ensure user input is legitimate and maybe work on making the UI a little bit better.
  * - This is where we'll add our code that reads a settings/config file for preselected choices.
  */
-export const getMissingOptions = async (options: addOptions) => {
+export const getMissingOptions = async (options: IMealOptions) => {
 
     let completedOptions = Object.assign({}, options);
     if (!completedOptions.hasOwnProperty("day")) {

@@ -16,6 +16,8 @@ This section allows me to capture my thoughts while coding this project for futu
 
 - Also it's time to start to thinking about putting types/interfaces into a dedicated file.
     - Plus this would allow me to rethink them as needed.
+    - All commands don't take advantage of IMealOptions as there would be additional refactoring needed.
+    - Also naming conventions for types need to improve.
 
 # Code Components to Consider
 ## Additional Comamnds:

@@ -9,6 +9,8 @@ import { addDish } from './commands/addDish.js';
 import { removeDish } from './commands/removeDish.js';
 import { showDishes } from './commands/showDishes.js';
 
+import { IMealOptions } from '../../types/commands.js';
+
 const program = new Command();
 
 (async () => {
@@ -36,7 +38,7 @@ const program = new Command();
         .option(defaults[0][0], defaults[0][1])
         .option(defaults[1][0], defaults[1][1])
         .option(defaults[2][0], defaults[2][1])
-        .action(async (str: string, options: any) => {
+        .action(async (str: string, options: IMealOptions) => {
             await addDish(str, options, planner);
         });
 
@@ -53,7 +55,7 @@ const program = new Command();
     .argument('<string>', 'name of dish to remove')
     .option(defaults[0][0], defaults[0][1])
     .option(defaults[1][0], defaults[1][1])
-    .action(async (str: string, options: any) => {
+    .action(async (str: string, options: IMealOptions) => {
         await removeDish(str, options, planner);
     });
 
@@ -70,7 +72,7 @@ const program = new Command();
     .option(defaults[0][0], defaults[0][1])
     .option(defaults[1][0], defaults[1][1])
     .option(defaults[2][0], defaults[2][1])
-    .action(async (options: any) => {
+    .action(async (options: IMealOptions) => {
         showDishes(options, planner);
     });
 
