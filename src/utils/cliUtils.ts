@@ -45,8 +45,10 @@ type choiceKey = keyof typeof CHOICES;
 export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOptions> => {
     let cleanedObj: IMealOptions = {};
 
-    for (const key of Object.keys(obj) as choiceKey[]) {
-        const value = obj[key];
+    cleanedObj = translateInput(obj);
+
+    for (const key of Object.keys(cleanedObj) as choiceKey[]) {
+        const value = cleanedObj[key];
         if (value && CHOICES[key].choices.includes(value)) {
             cleanedObj[key] = value;
         } else {
@@ -90,6 +92,7 @@ const getValidChoice = async (obj: any): Promise<string> => {
 export const getMissingOptions = async (options: IMealOptions) => {
 
     let completedOptions = Object.assign({}, options);
+    completedOptions = translateInput(completedOptions);
     if (!completedOptions.hasOwnProperty("day")) {
         completedOptions.day = await getValidChoice(CHOICES["day"]);
     }
@@ -153,4 +156,57 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
     } else if (Array.isArray(data) && data.every(item => typeof item === 'string')) {
         console.log(`Planned Dishes: ${data.join(", ")}`);
     }
+}
+
+export const translateInput = (options: IMealOptions) => {
+    let updatedOptions: IMealOptions = {};
+    const mapItems = (arr: any) => {
+        return arr.reduce((acc: any, item: any) => {
+            item.abbr.forEach((abbr: any) => {
+                acc[abbr] = item.full;
+            })
+            return acc;
+        }, {});
+    }
+
+    const dayOptions = [
+        { full: 'monday',     abbr: ['mon', 'mo', 'm'] },
+        { full: 'tuesday',    abbr: ['tue', 'tu', 't'] },
+        { full: 'wednesday',  abbr: ['wed', 'we', 'w'] },
+        { full: 'thursday',   abbr: ['thu', 'th', 'h'] },
+        { full: 'friday',     abbr: ['fri', 'fr', 'f'] },
+        { full: 'saturday',   abbr: ['sat', 'sa', 's'] },
+        { full: 'sunday',     abbr: ['sun', 'su', 'n'] }
+    ]
+    const timeOptions = [
+        { full: 'breakfast',  abbr: ['brkfst', 'brk', 'br', 'b'] },
+        { full: 'lunch',      abbr: ['lun', 'ln', 'l'] },
+        { full: 'dinner',     abbr: ['supper', 'din', 'sup', 'dn', 'sp', 'd'] }
+    ]
+    const typeOptions = [
+        { full: 'appetizers', abbr: ['app', 'starters', 'strt', 'st', 'ap', 'a'] },
+        { full: 'drinks',     abbr: ['drink', 'bev', 'drk', 'bv', 'dr', 'b'] },
+        { full: 'entrees',    abbr: ['mains', 'entr', 'main', 'mn', 'en', 'e'] },
+        { full: 'sides',      abbr: ['side', 'sds', 'sd', 's'] },
+        { full: 'desserts',   abbr: ['dessert', 'sweets', 'sweet', 'dsrt', 'dess', 'dss', 'ds', 'd'] }
+    ]
+
+    // Checking for mixture of lowercase and uppercase provides better UX.
+    if (options.hasOwnProperty('day') && typeof options.day === 'string') {
+        const normalizedDay = options.day.toLowerCase();
+        const dayMapping = mapItems(dayOptions);
+        updatedOptions.day = dayMapping[normalizedDay] || options.day;
+    }
+    if (options.hasOwnProperty('time') && typeof options.time === 'string') {
+        const normalizedTime = options.time.toLowerCase();
+        const timeMapping = mapItems(timeOptions);
+        updatedOptions.time = timeMapping[normalizedTime] || options.time;
+    }
+    if (options.hasOwnProperty('mealType') && typeof options.mealType === 'string') {
+        const normalizedType = options.mealType.toLowerCase();
+        const typeMapping = mapItems(typeOptions);
+        updatedOptions.mealType = typeMapping[normalizedType] || options.mealType;
+    }
+
+    return updatedOptions;
 }

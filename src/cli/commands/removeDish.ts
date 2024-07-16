@@ -1,10 +1,10 @@
-import MealPlannerService from "../../services/MealPlanner";
-import { validateOptionsInput, getMissingOptions } from "../../utils/cliUtils";
-import { updateFile } from "../../utils/fileUtils";
-import { shutdown } from "../../utils/misc";
-import { IMealPlanner } from "../../models/MealPlanner";
-import DailyMealsService from "../../services/DailyMealService";
-import { IDailyMeals } from "../../models/DailyMeals";
+import MealPlannerService from "../../services/MealPlanner.js";
+import { validateOptionsInput, getMissingOptions } from "../../utils/cliUtils.js";
+import { updateFile } from "../../utils/fileUtils.js";
+import { shutdown } from "../../utils/misc.js";
+import { IMealPlanner } from "../../models/MealPlanner.js";
+import DailyMealsService from "../../services/DailyMealService.js";
+import { IDailyMeals } from "../../models/DailyMeals.js";
 
 export const removeDish = async (arg: string, options: any, planner: MealPlannerService) => {
     options['mealType'] = "entrees"; // Avoids needing to add this in validation process.
