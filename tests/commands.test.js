@@ -6,6 +6,7 @@ import { mock, test } from 'node:test';
 /**
  * Starting to build a test for mocking more complex things involving user input and returning commands.
  * This test is incomplete and will fail as I work towards understand what the input should be.
+ * Also working towards understanding how mock testing actually works.
  */
 test('addDish successfully adds a dish', async (t) => {
     // Mock dependencies

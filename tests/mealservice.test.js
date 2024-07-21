@@ -8,19 +8,16 @@ describe('mealservice', () => {
     it('should add a meal', () => {
         let meal = new Meal();
         let mealService = new MealService(meal);
-        mealService.add("appetizers", "Deviled Eggs");
-        assert.strictEqual("Deviled Eggs", meal.items["appetizers"][0]);
-        assert.strictEqual(1, meal.info.numAppetizers);
+        mealService.addDish("appetizers", "Deviled Eggs");
+        assert.strictEqual("Deviled Eggs", meal.dishes["appetizers"][0]);
     });
     
     it('should remove a meal', () => {
         let meal = new Meal();
-        meal.items.entrees.push("Nachos");
-        meal.info.numEntrees++;
+        meal.dishes.entrees.push("Nachos");
     
         let service = new MealService(meal);
-        service.remove("Nachos");
-        assert.strictEqual(0, meal.items["entrees"].length);
-        assert.strictEqual(0, meal.info.numEntrees);
+        service.removeDish("Nachos");
+        assert.strictEqual(0, meal.dishes["entrees"].length);
     })
 })

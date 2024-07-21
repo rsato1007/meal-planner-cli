@@ -1,8 +1,8 @@
-import Meal, { DishKey, IMealInfo, InfoKey } from "../models/Meal.js";
+import Meal, { DishKey } from "../models/Meal.js";
 import { validateCondition } from "../utils/errorHandling.js";
 
 /**
- * Handles all business logic for Meals object.
+ * Think of this taking the model we had built out for meals and adding methods that interact with the data.
  * @remarks
  * - Possibly consider building methods for meal.info object.
  * - Also think about how to improve our static property.
@@ -10,37 +10,29 @@ import { validateCondition } from "../utils/errorHandling.js";
  */
 export default class MealService {
     private meal: Meal;
-    static meta = {
-        properties: {
-            dishes: ["appetizers", "desserts", "drinks", "entrees", "sides"],
-            info: ["numAppetizers", "numDesserts", "numDrinks", "numEntrees", "numSides"]
-        }
-    };
+    /*
+        Should you need to add a dish type, this property needs to be updated to avoid issues.
+    */
+    static dishTypes = ["appetizers", "desserts", "drinks", "entrees", "sides"];
 
     constructor(meal: Meal) {
         this.meal = meal;
     }
 
-    static getTypeNames() {
-        {
-            items: []
-            info: []
-        }
+    static getTypes() {
+        return this.dishTypes;
     }
 
     /**
      * Adds a dish to the meal object.
      * @param dishType The type of the dish
      * @param dishName The name of the dish
-     * @returns The name of the added dish
+     * @returns The name of the added dish or void if unable to add.
      */
     public addDish(dishType: DishKey, dishName: string): string | void {
-        validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
-
         try {
+            validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
             this.meal.dishes[dishType].push(dishName);
-            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-            this.meal.info[metaKey]++;
 
             return dishName;
         } catch (e: unknown) {
@@ -52,15 +44,12 @@ export default class MealService {
      * Allows user to add multiple dishes at a time.
      * @param dishType The type of the dishes
      * @param dishArr An array of dish names to add
-     * @returns The updated array of dishes of the specified type
+     * @returns The updated array of dishes of the specified type or void if action was unable to completed.
      */
     public addManyDishes(dishType: DishKey, dishArr: string[]): string[] | void {
-        validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
-
         try {
+            validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
             this.meal.dishes[dishType] = [...this.meal.dishes[dishType], ...dishArr];
-            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-            this.meal.info[metaKey] += dishArr.length;
 
             return this.meal.dishes[dishType];
         } catch (e: unknown) {
@@ -77,11 +66,15 @@ export default class MealService {
         try {
             let dishType: string | DishKey = "";
             let idx: number = -1;
+            
             for (const key of Object.keys(this.meal.dishes)) {
-                idx = this.meal.dishes[key as DishKey].indexOf(dishName);
-                if (idx >= 0) {
-                    dishType = key;
-                    break;
+                const dishesInType = this.meal.dishes[key as DishKey];
+                if (dishesInType.length > 0) {
+                    idx = dishesInType.indexOf(dishName);
+                    if (idx >= 0) {
+                        dishType = key;
+                        break;
+                    }
                 }
             }
             if (dishType === "") {
@@ -89,9 +82,6 @@ export default class MealService {
             }
     
             this.meal.dishes[dishType as DishKey].splice(idx, 1);
-    
-            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-            this.meal.info[metaKey]--;
     
             return true;
         } catch (e: unknown) {
@@ -130,10 +120,13 @@ export default class MealService {
             let dishType: string | DishKey = "";
             let idx: number = -1;
             for (const key of Object.keys(this.meal.dishes)) {
-                idx = this.meal.dishes[key as DishKey].indexOf(oldDish);
-                if (idx >= 0) {
-                    dishType = key;
-                    break;
+                const dishesInType = this.meal.dishes[key as DishKey];
+                if (dishesInType.length > 0) {
+                    idx = this.meal.dishes[key as DishKey].indexOf(oldDish);
+                    if (idx >= 0) {
+                        dishType = key;
+                        break;
+                    }
                 }
             }
             if (dishType === "") {
@@ -174,8 +167,6 @@ export default class MealService {
     public removeDishesByDishType(dishType: DishKey): boolean {
         validateCondition(this.meal.dishes.hasOwnProperty(dishType), "INVALID DISH TYPE");
         try {
-            const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-            this.meal.info[metaKey] -= this.meal.dishes[dishType].length;
             this.meal.dishes[dishType] = [];
             return true;
         } catch (e: unknown) {
@@ -192,8 +183,6 @@ export default class MealService {
         try {
             for (const key of Object.keys(this.meal.dishes)) {
                 const dishType = key as DishKey;
-                const metaKey = `num${dishType.charAt(0).toUpperCase() + dishType.slice(1)}` as keyof IMealInfo;
-                this.meal.info[metaKey] = 0;
                 this.meal.dishes[dishType] = [];
             }
             return true;

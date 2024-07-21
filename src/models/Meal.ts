@@ -6,20 +6,8 @@ export interface IMeal {
     desserts: string[]
 }
 
-/**
- * Meta data about an individual meal.
- */
-export interface IMealInfo {
-    numAppetizers: number,
-    numDrinks: number,
-    numEntrees: number,
-    numSides: number,
-    numDesserts: number
-}
-
 // Mapped Type
 export type DishKey = keyof IMeal;
-export type InfoKey = keyof IMealInfo
 
 /**
  * Model to represent an individual meal and dishes comprising it.
@@ -29,7 +17,6 @@ export type InfoKey = keyof IMealInfo
  */
 export default class Meal {
     public dishes: IMeal;
-    public info: IMealInfo;
 
     constructor() {
         this.dishes = {
@@ -38,14 +25,6 @@ export default class Meal {
             entrees: [],
             sides: [],
             desserts: []
-        };
-
-        this.info = {
-            numAppetizers: 0,
-            numDrinks: 0,
-            numEntrees: 0,
-            numSides: 0,
-            numDesserts: 0
         };
     }
 }

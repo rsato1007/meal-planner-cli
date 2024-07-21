@@ -8,6 +8,7 @@ import { IDailyMeals } from '../models/DailyMeals.js';
 import { IMeal } from '../models/Meal.js';
 import { IMealPlanner } from '../models/MealPlanner.js';
 import { IMealOptions } from '../../types/commands.js';
+import { capitalizeFirst } from './primitiveDataUtils.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -31,7 +32,7 @@ const CHOICES = {
     },
     "mealType": {
         query: "What type of meal am I adding? ",
-        choices: MealService.meta.properties["dishes"]
+        choices: MealService.getTypes()
     }
 }
 
@@ -132,7 +133,7 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
         const days = MealPlannerService.meta.properties.days;
         days.forEach((day) => {
             console.log("------------------------");
-            console.log(`Planned Meals for ${day.charAt(0).toUpperCase() + day.slice(1)}: `);
+            console.log(`Planned Meals for ${capitalizeFirst(day)}: `);
             console.log("------------------------");
             formatMealData(data.getMealsByDay(day as keyof IMealPlanner));
         })
@@ -140,17 +141,17 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
         DailyMealsService.meta.properties['meal-times'].forEach((time: string) => {
             const formattedString = time.replace(" MealService", "");
             const dishes = data.getDishesByTime(time as keyof IDailyMeals)["meal"]["dishes"];
-            console.log(`Planned ${formattedString.charAt(0).toUpperCase() + formattedString.slice(1)} Items: `)
+            console.log(`Planned ${capitalizeFirst(formattedString)} Items: `)
             for (const key in dishes) {
                 if (dishes[key as keyof IMeal].length > 0) {
-                    console.log(`   ${key.charAt(0).toUpperCase() + key.slice(1)}: ${dishes[key as keyof IMeal].join(", ")}`);
+                    console.log(`   ${capitalizeFirst(key)}: ${dishes[key as keyof IMeal].join(", ")}`);
                 }
             }
         })
     } else if (data instanceof MealService) {
-        MealService.meta.properties.dishes.forEach((mealType) => {
+        MealService.getTypes().forEach((mealType) => {
             if (data.getDishesByDishType(mealType as keyof IMeal).length > 0) {
-                console.log(`Planned ${mealType.charAt(0).toUpperCase() + mealType.slice(1)} Items: ${data.getDishesByDishType(mealType as keyof IMeal).join(", ")}`);
+                console.log(`Planned ${capitalizeFirst(mealType)} Items: ${data.getDishesByDishType(mealType as keyof IMeal).join(", ")}`);
             }
         })
     } else if (Array.isArray(data) && data.every(item => typeof item === 'string')) {
