@@ -24,11 +24,11 @@ const question = (query: string): Promise<string> => new Promise((resolve) => {
 const CHOICES = {
     "day": {
         query: "What day did you want to add the dish to? ",
-        choices: MealPlannerService.meta.properties.days
+        choices: MealPlannerService.days
     },
     "time": {
         query: "Is this a dish for breakfast, lunch, or dinner? ",
-        choices: DailyMealsService.meta.properties['meal-times']
+        choices: DailyMealsService.mealTimes
     },
     "mealType": {
         query: "What type of meal am I adding? ",
@@ -112,8 +112,8 @@ export const getMissingOptions = async (options: IMealOptions) => {
 export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
     let mealRemoved = false;
     // For loops play nicer with break statements in my experience.
-    for (let i = 0; i < DailyMealsService.meta.properties['meal-times'].length; i++) {
-        const time = DailyMealsService.meta.properties['meal-times'][i];
+    for (let i = 0; i < DailyMealsService.mealTimes.length; i++) {
+        const time = DailyMealsService.mealTimes[i];
         const result = meals.getDishesByTime(time as keyof IDailyMeals).removeDish(dish);
         if (result) {
             mealRemoved = true;
@@ -130,7 +130,7 @@ export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
 export const formatMealData = (data: MealPlannerService | DailyMealsService | MealService | string[]) => {
     // First we have to determine what data was provded
     if (data instanceof MealPlannerService) {
-        const days = MealPlannerService.meta.properties.days;
+        const days = MealPlannerService.days;
         days.forEach((day) => {
             console.log("------------------------");
             console.log(`Planned Meals for ${capitalizeFirst(day)}: `);
@@ -138,7 +138,7 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
             formatMealData(data.getMealsByDay(day as keyof IMealPlanner));
         })
     } else if (data instanceof DailyMealsService) {
-        DailyMealsService.meta.properties['meal-times'].forEach((time: string) => {
+        DailyMealsService.mealTimes.forEach((time: string) => {
             const formattedString = time.replace(" MealService", "");
             const dishes = data.getDishesByTime(time as keyof IDailyMeals)["meal"]["dishes"];
             console.log(`Planned ${capitalizeFirst(formattedString)} Items: `)

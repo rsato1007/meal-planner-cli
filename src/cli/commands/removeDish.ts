@@ -45,7 +45,7 @@ export const removeDish = async (arg: string, options: any, planner: MealPlanner
             // If no specific day or time is given, try all combinations
             for (const day of Object.keys(planner.getAllDays())) {
                 const mealsByDay = planner.getMealsByDay(day as keyof IMealPlanner);
-                for (const time of DailyMealsService.meta.properties['meal-times']) {
+                for (const time of DailyMealsService.mealTimes) {
                     if (mealsByDay.getDishesByTime(time as keyof IDailyMeals).removeDish(arg)) {
                         mealRemoved = true;
                         console.log(`Meal removed from ${day} at ${time}`);

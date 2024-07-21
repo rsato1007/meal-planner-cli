@@ -7,11 +7,8 @@ import DailyMealsService from "./DailyMealService.js";
  */
 export default class MealPlannerService {
     private planner: MealPlanner;
-    public static meta = {
-        properties: {
-            days: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-        }
-    }
+
+    public static days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
     constructor(planner: MealPlanner) {
         this.planner = planner;

@@ -18,11 +18,7 @@ import Meal from "../models/Meal.js";
 export default class DailyMealsService {
     private dailyMeals: DailyMeals;
 
-    public static meta = {
-        properties: {
-            "meal-times": ["breakfast", "lunch", "dinner"] 
-        }
-    }
+    public static mealTimes = ["breakfast", "lunch", "dinner"];
 
     constructor(dailyMeals: DailyMeals) {
         this.dailyMeals = dailyMeals;
