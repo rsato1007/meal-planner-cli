@@ -1,17 +1,16 @@
 import DailyMeals from "../models/DailyMeals.js";
-import MealPlanner, { DayKey } from "../models/MealPlanner.js";
+import MealPlanner from "../models/MealPlanner.js";
 import DailyMealsService from "./DailyMealService.js";
+
+import { DayKey } from "../../types/index.js";
 
 /**
  * Handles all business logic for Meal Planner
  */
 export default class MealPlannerService {
     private planner: MealPlanner;
-    public static meta = {
-        properties: {
-            days: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
-        }
-    }
+
+    public static days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
     constructor(planner: MealPlanner) {
         this.planner = planner;

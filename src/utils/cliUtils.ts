@@ -4,10 +4,17 @@ import MealService from '../services/MealService.js';
 import MealPlannerService from '../services/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
 import { wait } from './misc.js';
-import { IDailyMeals } from '../models/DailyMeals.js';
-import { IMeal } from '../models/Meal.js';
-import { IMealPlanner } from '../models/MealPlanner.js';
-import { IMealOptions } from '../../types/commands.js';
+import { capitalizeFirst } from './primitiveDataUtils.js';
+
+import { 
+    IDailyMeals,
+    IMealOptions,
+    IMealPlanner,
+    ICompletedOptions,
+    DayKey,
+    MealTypeKey,
+    DishKey
+} from '../../types/index.js';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -20,22 +27,22 @@ const question = (query: string): Promise<string> => new Promise((resolve) => {
     });
 });
 
-const CHOICES = {
-    "day": {
+const CHOICES: Record<choiceKey, { query: string, choices: string[] }> = {
+    day: {
         query: "What day did you want to add the dish to? ",
-        choices: MealPlannerService.meta.properties.days
+        choices: MealPlannerService.days
     },
-    "time": {
+    time: {
         query: "Is this a dish for breakfast, lunch, or dinner? ",
-        choices: DailyMealsService.meta.properties['meal-times']
+        choices: DailyMealsService.mealTimes
     },
-    "mealType": {
+    mealType: {
         query: "What type of meal am I adding? ",
-        choices: MealService.meta.properties["dishes"]
+        choices: MealService.getTypes()
     }
-}
+};
 
-type choiceKey = keyof typeof CHOICES;
+type choiceKey = "day" | "time" | "mealType";
 
 /**
  * Reviews input to ensure it's not invalid.
@@ -49,12 +56,16 @@ export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOpti
 
     for (const key of Object.keys(cleanedObj) as choiceKey[]) {
         const value = cleanedObj[key];
-        if (value && CHOICES[key].choices.includes(value)) {
-            cleanedObj[key] = value;
-        } else {
+        if (!(value && CHOICES[key].choices.includes(value))) {
             console.log("INVALID INPUT FOR: ", key);
             await wait(2000);
-            cleanedObj[key] = await getValidChoice(CHOICES[key]);
+            const validChoice = await getValidChoice(CHOICES[key]);
+            /*
+                The following line of code is how we avoid TypeScript's complier issue
+                with cleanedObj[key] being possibly undefined despite our if statement
+                verifying it's not undefined.
+            */
+            Object.defineProperty(cleanedObj, key, {value: validChoice})
         }
     }
 
@@ -66,7 +77,7 @@ export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOpti
  * @param obj - see getMissingOptions for object structure.
  * @returns - Promise-based string representing choice we want.
  */
-const getValidChoice = async (obj: any): Promise<string> => {
+const getValidChoice = async (obj: any): Promise<DishKey | MealTypeKey | DayKey> => {
     let validChoice = false;
     let res = "";
     while (!validChoice) {
@@ -78,7 +89,7 @@ const getValidChoice = async (obj: any): Promise<string> => {
         }
     }
 
-    return res;
+    return res as DishKey | MealTypeKey | DayKey;
 }
 
 /**
@@ -89,7 +100,7 @@ const getValidChoice = async (obj: any): Promise<string> => {
  * - We need to ensure user input is legitimate and maybe work on making the UI a little bit better.
  * - This is where we'll add our code that reads a settings/config file for preselected choices.
  */
-export const getMissingOptions = async (options: IMealOptions) => {
+export const getMissingOptions = async (options: any): Promise<ICompletedOptions> => {
 
     let completedOptions = Object.assign({}, options);
     completedOptions = translateInput(completedOptions);
@@ -111,8 +122,8 @@ export const getMissingOptions = async (options: IMealOptions) => {
 export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
     let mealRemoved = false;
     // For loops play nicer with break statements in my experience.
-    for (let i = 0; i < DailyMealsService.meta.properties['meal-times'].length; i++) {
-        const time = DailyMealsService.meta.properties['meal-times'][i];
+    for (let i = 0; i < DailyMealsService.mealTimes.length; i++) {
+        const time = DailyMealsService.mealTimes[i];
         const result = meals.getDishesByTime(time as keyof IDailyMeals).removeDish(dish);
         if (result) {
             mealRemoved = true;
@@ -124,33 +135,32 @@ export const removeMealFromDay = (meals: DailyMealsService, dish: string) => {
 
 /**
  * Displays a console log with requested data.
- * Ohh maybe I can make this recursive!
  */
 export const formatMealData = (data: MealPlannerService | DailyMealsService | MealService | string[]) => {
     // First we have to determine what data was provded
     if (data instanceof MealPlannerService) {
-        const days = MealPlannerService.meta.properties.days;
+        const days = MealPlannerService.days;
         days.forEach((day) => {
             console.log("------------------------");
-            console.log(`Planned Meals for ${day.charAt(0).toUpperCase() + day.slice(1)}: `);
+            console.log(`Planned Meals for ${capitalizeFirst(day)}: `);
             console.log("------------------------");
             formatMealData(data.getMealsByDay(day as keyof IMealPlanner));
         })
     } else if (data instanceof DailyMealsService) {
-        DailyMealsService.meta.properties['meal-times'].forEach((time: string) => {
+        DailyMealsService.mealTimes.forEach((time: string) => {
             const formattedString = time.replace(" MealService", "");
             const dishes = data.getDishesByTime(time as keyof IDailyMeals)["meal"]["dishes"];
-            console.log(`Planned ${formattedString.charAt(0).toUpperCase() + formattedString.slice(1)} Items: `)
+            console.log(`Planned ${capitalizeFirst(formattedString)} Items: `)
             for (const key in dishes) {
-                if (dishes[key as keyof IMeal].length > 0) {
-                    console.log(`   ${key.charAt(0).toUpperCase() + key.slice(1)}: ${dishes[key as keyof IMeal].join(", ")}`);
+                if (dishes[key as DishKey].length > 0) {
+                    console.log(`   ${capitalizeFirst(key)}: ${dishes[key as DishKey].join(", ")}`);
                 }
             }
         })
     } else if (data instanceof MealService) {
-        MealService.meta.properties.dishes.forEach((mealType) => {
-            if (data.getDishesByDishType(mealType as keyof IMeal).length > 0) {
-                console.log(`Planned ${mealType.charAt(0).toUpperCase() + mealType.slice(1)} Items: ${data.getDishesByDishType(mealType as keyof IMeal).join(", ")}`);
+        MealService.getTypes().forEach((mealType) => {
+            if (data.getDishesByDishType(mealType as DishKey).length > 0) {
+                console.log(`Planned ${capitalizeFirst(mealType)} Items: ${data.getDishesByDishType(mealType as DishKey).join(", ")}`);
             }
         })
     } else if (Array.isArray(data) && data.every(item => typeof item === 'string')) {

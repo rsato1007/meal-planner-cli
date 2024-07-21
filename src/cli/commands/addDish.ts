@@ -2,6 +2,8 @@ import MealPlannerService from "../../services/MealPlanner.js";
 import { validateOptionsInput, getMissingOptions } from "../../utils/cliUtils.js";
 import { updateFile } from "../../utils/fileUtils.js";
 
+import { IMealOptions } from "../../../types/index.js";
+
 export const addDish = async (arg: string, options: any, planner: MealPlannerService) => {
     options = await validateOptionsInput(options);
     options =  await getMissingOptions(options);

@@ -2,9 +2,10 @@ import MealPlannerService from "../../services/MealPlanner.js";
 import { validateOptionsInput, getMissingOptions } from "../../utils/cliUtils.js";
 import { updateFile } from "../../utils/fileUtils.js";
 import { shutdown } from "../../utils/misc.js";
-import { IMealPlanner } from "../../models/MealPlanner.js";
 import DailyMealsService from "../../services/DailyMealService.js";
-import { IDailyMeals } from "../../models/DailyMeals.js";
+
+import { IDailyMeals } from "../../../types/index.js";
+import { IMealPlanner } from "../../../types/index.js";
 
 export const removeDish = async (arg: string, options: any, planner: MealPlannerService) => {
     options['mealType'] = "entrees"; // Avoids needing to add this in validation process.
@@ -45,7 +46,7 @@ export const removeDish = async (arg: string, options: any, planner: MealPlanner
             // If no specific day or time is given, try all combinations
             for (const day of Object.keys(planner.getAllDays())) {
                 const mealsByDay = planner.getMealsByDay(day as keyof IMealPlanner);
-                for (const time of DailyMealsService.meta.properties['meal-times']) {
+                for (const time of DailyMealsService.mealTimes) {
                     if (mealsByDay.getDishesByTime(time as keyof IDailyMeals).removeDish(arg)) {
                         mealRemoved = true;
                         console.log(`Meal removed from ${day} at ${time}`);
