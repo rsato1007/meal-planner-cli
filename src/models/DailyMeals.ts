@@ -1,12 +1,6 @@
 import Meal from "./Meal.js";
 
-export interface IDailyMeals {
-    breakfast: Meal,
-    lunch: Meal,
-    dinner: Meal
-}
-
-export type MealTypeKey = keyof IDailyMeals;
+import { IDailyMeals } from "../../types/index.js";
 
 /**
  * Model to represent meals planned for a day.

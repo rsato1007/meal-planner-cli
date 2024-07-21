@@ -1,13 +1,4 @@
-export interface IMeal {
-    appetizers: string[],
-    drinks: string[],
-    entrees: string[],
-    sides: string[],
-    desserts: string[]
-}
-
-// Mapped Type
-export type DishKey = keyof IMeal;
+import { IMeal } from "../../types";
 
 /**
  * Model to represent an individual meal and dishes comprising it.

@@ -1,5 +1,7 @@
-import Meal, { DishKey } from "../models/Meal.js";
+import Meal from "../models/Meal.js";
 import { validateCondition } from "../utils/errorHandling.js";
+
+import { DishKey } from "../../types/index.js";
 
 /**
  * Think of this taking the model we had built out for meals and adding methods that interact with the data.

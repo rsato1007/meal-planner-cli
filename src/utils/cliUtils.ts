@@ -4,11 +4,12 @@ import MealService from '../services/MealService.js';
 import MealPlannerService from '../services/MealPlanner.js';
 import DailyMealsService from '../services/DailyMealService.js';
 import { wait } from './misc.js';
-import { IDailyMeals } from '../models/DailyMeals.js';
-import { IMeal } from '../models/Meal.js';
-import { IMealPlanner } from '../models/MealPlanner.js';
-import { IMealOptions } from '../../types/commands.js';
 import { capitalizeFirst } from './primitiveDataUtils.js';
+
+import { IDailyMeals } from '../../types/index.js';
+import { IMeal } from '../../types/index.js';
+import { IMealPlanner } from '../../types/index.js';
+import { IMealOptions } from '../../types/index.js';
 
 const rl = readline.createInterface({
     input: process.stdin,

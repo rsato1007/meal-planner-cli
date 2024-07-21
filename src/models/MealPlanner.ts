@@ -1,16 +1,5 @@
 import DailyMeals from "./DailyMeals.js";
-
-export interface IMealPlanner {
-    monday: DailyMeals,
-    tuesday: DailyMeals,
-    wednesday: DailyMeals,
-    thursday: DailyMeals,
-    friday: DailyMeals,
-    saturday: DailyMeals,
-    sunday: DailyMeals
-}
-
-export type DayKey = keyof IMealPlanner;
+import { IMealPlanner } from "../../types/index.js";
 
 /**
  * Model to represent meal planner for the week.

@@ -9,7 +9,7 @@ import { addDish } from './commands/addDish.js';
 import { removeDish } from './commands/removeDish.js';
 import { showDishes } from './commands/showDishes.js';
 
-import { IMealOptions } from '../../types/commands.js';
+import { IMealOptions } from '../../types/index.js';
 
 const program = new Command();
 
