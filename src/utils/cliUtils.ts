@@ -16,16 +16,18 @@ import {
     DishKey
 } from '../../types/index.js';
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-const question = (query: string): Promise<string> => new Promise((resolve) => {
-    rl.question(query, (answer) => {
-        resolve(answer);
+const question = (query: string): Promise<string> => {
+    return new Promise((resolve) => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+        rl.question(query, (answer) => {
+            rl.close(); // Close after receiving input
+            resolve(answer);
+        });
     });
-});
+};
 
 const CHOICES: Record<choiceKey, { query: string, choices: string[] }> = {
     day: {
@@ -113,8 +115,6 @@ export const getMissingOptions = async (options: any): Promise<ICompletedOptions
     if (!completedOptions.hasOwnProperty("mealType")) {
         completedOptions['mealType'] = await getValidChoice(CHOICES["mealType"]);
     }
-
-    rl.close();
 
     return completedOptions;
 }

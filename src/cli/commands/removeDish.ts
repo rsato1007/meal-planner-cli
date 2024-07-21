@@ -1,7 +1,6 @@
 import MealPlannerService from "../../services/MealPlanner.js";
 import { validateOptionsInput, getMissingOptions } from "../../utils/cliUtils.js";
 import { updateFile } from "../../utils/fileUtils.js";
-import { shutdown } from "../../utils/misc.js";
 import DailyMealsService from "../../services/DailyMealService.js";
 
 import { IDailyMeals } from "../../../types/index.js";
@@ -63,13 +62,7 @@ export const removeDish = async (arg: string, options: any, planner: MealPlanner
         } else {
             console.log("Couldn't find meal, no removal completed");
         }
-
-        shutdown();
     } catch (error) {
         console.error("An error occurred during the remove operation:", error);
-    } finally {
-        // Till we can figure out what's causing the process to keep running, we are keeping this in.
-        console.log("Exiting process");
-        process.exit();
     }
 }
