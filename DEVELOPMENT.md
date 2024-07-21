@@ -2,11 +2,12 @@
 This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- Overall: Reviewing code for refactoring opportunities then I plan to move onto QOL life improvements.
+- Overall: Refactoring code
+    - Consider heavy refacotr of both remove and show options
+    - cliUtils.ts has issues due to updated types, review and refactor as needed.
 
 # Additional Thoughts
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
-    - As an extension of this, consider refactoring existing removal code to use the info property to determine if we can skip a property or not.
 
 - Another possibility is building a statistic object for my mealplanner, daily meal, etc. Might not be necessary, but worth completating.
 
@@ -14,10 +15,9 @@ This section allows me to capture my thoughts while coding this project for futu
 
 - also would like to build a file that holds current state for meal planner. Think for example, not needing to pass a flag everytime you want to add to Monday's meals or appetizers for Sunday dinner, etc.
 
-- Also it's time to start to thinking about putting types/interfaces into a dedicated file.
-    - Plus this would allow me to rethink them as needed.
-    - All commands don't take advantage of IMealOptions as there would be additional refactoring needed.
-    - Also naming conventions for types need to improve.
+- For refactoring, some code still uses any. Find them and refactor.
+    - Also review all type assertion code for possible refactor opportunities
+    - Also look to refactor formatData code function to return a string instead. This will make testing easier.
 
 # Code Components to Consider
 ## Additional Comamnds:
@@ -48,3 +48,6 @@ This section allows me to capture my thoughts while coding this project for futu
 ## Weather API Integration
 - Feature: Integrate a weather API so I can determine what recipe would be appropriate that day. 
 - Feature: Also maybe integrate family birthday so I can plan for that as well.
+
+# Bugs
+- We'll keep track of bugs here.

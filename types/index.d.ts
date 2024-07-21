@@ -1,35 +1,43 @@
 export interface IMeal {
-    appetizers: string[],
-    drinks: string[],
-    entrees: string[],
-    sides: string[],
-    desserts: string[]
+    dishes: {
+        appetizers: string[],
+        drinks: string[],
+        entrees: string[],
+        sides: string[],
+        desserts: string[]
+    }
 }
 
-export type DishKey = keyof IMeal;
+export type DishKey = "appetizers" | "drinks" | "entrees" | "sides" | "desserts";
 
 export interface IDailyMeals {
-    breakfast: Meal,
-    lunch: Meal,
-    dinner: Meal
+    breakfast: IMeal,
+    lunch: IMeal,
+    dinner: IMeal
 }
 
-export type MealTypeKey = keyof IDailyMeals;
+export type MealTypeKey = "breakfast" | "lunch" | "dinner";
 
 export interface IMealPlanner {
-    monday: DailyMeals,
-    tuesday: DailyMeals,
-    wednesday: DailyMeals,
-    thursday: DailyMeals,
-    friday: DailyMeals,
-    saturday: DailyMeals,
-    sunday: DailyMeals
+    monday: IDailyMeals,
+    tuesday: IDailyMeals,
+    wednesday: IDailyMeals,
+    thursday: IDailyMeals,
+    friday: IDailyMeals,
+    saturday: IDailyMeals,
+    sunday: IDailyMeals
 }
 
-export type DayKey = keyof IMealPlanner;
+export type DayKey = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 
 export interface IMealOptions {
     day?: DayKey,
     time?: MealTypeKey,
     mealType?: DishKey
+}
+
+export interface ICompletedOptions {
+    day: DayKey,
+    time: MealTypeKey,
+    mealType: DishKey
 }

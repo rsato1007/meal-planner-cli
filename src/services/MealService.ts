@@ -1,7 +1,7 @@
 import Meal from "../models/Meal.js";
 import { validateCondition } from "../utils/errorHandling.js";
 
-import { DishKey } from "../../types/index.js";
+import { DishKey, IMeal } from "../../types/index.js";
 
 /**
  * Think of this taking the model we had built out for meals and adding methods that interact with the data.
@@ -11,7 +11,7 @@ import { DishKey } from "../../types/index.js";
  * - Look to refactor both update and removal to use meal.info to be more efficient in its operations
  */
 export default class MealService {
-    private meal: Meal;
+    private meal: IMeal;
     /*
         Should you need to add a dish type, this property needs to be updated to avoid issues.
     */
