@@ -8,24 +8,28 @@ A project that allows users to plan meals out for the week using a CLI.
 Historically I utilized an excel spreadsheet to plan out my meals, but this project gives me an opportunity to: (a) familiarize myself with Node's internal features (b) get comfortable with building out CLIs (c) and identify opportunities to automate my process for meal planning.
 
 # HOW TO USE
-- TBW
+- To be written
 - Available commands:
     - Add, Remove, and Show
 
 # PLANNED FEATURES/CONSIDERED FEATURES
+NOTE: This is more of a brainstorming document for ideas than guaranteed features.
 - Pretty View: ability for the code to open the data as HTML file with CSS to display a pretty viewing option.
     - As an extension, the ability to allow users to customize the HTML/CSS code while allowing it to still read the data.
 
 - Additional commands:
-    - remove many dishes at a time: the user would be able to specify (using a flag/argument) what meals they wanted removed. For example: mealplan remove-many -d sunday would remove all dishes from Sunday
+    - remove many dishes at a time: the user would be able to specify (using a flag/argument) what meals they wanted removed. For example: mealplan remove-many -d sunday would remove all dishes from Sunday.
     - reset: similar to remove, but would reset the whole planner.
-    - add many: possibly do an add many command to make adding multiple easier. However, this feature is may not be implemented.
+    - add many: possibly do an add many command to make adding multiple easier. However, this feature is one that may not be implemented.
     - update: ability for program to update a specified dish to a new dish.
+    - I don't have specific commands here, but adding for the ability to search for specific information. For example, finding what day a meal was added to.
 
 - Additional QOL:
-    - Ability to type shorthand for commands. For example: thursday can be simplified to th, sunday could be su (or even u), etc.
-        - we would allow for three, two, and one letter options.
-        - same concept, but for time (breakfast, lunch, and dinner) and dish type (en and e for entrees, ap and a for appetizers, sd and s for sides, lastly dr and d for drinks).
+    - Possibly exploring doing tab completions for users typing out CLI commands
+        - I would need to explore options for this.
+    - This would be a while out, but building a more dynamic version of this CLI for new comers is being considered.
+    - Some help options to help new users.
+    - a simplistic redo/undo feature 
 
 - Preferences: The ability to add settings for the CLI to reduce type commands. For example, I can type mealplan config -d monday and it would default to monday for now. Plus we can do mealplan config show to show configuration options. 
 

@@ -13,10 +13,8 @@ export const createOrGetDataFile = async (): Promise<MealPlanner> => {
 
     try {
         await fs.access(filePath);
-        console.log('Data file already exists, importing data.');
     } catch {
         await fs.writeFile(filePath, JSON.stringify(new MealPlanner(), null, 2), 'utf-8');
-        console.log('New data file created.');
     }
 
     const data = await fs.readFile(filePath, 'utf-8');
@@ -32,7 +30,6 @@ export const updateFile = async (planner: MealPlanner): Promise<MealPlanner> => 
     try {
         const filePath = path.resolve(process.cwd(), 'data', 'data.json');
         await fs.writeFile(filePath, JSON.stringify(planner, null, 2), 'utf-8');
-        console.log('File updated successfully');
         return planner;
     } catch (error) {
         console.error('Error updating file:', error);
