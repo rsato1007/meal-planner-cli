@@ -12,6 +12,8 @@ import assert from 'node:assert/strict';
 
 import "./mealservice.test.js";
 
+import "./commands.test.js";
+
 test('Example test', () => {
     assert.strictEqual(1, 1);
 });
