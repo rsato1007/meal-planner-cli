@@ -1,8 +1,8 @@
-import DailyMeals from "../models/DailyMeals.js";
-import MealPlanner from "../models/MealPlanner.js";
-import DailyMealsService from "./DailyMealService.js";
+import DailyMeals from "../models/DailyMeals";
+import MealPlanner from "../models/MealPlanner";
+import DailyMealsService from "./DailyMealService";
 
-import { DayKey } from "../../types/index.js";
+import { DayKey } from "../../types/index";
 
 /**
  * Handles all business logic for Meal Planner

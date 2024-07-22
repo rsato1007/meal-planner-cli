@@ -1,7 +1,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
-import MealPlanner from '../models/MealPlanner.js';
+import MealPlanner from '../models/MealPlanner';
 
 // Function to get the file path, allowing future extension for custom paths
 const getFilePath = (): string => {

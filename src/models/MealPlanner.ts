@@ -1,5 +1,5 @@
-import DailyMeals from "./DailyMeals.js";
-import { IMealPlanner } from "../../types/index.js";
+import DailyMeals from "./DailyMeals";
+import { IMealPlanner } from "../../types/index";
 
 /**
  * Model to represent meal planner for the week.

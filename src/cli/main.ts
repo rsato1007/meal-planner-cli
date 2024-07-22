@@ -3,16 +3,14 @@
 */
 import { Command } from 'commander';
 
-import MealPlannerService from '../services/MealPlanner.js';
-import { createOrGetDataFile } from '../utils/fileUtils.js';
-import { addDish } from './commands/addDish.js';
-import { removeDish } from './commands/removeDish.js';
-import { showDishes } from './commands/showDishes.js';
+import MealPlannerService from '../services/MealPlanner';
+import { createOrGetDataFile } from '../utils/fileUtils';
+import { addDish } from './commands/addDish';
+import { removeDish } from './commands/removeDish';
+import { showDishes } from './commands/showDishes';
+import updateDish from './commands/updateDish';
 
-import { IMealOptions } from '../../types/index.js';
-
-import { findActiveHandlesAndRequests } from '../utils/misc.js';
-import updateDish from './commands/updateDish.js';
+import { IMealOptions } from '../../types/index';
 
 const program = new Command();
 

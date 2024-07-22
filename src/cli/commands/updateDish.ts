@@ -1,14 +1,14 @@
-import MealPlannerService from "../../services/MealPlanner.js";
+import MealPlannerService from "../../services/MealPlanner";
 import { 
     translateInput, 
     validateOptionsInput,
     findDishByAll,
     findDishByDay,
     findDishByTime
-} from "../../utils/cliUtils.js";
-import MealService from "../../services/MealService.js";
+} from "../../utils/cliUtils";
+import MealService from "../../services/MealService";
 
-import { IMealOptions, IUpdateDishData } from "../../../types/index.js";
+import { IMealOptions, IUpdateDishData } from "../../../types/index";
 
 /**
  * 

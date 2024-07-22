@@ -1,10 +1,10 @@
 import readline from 'node:readline';
 
-import MealService from '../services/MealService.js';
-import MealPlannerService from '../services/MealPlanner.js';
-import DailyMealsService from '../services/DailyMealService.js';
+import MealService from '../services/MealService';
+import MealPlannerService from '../services/MealPlanner';
+import DailyMealsService from '../services/DailyMealService';
 import { wait } from './misc.js';
-import { capitalizeFirst } from './primitiveDataUtils.js';
+import { capitalizeFirst } from './primitiveDataUtils';
 
 import { 
     IDailyMeals,
