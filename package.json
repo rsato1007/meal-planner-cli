@@ -9,6 +9,7 @@
   "type": "module",
   "scripts": {
     "start": "tsc && node dist/index.js",
+    "build": "tsc && tsc-alias",
     "crcli": "npm link && tsc && node dist/index.js",
     "rmcli": "npm unlink && rm $(which mealplan)",
     "test": "jest"
@@ -19,7 +20,8 @@
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.10",
-    "ts-jest": "^29.2.3"
+    "ts-jest": "^29.2.3",
+    "tsc-alias": "^1.8.10"
   },
   "dependencies": {
     "commander": "^12.1.0"

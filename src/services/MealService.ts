@@ -1,5 +1,5 @@
 import Meal from "../models/Meal.js";
-import { validateCondition } from "../utils/errorHandling.js";
+import { validateCondition } from "../utils/errorHandling";
 
 import { DishKey, IMeal } from "../../types/index.js";
 
