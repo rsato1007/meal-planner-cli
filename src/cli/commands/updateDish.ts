@@ -1,14 +1,65 @@
 import MealPlannerService from "../../services/MealPlanner.js";
+import { 
+    translateInput, 
+    validateOptionsInput,
+    findDishByAll,
+    findDishByDay,
+    findDishByTime
+} from "../../utils/cliUtils.js";
+import MealService from "../../services/MealService.js";
+
 import { IMealOptions, IUpdateDishData } from "../../../types/index.js";
 
+/**
+ * 
+ * @param data 
+ * @param planner 
+ * @returns 
+ * @remarks
+ * - Consider how to integrate dish type into update and remove (most likely new meal services).
+ */
 const updateDish = async (data: IUpdateDishData, planner: MealPlannerService): Promise<void> => {
-    // Actually we need to clean up the data we received.
+    // Clean up data received.
     let cleanedObj: IMealOptions = data.options;
-    // First and foremost, we need to find the dish in question.
-        // Find the appropriate mealservice and remove from there.
-        // So other thing, we need to be aware of all posibilities: all three passed, only two passed, only one passed.
-    // Then we can use the update functionality from there I believe.
-        // mealservice's update dish specifically.
+    cleanedObj = translateInput(cleanedObj);
+    cleanedObj = await validateOptionsInput(cleanedObj);
+    let serviceObj: MealService | undefined;
+    
+    // FIND DISH
+    /*
+        end goal: mealservice we can use.
+        What option can we encounter?
+        - day only (findDishByDay)
+        - day and time (findDishByDayTime)
+        - time only (findDishByTime)
+        - Neither day nor time. (FindDishByAll) DONE
+
+        So using the above, we get a mealservice then we can write code than handles both knowing the entree and not knowing the entree.
+    */
+    if (cleanedObj.hasOwnProperty("day") && cleanedObj.hasOwnProperty("time")) {
+        if (cleanedObj.day && cleanedObj.time) {
+            serviceObj = planner.getMealsByDay(cleanedObj.day).getDishesByTime(cleanedObj.time);
+        }
+    } else if (cleanedObj.hasOwnProperty("day") && !cleanedObj.hasOwnProperty("time")) {
+        if (cleanedObj.day) {
+            serviceObj = findDishByDay(data.cur, planner.getMealsByDay(cleanedObj.day));
+        }
+    } else if (!cleanedObj.hasOwnProperty("day") && cleanedObj.hasOwnProperty("time")) {
+        if (cleanedObj.time) {
+            serviceObj = findDishByTime({dish: data.cur, time: cleanedObj.time}, planner)
+        }
+    } else {
+        serviceObj = findDishByAll(data.cur, planner);
+    }
+
+    if (!serviceObj) {
+        console.log("Dish not found");
+        return;
+    } else {
+        // NOT COMPLETE
+        console.log("Object: ", serviceObj.getAllDishes());
+        // serviceObj.updateDish;
+    }
 }
 
 export default updateDish;

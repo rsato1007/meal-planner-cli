@@ -53,7 +53,7 @@ const program = new Command();
             try {
                 await addDish(str, options, planner);
             } catch (error) {
-                console.error('Error adding dish:', error);
+                console.error('Error adding dish: ', error);
             }
         });
 
@@ -82,12 +82,16 @@ const program = new Command();
     .option(defaults[1][0], defaults[1][1])
     .option(defaults[2][0], defaults[2][1])
     .action(async (currentDish: string, newDish: string, options: IMealOptions) => {
-        const data = {
-            cur: currentDish,
-            new: newDish,
-            options
+        try {
+            const data = {
+                cur: currentDish,
+                new: newDish,
+                options
+            }
+            await updateDish(data, planner);
+        } catch (error) {
+            console.error('Error updating dish: ', error);
         }
-        updateDish(data, planner);
     });
 
     /*

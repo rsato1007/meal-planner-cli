@@ -4,11 +4,8 @@ import { validateCondition } from "../utils/errorHandling.js";
 import { DishKey, IMeal } from "../../types/index.js";
 
 /**
- * Think of this taking the model we had built out for meals and adding methods that interact with the data.
+ * Think of this as taking the model we had built out for meals and adding methods that interact with the data.
  * @remarks
- * - Possibly consider building methods for meal.info object.
- * - Also think about how to improve our static property.
- * - Look to refactor both update and removal to use meal.info to be more efficient in its operations
  */
 export default class MealService {
     private meal: IMeal;
@@ -190,6 +187,36 @@ export default class MealService {
             return true;
         } catch (e: unknown) {
             console.error("Unable to remove all dishes: ", e);
+            return false;
+        }
+    }
+
+    /**
+     * Sees if the dish exists in the meal.
+     * @param dishName 
+     * @returns boolean
+     */
+    public doesDishExist(dishName: string): boolean {
+        try {
+            let dishType: string | DishKey = "";
+            let idx: number = -1;
+            for (const key of Object.keys(this.meal.dishes)) {
+                const dishesInType = this.meal.dishes[key as DishKey];
+                if (dishesInType.length > 0) {
+                    idx = this.meal.dishes[key as DishKey].indexOf(dishName);
+                    if (idx >= 0) {
+                        dishType = key;
+                        break;
+                    }
+                }
+            }
+            if (dishType === "") {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (e: unknown) {
+            console.error("Unable to update dish: ", e);
             return false;
         }
     }

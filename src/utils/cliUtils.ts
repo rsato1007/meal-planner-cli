@@ -224,3 +224,42 @@ export const translateInput = (options: IMealOptions) => {
 
     return updatedOptions;
 }
+
+export const findDishByAll = (dish: string, planner: MealPlannerService): MealService | undefined => {
+    let days = MealPlannerService.days;
+    let times = DailyMealsService.mealTimes;
+    for (const day of days) {
+        const DailyMeals = planner.getMealsByDay(day as DayKey);
+        for (const time of times) {
+            const DishesForTime = DailyMeals.getDishesByTime(time as MealTypeKey);
+            if (DishesForTime.doesDishExist(dish)) {
+                return DishesForTime;
+            };
+        }
+    }
+
+    return;
+}
+
+export const findDishByDay = (dish: string, mealsInDay: DailyMealsService): MealService | undefined => {
+    let times = DailyMealsService.mealTimes;
+    for (const time of times) {
+        const DishesForTime = mealsInDay.getDishesByTime(time as MealTypeKey);
+        if (DishesForTime.doesDishExist(dish)) {
+            return DishesForTime;
+        };
+    }
+
+    return;
+}
+
+export const findDishByTime = (data: {dish: string, time: MealTypeKey}, planner: MealPlannerService): MealService | undefined => {
+    let days = MealPlannerService.days;
+    for (const day of days) {
+        const DishesForTime = planner.getMealsByDay(day as DayKey).getDishesByTime(data.time);
+        if (DishesForTime.doesDishExist(data.dish)) {
+            return DishesForTime;
+        };
+    }
+    return;
+}

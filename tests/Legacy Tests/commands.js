@@ -1,5 +1,5 @@
-import { addDish } from '../dist/cli/commands/addDish.js';
-import MealPlannerService from "../dist/models/MealPlanner.js"
+import { addDish } from '../../dist/cli/commands/addDish.js';
+import MealPlannerService from "../../dist/models/MealPlanner.js"
 import assert from 'node:assert';
 import { mock, test } from 'node:test';
 
