@@ -193,25 +193,25 @@ export const translateInput = (options: IMealOptions) => {
     }
 
     const dayOptions = [
-        { full: 'monday',     abbr: ['mon', 'mo', 'm'] },
-        { full: 'tuesday',    abbr: ['tue', 'tu', 't'] },
-        { full: 'wednesday',  abbr: ['wed', 'we', 'w'] },
-        { full: 'thursday',   abbr: ['thu', 'th', 'h'] },
-        { full: 'friday',     abbr: ['fri', 'fr', 'f'] },
-        { full: 'saturday',   abbr: ['sat', 'sa', 's'] },
-        { full: 'sunday',     abbr: ['sun', 'su', 'n'] }
+        { full: 'monday',     abbr: ['monday', 'mon', 'mo', 'm'] },
+        { full: 'tuesday',    abbr: ['tuesday', 'tue', 'tu', 't'] },
+        { full: 'wednesday',  abbr: ['wednesday', 'wed', 'we', 'w'] },
+        { full: 'thursday',   abbr: ['thursday', 'thu', 'th', 'h'] },
+        { full: 'friday',     abbr: ['friday', 'fri', 'fr', 'f'] },
+        { full: 'saturday',   abbr: ['saturday', 'sat', 'sa', 's'] },
+        { full: 'sunday',     abbr: ['sunday', 'sun', 'su', 'n'] }
     ]
     const timeOptions = [
-        { full: 'breakfast',  abbr: ['brkfst', 'brk', 'br', 'b'] },
-        { full: 'lunch',      abbr: ['lun', 'ln', 'l'] },
-        { full: 'dinner',     abbr: ['supper', 'din', 'sup', 'dn', 'sp', 'd'] }
+        { full: 'breakfast',  abbr: ['breakfast', 'brkfst', 'brk', 'br', 'b'] },
+        { full: 'lunch',      abbr: ['lunch', 'lun', 'ln', 'l'] },
+        { full: 'dinner',     abbr: ['dinner', 'supper', 'din', 'sup', 'dn', 'sp', 'd'] }
     ]
     const typeOptions = [
-        { full: 'appetizers', abbr: ['app', 'starters', 'strt', 'st', 'ap', 'a'] },
-        { full: 'drinks',     abbr: ['drink', 'bev', 'drk', 'bv', 'dr', 'b'] },
-        { full: 'entrees',    abbr: ['mains', 'entr', 'main', 'mn', 'en', 'e'] },
-        { full: 'sides',      abbr: ['side', 'sds', 'sd', 's'] },
-        { full: 'desserts',   abbr: ['dessert', 'sweets', 'sweet', 'dsrt', 'dess', 'dss', 'ds', 'd'] }
+        { full: 'appetizers', abbr: ['appetizers', 'app', 'starters', 'strt', 'st', 'ap', 'a'] },
+        { full: 'drinks',     abbr: ['drinks', 'drink', 'bev', 'drk', 'bv', 'dr', 'b'] },
+        { full: 'entrees',    abbr: ['entrees', 'mains', 'entr', 'main', 'mn', 'en', 'e'] },
+        { full: 'sides',      abbr: ['sides', 'side', 'sds', 'sd', 's'] },
+        { full: 'desserts',   abbr: ['desserts', 'dessert', 'sweets', 'sweet', 'dsrt', 'dess', 'dss', 'ds', 'd'] }
     ]
 
     // Checking for mixture of lowercase and uppercase provides better UX.
