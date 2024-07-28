@@ -31,15 +31,15 @@ const question = (query: string): Promise<string> => {
 
 const CHOICES: Record<choiceKey, { query: string, choices: string[] }> = {
     day: {
-        query: "What day did you want to add the dish to? ",
+        query: "What day did you want to add the dish to? Select a number from the following options: ",
         choices: MealPlannerService.days
     },
     time: {
-        query: "Is this a dish for breakfast, lunch, or dinner? ",
+        query: "Is this a dish for breakfast, lunch, or dinner? Select a number from the following options: ",
         choices: DailyMealsService.mealTimes
     },
     mealType: {
-        query: "What type of meal am I adding? ",
+        query: "What type of meal am I adding? Select a number from the following options: ",
         choices: MealService.getTypes()
     }
 };
@@ -79,18 +79,27 @@ export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOpti
  * @param obj - see getMissingOptions for object structure.
  * @returns - Promise-based string representing choice we want.
  */
-const getValidChoice = async (obj: any): Promise<DishKey | MealTypeKey | DayKey> => {
+export const getValidChoice = async (obj: {query: string, choices: string[]}): Promise<DishKey | MealTypeKey | DayKey> => {
     let validChoice = false;
     let res = "";
+
+    let options = obj.query + "\n";
+    obj.choices.forEach((option, idx) => {
+        options += `${idx + 1}: ${capitalizeFirst(option)}\n`
+    })
+    options.trim();
+
     while (!validChoice) {
-        res = await question(obj.query);
-        if (obj.choices.includes(res)) {
+        const idx = parseInt(await question(options));
+        if (idx > 0 && idx <= obj.choices.length) {
+            res = obj.choices[idx - 1];
             validChoice = true;
         } else {
             console.log("INVALID CHOICE");
+            await wait(2000);
         }
     }
-
+    console.clear();
     return res as DishKey | MealTypeKey | DayKey;
 }
 
