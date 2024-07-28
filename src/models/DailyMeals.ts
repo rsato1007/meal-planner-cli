@@ -1,6 +1,6 @@
-import Meal from "./Meal.js";
+import Meal from "./Meal";
 
-import { IDailyMeals } from "../../types/index.js";
+import { IDailyMeals } from "../../types/index";
 
 /**
  * Model to represent meals planned for a day.

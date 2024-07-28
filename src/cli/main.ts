@@ -3,13 +3,14 @@
 */
 import { Command } from 'commander';
 
-import MealPlannerService from '../services/MealPlanner.js';
-import { createOrGetDataFile } from '../utils/fileUtils.js';
-import { addDish } from './commands/addDish.js';
-import { removeDish } from './commands/removeDish.js';
-import { showDishes } from './commands/showDishes.js';
+import MealPlannerService from '../services/MealPlanner';
+import { createOrGetDataFile } from '../utils/fileUtils';
+import { addDish } from './commands/addDish';
+import { removeDish } from './commands/removeDish';
+import { showDishes } from './commands/showDishes';
+import updateDish from './commands/updateDish';
 
-import { IMealOptions } from '../../types/index.js';
+import { IMealOptions } from '../../types/index';
 
 const program = new Command();
 
@@ -20,9 +21,17 @@ const program = new Command();
         ['-t --time <value>', 'Specifying what meal time you want to add the dish to'],
         ['-m --meal-type <value>', 'Specifying what type of dish you are adding (e.g., appetizers, entrees, etc.)']
     ]
-    const dataFile = await createOrGetDataFile();
 
-    const planner = new MealPlannerService(dataFile);
+    let dataFile;
+    let planner: MealPlannerService;
+    try {
+        dataFile = await createOrGetDataFile();
+
+        planner = new MealPlannerService(dataFile);
+    } catch (e: unknown) {
+        console.log("UNABLE TO CREATE PLANNER: ", e);
+    }
+
 
     program
     .name('mealplan')
@@ -39,7 +48,11 @@ const program = new Command();
         .option(defaults[1][0], defaults[1][1])
         .option(defaults[2][0], defaults[2][1])
         .action(async (str: string, options: IMealOptions) => {
-            await addDish(str, options, planner);
+            try {
+                await addDish(str, options, planner);
+            } catch (error) {
+                console.error('Error adding dish: ', error);
+            }
         });
 
     /**
@@ -59,7 +72,25 @@ const program = new Command();
         await removeDish(str, options, planner);
     });
 
-    // program.command('update')
+    program.command('update')
+    .description('Allows user to update a recipe, flags can be used to specify where the recipe lives exactly')
+    .argument('<currentDish>', 'name of existing dish')
+    .argument('<newDish>', 'What the new dish will be')
+    .option(defaults[0][0], defaults[0][1])
+    .option(defaults[1][0], defaults[1][1])
+    .option(defaults[2][0], defaults[2][1])
+    .action(async (currentDish: string, newDish: string, options: IMealOptions) => {
+        try {
+            const data = {
+                cur: currentDish,
+                new: newDish,
+                options
+            }
+            await updateDish(data, planner);
+        } catch (error) {
+            console.error('Error updating dish: ', error);
+        }
+    });
 
     /*
         Some things to consider: 
@@ -68,12 +99,12 @@ const program = new Command();
             (3) How to avoid showing days, times, and meal types with nothing in there.
     */
     program.command('show')
-    .description('Displays recipes based on specified description. Currently unable to show the entire planner')
+    .description('Displays recipes based on specified description.')
     .option(defaults[0][0], defaults[0][1])
     .option(defaults[1][0], defaults[1][1])
     .option(defaults[2][0], defaults[2][1])
     .action(async (options: IMealOptions) => {
-        showDishes(options, planner);
+        await showDishes(options, planner);
     });
 
     /*

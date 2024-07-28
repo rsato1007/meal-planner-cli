@@ -1,8 +1,8 @@
 import {describe, it} from "node:test";
 import assert from 'node:assert/strict';
 
-import Meal from "../dist/models/Meal.js";
-import MealService from "../dist/services/MealService.js";
+import Meal from "../../dist/models/Meal.js";
+import MealService from "../../dist/services/MealService.js";
 
 describe('mealservice', () => {
     it('should add a meal', () => {

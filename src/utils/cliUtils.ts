@@ -1,10 +1,10 @@
 import readline from 'node:readline';
 
-import MealService from '../services/MealService.js';
-import MealPlannerService from '../services/MealPlanner.js';
-import DailyMealsService from '../services/DailyMealService.js';
+import MealService from '../services/MealService';
+import MealPlannerService from '../services/MealPlanner';
+import DailyMealsService from '../services/DailyMealService';
 import { wait } from './misc.js';
-import { capitalizeFirst } from './primitiveDataUtils.js';
+import { capitalizeFirst } from './primitiveDataUtils';
 
 import { 
     IDailyMeals,
@@ -16,16 +16,18 @@ import {
     DishKey
 } from '../../types/index.js';
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-const question = (query: string): Promise<string> => new Promise((resolve) => {
-    rl.question(query, (answer) => {
-        resolve(answer);
+const question = (query: string): Promise<string> => {
+    return new Promise((resolve) => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+        rl.question(query, (answer) => {
+            rl.close(); // Close after receiving input
+            resolve(answer);
+        });
     });
-});
+};
 
 const CHOICES: Record<choiceKey, { query: string, choices: string[] }> = {
     day: {
@@ -113,8 +115,6 @@ export const getMissingOptions = async (options: any): Promise<ICompletedOptions
     if (!completedOptions.hasOwnProperty("mealType")) {
         completedOptions['mealType'] = await getValidChoice(CHOICES["mealType"]);
     }
-
-    rl.close();
 
     return completedOptions;
 }
@@ -223,4 +223,43 @@ export const translateInput = (options: IMealOptions) => {
     }
 
     return updatedOptions;
+}
+
+export const findDishByAll = (dish: string, planner: MealPlannerService): MealService | undefined => {
+    let days = MealPlannerService.days;
+    let times = DailyMealsService.mealTimes;
+    for (const day of days) {
+        const DailyMeals = planner.getMealsByDay(day as DayKey);
+        for (const time of times) {
+            const DishesForTime = DailyMeals.getDishesByTime(time as MealTypeKey);
+            if (DishesForTime.doesDishExist(dish)) {
+                return DishesForTime;
+            };
+        }
+    }
+
+    return;
+}
+
+export const findDishByDay = (dish: string, mealsInDay: DailyMealsService): MealService | undefined => {
+    let times = DailyMealsService.mealTimes;
+    for (const time of times) {
+        const DishesForTime = mealsInDay.getDishesByTime(time as MealTypeKey);
+        if (DishesForTime.doesDishExist(dish)) {
+            return DishesForTime;
+        };
+    }
+
+    return;
+}
+
+export const findDishByTime = (data: {dish: string, time: MealTypeKey}, planner: MealPlannerService): MealService | undefined => {
+    let days = MealPlannerService.days;
+    for (const day of days) {
+        const DishesForTime = planner.getMealsByDay(day as DayKey).getDishesByTime(data.time);
+        if (DishesForTime.doesDishExist(data.dish)) {
+            return DishesForTime;
+        };
+    }
+    return;
 }

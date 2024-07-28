@@ -9,16 +9,19 @@
   "type": "module",
   "scripts": {
     "start": "tsc && node dist/index.js",
+    "build": "tsc && tsc-alias",
     "crcli": "npm link && tsc && node dist/index.js",
     "rmcli": "npm unlink && rm $(which mealplan)",
-    "test": "tsc && node tests/index.test.js"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.14.10",
-    "why-is-node-running": "^3.2.0"
+    "ts-jest": "^29.2.3",
+    "tsc-alias": "^1.8.10"
   },
   "dependencies": {
     "commander": "^12.1.0"

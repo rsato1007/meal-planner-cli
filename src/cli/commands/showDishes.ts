@@ -1,6 +1,5 @@
-import MealPlannerService from "../../services/MealPlanner.js";
-import { validateOptionsInput, formatMealData } from "../../utils/cliUtils.js";
-import { shutdown } from "../../utils/misc.js";
+import MealPlannerService from "../../services/MealPlanner";
+import { validateOptionsInput, formatMealData } from "../../utils/cliUtils";
 
 export const showDishes = async (options: any, planner: MealPlannerService) => {
     try {
@@ -29,13 +28,7 @@ export const showDishes = async (options: any, planner: MealPlannerService) => {
 
         formatMealData(data);
 
-        shutdown();
-
     } catch (error) {
         console.error("An error occurred during the operation:", error);
-    } finally {
-        // Till we can figure out what's causing the process to keep running, we are keeping this in.
-        console.log("Exiting process");
-        process.exit();
     }
 }

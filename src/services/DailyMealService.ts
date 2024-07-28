@@ -1,8 +1,8 @@
-import DailyMeals from "../models/DailyMeals.js";
-import MealService from "./MealService.js";
-import Meal from "../models/Meal.js";
+import DailyMeals from "../models/DailyMeals";
+import MealService from "./MealService";
+import Meal from "../models/Meal";
 
-import { MealTypeKey } from "../../types/index.js";
+import { MealTypeKey } from "../../types/index";
 
 /**
  * Handles all business logic for DailyMeals object.

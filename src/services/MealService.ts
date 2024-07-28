@@ -1,14 +1,11 @@
-import Meal from "../models/Meal.js";
-import { validateCondition } from "../utils/errorHandling.js";
+import Meal from "../models/Meal";
+import { validateCondition } from "../utils/errorHandling";
 
-import { DishKey, IMeal } from "../../types/index.js";
+import { DishKey, IMeal } from "../../types/index";
 
 /**
- * Think of this taking the model we had built out for meals and adding methods that interact with the data.
+ * Think of this as taking the model we had built out for meals and adding methods that interact with the data.
  * @remarks
- * - Possibly consider building methods for meal.info object.
- * - Also think about how to improve our static property.
- * - Look to refactor both update and removal to use meal.info to be more efficient in its operations
  */
 export default class MealService {
     private meal: IMeal;
@@ -144,6 +141,30 @@ export default class MealService {
     }
 
     /**
+     * If dish type is known, we can use this method instead for updating the dish.
+     * @param data - object with oldDish, newDish, and type.
+     * @returns 
+     */
+    public updateDishWithType({oldDish, newDish, type}: {oldDish: string, newDish: string, type: string}): string | void {
+        try {
+            if (this.meal.dishes[type as DishKey].length > 0) {
+                const idx = this.meal.dishes[type as DishKey].indexOf(oldDish);
+                if (idx !== -1) {
+                    this.meal.dishes[type as DishKey][idx] = newDish;
+                    return newDish;
+                } else {
+                    throw new Error(`Dish "${oldDish}" not found.`);
+                }
+            } else {
+                throw new Error(`No dishes of type ${type} found.`);
+            }
+        } catch (e) {
+            console.log("Error in updating dish by type: ", e);
+            return;
+        }
+    }
+
+    /**
      * Finds all dishes in a type (e.g., all appetizers).
      * @param dishType The type of the dishes
      * @returns An array of dish names
@@ -190,6 +211,36 @@ export default class MealService {
             return true;
         } catch (e: unknown) {
             console.error("Unable to remove all dishes: ", e);
+            return false;
+        }
+    }
+
+    /**
+     * Sees if the dish exists in the meal.
+     * @param dishName 
+     * @returns boolean
+     */
+    public doesDishExist(dishName: string): boolean {
+        try {
+            let dishType: string | DishKey = "";
+            let idx: number = -1;
+            for (const key of Object.keys(this.meal.dishes)) {
+                const dishesInType = this.meal.dishes[key as DishKey];
+                if (dishesInType.length > 0) {
+                    idx = this.meal.dishes[key as DishKey].indexOf(dishName);
+                    if (idx >= 0) {
+                        dishType = key;
+                        break;
+                    }
+                }
+            }
+            if (dishType === "") {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (e: unknown) {
+            console.error("Unable to update dish: ", e);
             return false;
         }
     }

@@ -2,9 +2,10 @@
 This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- Overall: Refactoring code
-    - Consider heavy refacotr of both remove and show options
-    - cliUtils.ts has issues due to updated types, review and refactor as needed.
+- Completed a simple update function. Need to consider how to allow for entree flag
+    - Tests for all functions built
+    - Documentation for everything
+- Also refactoring remove to use our newly built functions.
 
 # Additional Thoughts
 - Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
