@@ -141,6 +141,30 @@ export default class MealService {
     }
 
     /**
+     * If dish type is known, we can use this method instead for updating the dish.
+     * @param data - object with oldDish, newDish, and type.
+     * @returns 
+     */
+    public updateDishWithType({oldDish, newDish, type}: {oldDish: string, newDish: string, type: string}): string | void {
+        try {
+            if (this.meal.dishes[type as DishKey].length > 0) {
+                const idx = this.meal.dishes[type as DishKey].indexOf(oldDish);
+                if (idx !== -1) {
+                    this.meal.dishes[type as DishKey][idx] = newDish;
+                    return newDish;
+                } else {
+                    throw new Error(`Dish "${oldDish}" not found.`);
+                }
+            } else {
+                throw new Error(`No dishes of type ${type} found.`);
+            }
+        } catch (e) {
+            console.log("Error in updating dish by type: ", e);
+            return;
+        }
+    }
+
+    /**
      * Finds all dishes in a type (e.g., all appetizers).
      * @param dishType The type of the dishes
      * @returns An array of dish names
