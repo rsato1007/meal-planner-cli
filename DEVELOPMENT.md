@@ -2,9 +2,7 @@
 This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- Completed a simple update function. Need to consider how to allow for entree flag
-    - Tests for all functions built
-    - Documentation for everything
+- Refactoring our show meals command for slightly better UI.
 - Also refactoring remove to use our newly built functions.
 
 # Additional Thoughts
@@ -24,6 +22,7 @@ This section allows me to capture my thoughts while coding this project for futu
 ## Additional Comamnds:
 - Feature: allowing more commands to make management easier.
 - Possible commands: add-many (still determining if this would make sense tbh), remove-many, etc.
+    - Another command: print would generate a file with a pretty view of the data. Though this may be combined with pretty view where users can select between HTML or some file type.
 
 ## Pretty View Option
 - Feature: The ability to do a command which would show a "pretty" version of the data. Essentially HTML with CSS and MAYBE JS.
@@ -49,6 +48,12 @@ This section allows me to capture my thoughts while coding this project for futu
 ## Weather API Integration
 - Feature: Integrate a weather API so I can determine what recipe would be appropriate that day. 
 - Feature: Also maybe integrate family birthday so I can plan for that as well.
+
+## Configuration Ideas
+- Eventually I want to expand the freedom and flexibility of this project by allowing users to alter a provided configuration file.
+    - One option would be saving current week file, multiple week files, etc.
+    - Another would be path to where to save data.
+    - Another would be customizing show options. For example, allowing users to show empty days/times or to omit them.
 
 # Bugs
 - We'll keep track of bugs here.

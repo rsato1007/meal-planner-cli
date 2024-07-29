@@ -10,7 +10,7 @@ Historically I utilized an excel spreadsheet to plan out my meals, but this proj
 # HOW TO USE
 - To be written
 - Available commands:
-    - Add, Remove, and Show
+    - Add, Remove, update and show.
 
 # PLANNED FEATURES/CONSIDERED FEATURES
 NOTE: This is more of a brainstorming document for ideas than guaranteed features.
@@ -21,7 +21,6 @@ NOTE: This is more of a brainstorming document for ideas than guaranteed feature
     - remove many dishes at a time: the user would be able to specify (using a flag/argument) what meals they wanted removed. For example: mealplan remove-many -d sunday would remove all dishes from Sunday.
     - reset: similar to remove, but would reset the whole planner.
     - add many: possibly do an add many command to make adding multiple easier. However, this feature is one that may not be implemented.
-    - update: ability for program to update a specified dish to a new dish.
     - I don't have specific commands here, but adding for the ability to search for specific information. For example, finding what day a meal was added to.
 
 - Additional QOL:

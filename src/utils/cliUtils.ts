@@ -31,15 +31,15 @@ const question = (query: string): Promise<string> => {
 
 const CHOICES: Record<choiceKey, { query: string, choices: string[] }> = {
     day: {
-        query: "What day did you want to add the dish to? ",
+        query: "What day did you want to add the dish to? Select a number from the following options: ",
         choices: MealPlannerService.days
     },
     time: {
-        query: "Is this a dish for breakfast, lunch, or dinner? ",
+        query: "Is this a dish for breakfast, lunch, or dinner? Select a number from the following options: ",
         choices: DailyMealsService.mealTimes
     },
     mealType: {
-        query: "What type of meal am I adding? ",
+        query: "What type of meal am I adding? Select a number from the following options: ",
         choices: MealService.getTypes()
     }
 };
@@ -79,18 +79,27 @@ export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOpti
  * @param obj - see getMissingOptions for object structure.
  * @returns - Promise-based string representing choice we want.
  */
-const getValidChoice = async (obj: any): Promise<DishKey | MealTypeKey | DayKey> => {
+export const getValidChoice = async (obj: {query: string, choices: string[]}): Promise<DishKey | MealTypeKey | DayKey> => {
     let validChoice = false;
     let res = "";
+
+    let options = obj.query + "\n";
+    obj.choices.forEach((option, idx) => {
+        options += `${idx + 1}: ${capitalizeFirst(option)}\n`
+    })
+    options.trim();
+
     while (!validChoice) {
-        res = await question(obj.query);
-        if (obj.choices.includes(res)) {
+        const idx = parseInt(await question(options));
+        if (idx > 0 && idx <= obj.choices.length) {
+            res = obj.choices[idx - 1];
             validChoice = true;
         } else {
             console.log("INVALID CHOICE");
+            await wait(2000);
         }
     }
-
+    console.clear();
     return res as DishKey | MealTypeKey | DayKey;
 }
 
@@ -184,25 +193,25 @@ export const translateInput = (options: IMealOptions) => {
     }
 
     const dayOptions = [
-        { full: 'monday',     abbr: ['mon', 'mo', 'm'] },
-        { full: 'tuesday',    abbr: ['tue', 'tu', 't'] },
-        { full: 'wednesday',  abbr: ['wed', 'we', 'w'] },
-        { full: 'thursday',   abbr: ['thu', 'th', 'h'] },
-        { full: 'friday',     abbr: ['fri', 'fr', 'f'] },
-        { full: 'saturday',   abbr: ['sat', 'sa', 's'] },
-        { full: 'sunday',     abbr: ['sun', 'su', 'n'] }
+        { full: 'monday',     abbr: ['monday', 'mon', 'mo', 'm'] },
+        { full: 'tuesday',    abbr: ['tuesday', 'tue', 'tu', 't'] },
+        { full: 'wednesday',  abbr: ['wednesday', 'wed', 'we', 'w'] },
+        { full: 'thursday',   abbr: ['thursday', 'thu', 'th', 'h'] },
+        { full: 'friday',     abbr: ['friday', 'fri', 'fr', 'f'] },
+        { full: 'saturday',   abbr: ['saturday', 'sat', 'sa', 's'] },
+        { full: 'sunday',     abbr: ['sunday', 'sun', 'su', 'n'] }
     ]
     const timeOptions = [
-        { full: 'breakfast',  abbr: ['brkfst', 'brk', 'br', 'b'] },
-        { full: 'lunch',      abbr: ['lun', 'ln', 'l'] },
-        { full: 'dinner',     abbr: ['supper', 'din', 'sup', 'dn', 'sp', 'd'] }
+        { full: 'breakfast',  abbr: ['breakfast', 'brkfst', 'brk', 'br', 'b'] },
+        { full: 'lunch',      abbr: ['lunch', 'lun', 'ln', 'l'] },
+        { full: 'dinner',     abbr: ['dinner', 'supper', 'din', 'sup', 'dn', 'sp', 'd'] }
     ]
     const typeOptions = [
-        { full: 'appetizers', abbr: ['app', 'starters', 'strt', 'st', 'ap', 'a'] },
-        { full: 'drinks',     abbr: ['drink', 'bev', 'drk', 'bv', 'dr', 'b'] },
-        { full: 'entrees',    abbr: ['mains', 'entr', 'main', 'mn', 'en', 'e'] },
-        { full: 'sides',      abbr: ['side', 'sds', 'sd', 's'] },
-        { full: 'desserts',   abbr: ['dessert', 'sweets', 'sweet', 'dsrt', 'dess', 'dss', 'ds', 'd'] }
+        { full: 'appetizers', abbr: ['appetizers', 'app', 'starters', 'strt', 'st', 'ap', 'a'] },
+        { full: 'drinks',     abbr: ['drinks', 'drink', 'bev', 'drk', 'bv', 'dr', 'b'] },
+        { full: 'entrees',    abbr: ['entrees', 'mains', 'entr', 'main', 'mn', 'en', 'e'] },
+        { full: 'sides',      abbr: ['sides', 'side', 'sds', 'sd', 's'] },
+        { full: 'desserts',   abbr: ['desserts', 'dessert', 'sweets', 'sweet', 'dsrt', 'dess', 'dss', 'ds', 'd'] }
     ]
 
     // Checking for mixture of lowercase and uppercase provides better UX.
