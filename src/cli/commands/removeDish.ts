@@ -6,6 +6,9 @@ import DailyMealsService from "../../services/DailyMealService";
 import { IDailyMeals } from "../../../types/index";
 import { IMealPlanner } from "../../../types/index";
 
+/**
+ * @remarks Evaulate this function and look towards refactoring.
+ */
 export const removeDish = async (arg: string, options: any, planner: MealPlannerService) => {
     options['mealType'] = "entrees"; // Avoids needing to add this in validation process.
 

@@ -11,17 +11,8 @@ import { updateFile } from "@utils/fileUtils";
 
 import { IMealOptions, IUpdateDishData } from "../../../types/index";
 
-/**
- * Command to allows users to update an old dish with a new dish using varying flag options.
- * @param data 
- * @param planner 
- * @returns 
- * @remarks
- * - Consider how to integrate dish type into update and remove (most likely new meal services).
- */
 const updateDish = async (data: IUpdateDishData, planner: MealPlannerService): Promise<void> => {
     try {
-        // Clean up data received.
         let cleanedObj: IMealOptions = data.options;
         cleanedObj = translateInput(cleanedObj);
         cleanedObj = await validateOptionsInput(cleanedObj);
