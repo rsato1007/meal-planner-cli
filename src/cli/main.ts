@@ -9,6 +9,7 @@ import { addDish } from './commands/addDish';
 import { removeDish } from './commands/removeDish';
 import { showDishes } from './commands/showDishes';
 import updateDish from './commands/updateDish';
+import { startInteractive } from './commands/startInteractive';
 
 import { IMealOptions } from '../../types/index';
 
@@ -34,9 +35,9 @@ const program = new Command();
 
 
     program
-    .name('mealplan')
-    .description('CLI tool to allow users to plan meals.')
-    .version('0.9.5')
+        .name('mealplan')
+        .description('CLI tool to allow users to plan meals.')
+        .version('0.9.5')
 
     program.command('add')
         .description('Add a dish to your meal planner')
@@ -53,43 +54,49 @@ const program = new Command();
         });
 
     program.command('remove')
-    .description('Remove a dish from your meal planner')
-    .argument('<string>', 'name of dish to remove')
-    .option(defaults[0][0], defaults[0][1])
-    .option(defaults[1][0], defaults[1][1])
-    .option(defaults[2][0], defaults[2][1])
-    .action(async (str: string, options: IMealOptions) => {
-        await removeDish(str, options, planner);
-    });
+        .description('Remove a dish from your meal planner')
+        .argument('<string>', 'name of dish to remove')
+        .option(defaults[0][0], defaults[0][1])
+        .option(defaults[1][0], defaults[1][1])
+        .option(defaults[2][0], defaults[2][1])
+        .action(async (str: string, options: IMealOptions) => {
+            await removeDish(str, options, planner);
+        });
 
     program.command('update')
-    .description('Allows user to update a recipe, flags can be used to specify where the recipe lives exactly')
-    .argument('<currentDish>', 'name of existing dish')
-    .argument('<newDish>', 'What the new dish will be')
-    .option(defaults[0][0], defaults[0][1])
-    .option(defaults[1][0], defaults[1][1])
-    .option(defaults[2][0], defaults[2][1])
-    .action(async (currentDish: string, newDish: string, options: IMealOptions) => {
-        try {
-            const data = {
-                cur: currentDish,
-                new: newDish,
-                options
+        .description('Allows user to update a recipe, flags can be used to specify where the recipe lives exactly')
+        .argument('<currentDish>', 'name of existing dish')
+        .argument('<newDish>', 'What the new dish will be')
+        .option(defaults[0][0], defaults[0][1])
+        .option(defaults[1][0], defaults[1][1])
+        .option(defaults[2][0], defaults[2][1])
+        .action(async (currentDish: string, newDish: string, options: IMealOptions) => {
+            try {
+                const data = {
+                    cur: currentDish,
+                    new: newDish,
+                    options
+                }
+                await updateDish(data, planner);
+            } catch (error) {
+                console.error('Error updating dish: ', error);
             }
-            await updateDish(data, planner);
-        } catch (error) {
-            console.error('Error updating dish: ', error);
-        }
-    });
+        });
 
     program.command('show')
-    .description('Displays recipes based on specified description.')
-    .option(defaults[0][0], defaults[0][1])
-    .option(defaults[1][0], defaults[1][1])
-    .option(defaults[2][0], defaults[2][1])
-    .action(async (options: IMealOptions) => {
-        await showDishes(options, planner);
-    });
+        .description('Displays recipes based on specified description.')
+        .option(defaults[0][0], defaults[0][1])
+        .option(defaults[1][0], defaults[1][1])
+        .option(defaults[2][0], defaults[2][1])
+        .action(async (options: IMealOptions) => {
+            await showDishes(options, planner);
+        });
+
+    program.command('run')
+        .description('Launch the meal planner in interactive mode, allowing you to continuously add, remove, update, or view meals.')
+        .action(async () => {
+            await startInteractive();
+        })
 
     /*
         For our default setting situation

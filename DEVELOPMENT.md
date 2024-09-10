@@ -2,9 +2,8 @@
 This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- Refactoring our show meals command for slightly better UI.
-- Also refactoring remove to use our newly built functions.
-- Review README for anything else I might have missed here.
+- The application allows for typed commands, but now we are building an interactive mode where the application continously runs. Currently planning what the user flow would look like.
+    - Only thing to consider is a dynamic quit option at any point.
 
 # Code Components to Consider
 ## Additional Comamnds:
@@ -47,6 +46,9 @@ This section allows me to capture my thoughts while coding this project for futu
 - Refactoring type assertions if possible.
 - Refactoring show command to return strings instead for easier testing.
 - Also building more tests to ensure strong coverage.
+- Refactoring our show meals command for slightly better UI.
+- Also refactoring remove to use our newly built functions.
+- Review README for anything else I might have missed here.
 
 # Bugs
 - We'll keep track of bugs here.

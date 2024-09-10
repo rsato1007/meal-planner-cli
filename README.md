@@ -59,9 +59,7 @@ NOTE: Treat this as a list of ideas that are either likely to be added or being 
 - API integration: Also integration with a free weather API so the user can get upcoming weather to better plan their meals. Also other free APIs for things like: pricing, nutrition, etc.
     - Mostly like to happen here is weather integration.
 
-- Helper command: To improve QOL, also exploring a command to help users with using the CLI. Think of it almost like a tutorial in a sense. 
-
-- Dynamic CLI: Essentially, a continuous running CLI. FOr example, doing mealplan start means the app keeps running until the user quits.
+- Helper command: To improve QOL, also exploring a command to help users with using the CLI. Think of it almost like a tutorial in a sense.
 
 # DOCUMENTATION
 - NOTE: THIS NEEDS TO BE UPDATED OR MOVED SOMEWHERE.
