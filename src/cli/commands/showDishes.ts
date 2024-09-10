@@ -4,6 +4,7 @@ import { validateOptionsInput, formatMealData } from "../../utils/cliUtils";
 export const showDishes = async (options: any, planner: MealPlannerService) => {
     try {
         let data;
+        
         if (options.hasOwnProperty("day") && options.hasOwnProperty("time") && options.hasOwnProperty("mealType")) {
             options = await validateOptionsInput(options);
             data = planner

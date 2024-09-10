@@ -4,19 +4,7 @@ This section allows me to capture my thoughts while coding this project for futu
 # Current Status
 - Refactoring our show meals command for slightly better UI.
 - Also refactoring remove to use our newly built functions.
-
-# Additional Thoughts
-- Also consider adding methods that help find specific things (like days not planned for, what day a dish/meal is in, etc.)
-
-- Another possibility is building a statistic object for my mealplanner, daily meal, etc. Might not be necessary, but worth completating.
-
-- Also consider doing a config file where the code reads it to allow some customization (think where to store files, whether to archive or delete old files, etc.)
-
-- also would like to build a file that holds current state for meal planner. Think for example, not needing to pass a flag everytime you want to add to Monday's meals or appetizers for Sunday dinner, etc.
-
-- For refactoring, some code still uses any. Find them and refactor.
-    - Also review all type assertion code for possible refactor opportunities
-    - Also look to refactor formatData code function to return a string instead. This will make testing easier.
+- Review README for anything else I might have missed here.
 
 # Code Components to Consider
 ## Additional Comamnds:
@@ -55,5 +43,11 @@ This section allows me to capture my thoughts while coding this project for futu
     - Another would be path to where to save data.
     - Another would be customizing show options. For example, allowing users to show empty days/times or to omit them.
 
+## Additional Thoughts:
+- Refactoring type assertions if possible.
+- Refactoring show command to return strings instead for easier testing.
+- Also building more tests to ensure strong coverage.
+
 # Bugs
 - We'll keep track of bugs here.
+- Remove has some weird quirks, though it should be fixed with refactoring to use some of update's functions.
