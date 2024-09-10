@@ -88,6 +88,28 @@ export default class MealService {
             return false;
         }
     }
+    /**
+     * 
+     */
+    public removeDishByMealType(dishName: string, type: string) {
+        try {
+            if (this.meal.dishes[type as DishKey].length > 0) {
+                const idx = this.meal.dishes[type as DishKey].indexOf(dishName);
+                if (idx !== -1) {
+                    this.meal.dishes[type as DishKey].splice(idx, 1);
+                    console.log(this.meal.dishes[type as DishKey]);
+                    return true;
+                } else {
+                    throw new Error(`Dish "${dishName}" not found.`);
+                }
+            } else {
+                throw new Error(`No dishes of type ${type} found.`);
+            }
+        } catch (e) {
+            console.log("Error in removing dish by type: ", e);
+            return;
+        }
+    }
 
     /**
      * Allows user to remove many dishes at a time.

@@ -57,6 +57,7 @@ const program = new Command();
     .argument('<string>', 'name of dish to remove')
     .option(defaults[0][0], defaults[0][1])
     .option(defaults[1][0], defaults[1][1])
+    .option(defaults[2][0], defaults[2][1])
     .action(async (str: string, options: IMealOptions) => {
         await removeDish(str, options, planner);
     });
