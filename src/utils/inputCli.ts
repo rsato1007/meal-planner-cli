@@ -2,7 +2,7 @@ import readline from 'node:readline';
 
 import { wait } from './misc';
 import { capitalizeFirst } from './primitiveDataUtils';
-import { MealTypeKey, DayKey, DishKey } from 'types';
+import MealPlannerService from '../services/MealPlanner';
 
 export const question = (query: string): Promise<string> => {
     return new Promise((resolve) => {
@@ -18,11 +18,11 @@ export const question = (query: string): Promise<string> => {
 };
 
 /**
- * If a day/time/meal-type choice is invalid or missing, this function ensures we receive.
+ * Ensures we get the response we want.
  * @param obj - see getMissingOptions for object structure.
  * @returns - Promise-based string representing choice we want.
  */
-export const getValidChoice = async (obj: {query: string, choices: string[]}): Promise<DishKey | MealTypeKey | DayKey> => {
+export const getValidChoice = async <T>(obj: {query: string, choices: string[]}): Promise<T> => {
     let validChoice = false;
     let res = "";
 
@@ -33,7 +33,8 @@ export const getValidChoice = async (obj: {query: string, choices: string[]}): P
     options.trim();
 
     while (!validChoice) {
-        const idx = parseInt(await question(options));
+        console.log(options);
+        const idx = parseInt(await question(`Select an option (1-${obj.choices.length}): `));
         if (idx > 0 && idx <= obj.choices.length) {
             res = obj.choices[idx - 1];
             validChoice = true;
@@ -43,7 +44,7 @@ export const getValidChoice = async (obj: {query: string, choices: string[]}): P
         }
     }
     console.clear();
-    return res as DishKey | MealTypeKey | DayKey;
+    return res as T;
 }
 
 /**
@@ -52,18 +53,18 @@ export const getValidChoice = async (obj: {query: string, choices: string[]}): P
  */
 export const offerOptions = async () => {
     let options = {};
-    console.log("Would you like to specify the following? Meal time, type of dish, and day of meal");
-    console.log("Type in y for yes or n for no ");
-    let optionResponse = await question("");
-    // This would be the start of where we get valid input.
-    let isResValid = false;
-    while(!isResValid) {
-        if (optionResponse !== "y" && optionResponse !== "n") {
-            optionResponse = await question("Invalid input, type y for yes or n for no: ");
-        } else {
-            isResValid = true;
-        }
+    let res = await getValidChoice({
+            query: "Would you like to specify the following? Meal time, type of dish, and day of meal",
+            choices:["yes", "no"]
+        });
+    if (res === "no") {
+        return options;
+    } else {
+        const day = await getValidChoice({
+            query: "Did you want to specify a day the dish pertains to?",
+            choices: [...MealPlannerService.days, "skip"] 
+        });
+        // Review input then rinse and repeat.
     }
-    // then we can determine what happens next.
     return options;
 }

@@ -1,4 +1,4 @@
-import { question, offerOptions } from "@utils/inputCli";
+import { question, offerOptions, getValidChoice } from "@utils/inputCli";
 import { wait } from "@utils/misc";
 import { addDish } from "./addDish";
 import MealPlannerService from "src/services/MealPlanner";
@@ -6,37 +6,37 @@ import MealPlannerService from "src/services/MealPlanner";
 export const startInteractive = async (planner: MealPlannerService) => {
     // Use a while loop 
     let runProgram = true;
-    const choices =
-`Main Menu:
-  1. Add a dish
-  2. Remove a dish
-  3. Update a dish
-  4. Show planned dishes
-  5. Exit
-  
-Select an option (1-4): `
 
     console.log("Welcome to the meal planner main menu.")
     await wait(1500);
     while (runProgram) {
-        const option = await question(choices);
+        const option = await getValidChoice({
+            query: "Main Menu:",
+            choices: [
+                "Add a dish",
+                "Remove a dish",
+                "Update a dish",
+                "Show planned dishes",
+                "Exit"
+            ]
+        });
         switch (option){
-            case "1":
+            case "Add a dish":
                 console.clear();
                 const dishName = await question("What's the name of dish you wish to add? ");
                 await addDish(dishName, {}, planner);
                 break;
-            case "2":
+            case "Remove a dish":
                 console.clear();
                 const options = await offerOptions();
                 break;
-            case "3":
+            case "Update a dish":
                 console.clear();
                 break;
-            case "4":
+            case "Show planned dishes":
                 console.clear();
                 break;
-            case "5":
+            case "Exit":
                 console.log("Exiting Program");
                 await wait(1500);
                 runProgram = false;
