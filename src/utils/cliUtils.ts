@@ -1,10 +1,10 @@
-import readline from 'node:readline';
-
 import MealService from '../services/MealService';
 import MealPlannerService from '../services/MealPlanner';
 import DailyMealsService from '../services/DailyMealService';
+
 import { wait } from './misc.js';
 import { capitalizeFirst } from './primitiveDataUtils';
+import { getValidChoice } from './inputCli';
 
 import { 
     IDailyMeals,
@@ -15,19 +15,6 @@ import {
     MealTypeKey,
     DishKey
 } from '../../types/index.js';
-
-export const question = (query: string): Promise<string> => {
-    return new Promise((resolve) => {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        rl.question(query, (answer) => {
-            rl.close(); // Close after receiving input
-            resolve(answer);
-        });
-    });
-};
 
 const CHOICES: Record<choiceKey, { query: string, choices: string[] }> = {
     day: {
@@ -50,6 +37,7 @@ type choiceKey = "day" | "time" | "mealType";
  * Reviews input to ensure it's not invalid.
  * @param obj - selected choice for each option (day, time, and meal type)
  * @returns - updated object for options selected with invalid input
+ * @remarks - This will most likely by removed down the road as we move towards numbered options and removing flags.
  */
 export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOptions> => {
     let cleanedObj: IMealOptions = {};
@@ -72,35 +60,6 @@ export const validateOptionsInput = async (obj: IMealOptions): Promise<IMealOpti
     }
 
     return cleanedObj;
-}
-
-/**
- * If a day/time/meal-type choice is invalid or missing, this function ensures we receive.
- * @param obj - see getMissingOptions for object structure.
- * @returns - Promise-based string representing choice we want.
- */
-export const getValidChoice = async (obj: {query: string, choices: string[]}): Promise<DishKey | MealTypeKey | DayKey> => {
-    let validChoice = false;
-    let res = "";
-
-    let options = obj.query + "\n";
-    obj.choices.forEach((option, idx) => {
-        options += `${idx + 1}: ${capitalizeFirst(option)}\n`
-    })
-    options.trim();
-
-    while (!validChoice) {
-        const idx = parseInt(await question(options));
-        if (idx > 0 && idx <= obj.choices.length) {
-            res = obj.choices[idx - 1];
-            validChoice = true;
-        } else {
-            console.log("INVALID CHOICE");
-            await wait(2000);
-        }
-    }
-    console.clear();
-    return res as DishKey | MealTypeKey | DayKey;
 }
 
 /**
@@ -179,7 +138,7 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
 
 /**
  * @remarks
- * - Look at refactoring types for better use of TypeScript's system.
+ * - Eventually we'll remove the flags from our CLI and this will be obsolete 
  */
 export const translateInput = (options: IMealOptions) => {
     let updatedOptions: IMealOptions = {};
