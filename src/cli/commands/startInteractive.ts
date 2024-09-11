@@ -3,8 +3,10 @@ import { wait } from "@utils/misc";
 import { addDish } from "./addDish";
 import MealPlannerService from "src/services/MealPlanner";
 
+/**
+ * We just need to finish up the remove, update, and show options. I have created the ability to create an options.
+ */
 export const startInteractive = async (planner: MealPlannerService) => {
-    // Use a while loop 
     let runProgram = true;
 
     console.log("Welcome to the meal planner main menu.")
@@ -46,7 +48,5 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 await wait(1000);
                 break;
         }
-
-        // runProgram = false;
     }
 }

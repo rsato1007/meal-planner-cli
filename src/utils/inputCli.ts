@@ -3,6 +3,9 @@ import readline from 'node:readline';
 import { wait } from './misc';
 import { capitalizeFirst } from './primitiveDataUtils';
 import MealPlannerService from '../services/MealPlanner';
+import DailyMealsService from '../services/DailyMealService';
+import MealService from '../services/MealService';
+import { DayKey, DishKey, IMealOptions, MealTypeKey } from 'types';
 
 export const question = (query: string): Promise<string> => {
     return new Promise((resolve) => {
@@ -20,7 +23,6 @@ export const question = (query: string): Promise<string> => {
 /**
  * Ensures we get the response we want.
  * @param obj - see getMissingOptions for object structure.
- * @returns - Promise-based string representing choice we want.
  */
 export const getValidChoice = async <T>(obj: {query: string, choices: string[]}): Promise<T> => {
     let validChoice = false;
@@ -47,24 +49,41 @@ export const getValidChoice = async <T>(obj: {query: string, choices: string[]})
     return res as T;
 }
 
-/**
- * 
- * @remarks I also think a validation function for input is a good idea. Essentially ensuring we can't proceed if the input isn't valid.
- */
 export const offerOptions = async () => {
-    let options = {};
+    let options: IMealOptions = {};
     let res = await getValidChoice({
-            query: "Would you like to specify the following? Meal time, type of dish, and day of meal",
+            query: "Would you like to specify the following: Meal time, type of dish, and day of meal",
             choices:["yes", "no"]
         });
     if (res === "no") {
         return options;
     } else {
-        const day = await getValidChoice({
+        const day = await getValidChoice<DayKey | 'skip'>({
             query: "Did you want to specify a day the dish pertains to?",
             choices: [...MealPlannerService.days, "skip"] 
         });
-        // Review input then rinse and repeat.
+
+        if (day !== "skip") {
+            options["day"] = day;
+        }
+
+        const time = await getValidChoice<MealTypeKey | "skip">({
+            query: "Did you want to specify what meal time the dish pertains to?",
+            choices: [...DailyMealsService.mealTimes, "skip"] 
+        });
+
+        if (time !== "skip") {
+            options["time"] = time;
+        }
+
+        const type = await getValidChoice<DishKey | "skip">({
+            query: "Did you want to specify what type of meal the dish is?",
+            choices: [...MealService.dishTypes, "skip"]
+        });
+
+        if (type !== "skip") {
+            options["mealType"] = type;
+        }
     }
     return options;
 }
