@@ -16,7 +16,7 @@ import {
     DishKey
 } from '../../types/index.js';
 
-const question = (query: string): Promise<string> => {
+export const question = (query: string): Promise<string> => {
     return new Promise((resolve) => {
         const rl = readline.createInterface({
             input: process.stdin,

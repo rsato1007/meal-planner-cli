@@ -95,7 +95,7 @@ const program = new Command();
     program.command('run')
         .description('Launch the meal planner in interactive mode, allowing you to continuously add, remove, update, or view meals.')
         .action(async () => {
-            await startInteractive();
+            await startInteractive(planner);
         })
 
     /*
