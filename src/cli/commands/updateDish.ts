@@ -46,7 +46,7 @@ const updateDish = async (data: IUpdateDishData, planner: MealPlannerService): P
         }
 
         await updateFile(planner.getAllDays());
-        console.log("Dish Updated Successfully and file updated!");
+        console.log("Dish Updated Successfully!");
     } catch (e) {
         console.error("An error occurred during the operation:", e);
     }

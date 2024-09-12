@@ -13,4 +13,5 @@ export const addDish = async (arg: string, options: any, planner: MealPlannerSer
 
     await updateFile(planner.getAllDays());
     console.log("Meal Added Successfully!");
+    return;
 }

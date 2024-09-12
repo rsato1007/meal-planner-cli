@@ -28,6 +28,7 @@ Historically, I utilized a excel spreadsheet template to plan out meals. However
     - "remove": removes a meal. If no flags are specified, the app will start on Monday and look until it finds a dish finding the corresponding name. You can also pass flags if you wish to specify where the dish is (espcially if the same dish is listed twice in your meal planner)
     - "update": updates the meal provide to the new name also provided. Same case as with the remove command where you are advised to pass flags and specify which dish to update if the dish name is listed multiple times in your planner.
     - "show": shows planned meals in console. Also accepts flags to specify which part of the planner you wish to view.
+    - "run": this starts an interactive mode that runs continuously until you say otherwise.
 
 # PLANNED FEATURES/CONSIDERED FEATURES
 NOTE: Treat this as a list of ideas that are either likely to be added or being heavily considered..
@@ -59,9 +60,7 @@ NOTE: Treat this as a list of ideas that are either likely to be added or being 
 - API integration: Also integration with a free weather API so the user can get upcoming weather to better plan their meals. Also other free APIs for things like: pricing, nutrition, etc.
     - Mostly like to happen here is weather integration.
 
-- Helper command: To improve QOL, also exploring a command to help users with using the CLI. Think of it almost like a tutorial in a sense. 
-
-- Dynamic CLI: Essentially, a continuous running CLI. FOr example, doing mealplan start means the app keeps running until the user quits.
+- Helper command: To improve QOL, also exploring a command to help users with using the CLI. Think of it almost like a tutorial in a sense.
 
 # DOCUMENTATION
 - NOTE: THIS NEEDS TO BE UPDATED OR MOVED SOMEWHERE.
