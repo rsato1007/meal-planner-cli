@@ -2,8 +2,7 @@
 This section allows me to capture my thoughts while coding this project for future reference.
 
 # Current Status
-- The application allows for typed commands, but now we are building an interactive mode where the application continously runs. Currently planning what the user flow would look like.
-    - Only thing to consider is a dynamic quit option at any point.
+- Most likely building out an add many functionality.
 
 # Code Components to Consider
 ## Additional Comamnds:

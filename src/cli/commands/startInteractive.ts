@@ -6,14 +6,13 @@ import { removeDish } from "./removeDish";
 import { showDishes } from "./showDishes";
 import updateDish from "./updateDish";
 
-/**
- * We just need to finish up the remove, update, and show options. I have created the ability to create an options.
- */
 export const startInteractive = async (planner: MealPlannerService) => {
     let runProgram = true;
 
-    console.log("Welcome to the meal planner main menu.")
+    console.log("Welcome to the meal planner main menu.");
+
     await wait(1500);
+
     while (runProgram) {
         const option = await getValidChoice({
             query: "Main Menu:",
@@ -25,6 +24,8 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 "Exit"
             ]
         });
+
+        // Switch case makes each option easier to distinguish and relatively more scalable.
         switch (option){
             case "Add a dish":
                 console.clear();
