@@ -1,54 +1,57 @@
 # START HERE
-This section allows me to capture my thoughts while coding this project for future reference.
+This section captures my thoughts and plans while coding this project for future reference.
 
 # Current Status
-- Most likely building out an add many functionality.
+- Developing functionality to allow adding multiple entries at once (e.g., add-many).
 
-# Code Components to Consider
-## Additional Comamnds:
-- Feature: allowing more commands to make management easier.
-- Possible commands: add-many (still determining if this would make sense tbh), remove-many, etc.
-    - Another command: print would generate a file with a pretty view of the data. Though this may be combined with pretty view where users can select between HTML or some file type.
+# Planned Features
+## Additional Commands
+- Goal: Add new commands to improve usability and flexibility.
+- Potential Commands:
+    - add-many: Allows adding multiple meals at once (still evaluating if this enhances UX).
+    - remove-many: Supports removing multiple meals simultaneously.
+    - print: Generates a file containing a formatted view of meal data. This may be combined with the "Pretty View" feature to allow users to select output formats (e.g., HTML, CSV).
 
-## Pretty View Option
-- Feature: The ability to do a command which would show a "pretty" version of the data. Essentially HTML with CSS and MAYBE JS.
-- Development:
-    - We'll would need to create HTML, CSS, and JS then write something akin to EJS that can input data where HTML template is (example: <div>${date}</div>);
-    - I would imagine this won't be complex so we can use REGEX for easy translation tbh.
-    - We'll need to create a command, but that's not too bad to be honest.
-    - Also a more advanced version would be allowing users to customize the HTML/CSS while allowing data to customized.
-        - Naturally users would need to ensure they are typing in syntax correctly, but could allow for some excellent dynamic customizations.
+# Pretty View Option
+- Goal: Provide a visually formatted output of the meal plan data, potentially in HTML.
+- Approach:
+    - Develop HTML, CSS, and optional JS templates to create "pretty" views.
+    - Consider using a lightweight templating engine (e.g., EJS or a custom solution) to insert dynamic data into the HTML template (e.g., <div>${meal_date}</div>).
+    - Basic version: Predefined templates for users.
+    - Advanced version: Allow users to customize the HTML/CSS to modify how data is displayed.
+    - Consideration: Use regular expressions for simple string replacements, though this might be replaced with a templating engine if it becomes too complex.
 
-## Ingredient List Generation
-- Feature: The CLI can pull ingredients from my recipe documents and generate a list of what I need to make the dish.
-- Advanced Feature: The CLI can generate an email, document, or something of that nature that contains a list of the ingredients needed.
-- Advanced Feature: The CLI can categorize the ingredients to make it easier to shop around.
-    - Part of me wonders if I want to eventually build it where you can write a file to specify how to structure the document (like a config file) and read from it.
+# Ingredient List Generation
+- Goal: Automatically generate a shopping list based on the ingredients in selected recipes.
+- Advanced Features:
+    - The CLI can output the list in different formats (e.g., text, email, document).
+    - Categorize ingredients by section (e.g., produce, dairy) to simplify shopping.
+    - Consider developing a configuration file where users can specify the structure of the output (e.g., grouping ingredients, sorting alphabetically).
 
-## Archiving and Retrieving Old Files
-- Feature: Not certain on this yet, but essentially it can recognize a new week is upon us and archive the old file. Then it would create a new file for the new week.
-    - Perhaps we could also make each file a month? That could also work.
-- Additional Feature: It would also be able to retrieve old files.
-    - Consider how you would organize the directory for better access.
+# Archiving and Retrieving Files
+- Goal: Automate weekly or monthly archiving of meal plans.
+    - Create a system to recognize when a new week/month begins, archive the old data, and create a new file for the current period.
+- Advanced: Allow users to retrieve and view archived files easily.
+- Consideration: Determine the best directory structure for storing and retrieving files (e.g., year/month/week).
 
-## Weather API Integration
-- Feature: Integrate a weather API so I can determine what recipe would be appropriate that day. 
-- Feature: Also maybe integrate family birthday so I can plan for that as well.
+# Weather API Integration
+- Goal: Provide weather-based meal suggestions.
+    - Use a weather API to recommend appropriate recipes based on the forecast.
+    - Integrate reminders for family birthdays or special events.
+    - Consideration: Define how weather conditions will map to specific meals (e.g., warm soups on cold days).
 
-## Configuration Ideas
-- Eventually I want to expand the freedom and flexibility of this project by allowing users to alter a provided configuration file.
-    - One option would be saving current week file, multiple week files, etc.
-    - Another would be path to where to save data.
-    - Another would be customizing show options. For example, allowing users to show empty days/times or to omit them.
+# Configuration File
+- Goal: Provide users with the ability to customize aspects of the tool via a configuration file.
+    - Possible Config Options:
+        - File save paths (e.g., archive location).
+        - Visibility of empty days/times in meal plans.
+        - Customization for output formats (e.g., HTML/CSS templates, showing/hiding empty fields).
+        - Archiving options (weekly vs. monthly).
 
-## Additional Thoughts:
-- Refactoring type assertions if possible.
-- Refactoring show command to return strings instead for easier testing.
-- Also building more tests to ensure strong coverage.
-- Refactoring our show meals command for slightly better UI.
-- Also refactoring remove to use our newly built functions.
-- Review README for anything else I might have missed here.
+# Refactoring & Optimization
+- Refactor type assertions to make the codebase cleaner and easier to maintain.
+- Refactor the show command to return strings for better testability and modularity.
+- Refactor the remove command to use shared functions from the update command to reduce redundancy.
+- Expand test coverage to ensure edge cases are handled effectively, particularly for complex commands like add-many and pretty view.
 
-# Bugs
-- We'll keep track of bugs here.
-- Remove has some weird quirks, though it should be fixed with refactoring to use some of update's functions.
+# Bugs and Known Issues
