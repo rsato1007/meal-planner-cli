@@ -8,6 +8,7 @@ import {
     translateInput,
     validateOptionsInput 
 } from "../../utils/cliUtils";
+import { wait } from "@utils/misc";
 
 import { IMealOptions } from "types";
 
@@ -15,7 +16,6 @@ import { IMealOptions } from "types";
  * @remarks I noticed this function can't handle case sensitive (i.e., tacos vs Tacos)
  */
 export const removeDish = async (arg: string, options: any, planner: MealPlannerService) => {
-    options['mealType'] = "entrees"; // Avoids needing to add this in validation process.
 
     try {
         let cleanedObj: IMealOptions = options;
@@ -50,6 +50,8 @@ export const removeDish = async (arg: string, options: any, planner: MealPlanner
                 serviceObj.removeDish(arg);
             }
             await updateFile(planner.getAllDays());
+            console.log("Successfully removed dish!");
+            await wait(1000);
         }
     } catch(e) {
         console.error("Unable to remove dish: ", e);
