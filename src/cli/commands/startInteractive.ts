@@ -18,6 +18,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
             query: "Main Menu:",
             choices: [
                 "Add a dish",
+                "Add multiple dishes",
                 "Remove a dish",
                 "Update a dish",
                 "Show planned dishes",
@@ -31,6 +32,17 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 console.clear();
                 const dishName = await question("What's the name of dish you wish to add? ");
                 await addDish(dishName, {}, planner);
+                break;
+            case "Add multiple dishes":
+                console.clear();
+                // Build a string of dish names
+                
+                // Offer options of where they mostly live
+                const mulitpleDishOptions = await offerOptions();
+
+                // Build and go through
+
+                // Save and return to menu.
                 break;
             case "Remove a dish":
                 console.clear();

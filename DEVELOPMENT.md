@@ -3,6 +3,7 @@ This section captures my thoughts and plans while coding this project for future
 
 # Current Status
 - Developing functionality to allow adding multiple entries at once (e.g., add-many).
+    - Ensure both flags and interactive mode can be used for adding multiple.
 
 # Planned Features
 ## Additional Commands
