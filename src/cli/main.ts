@@ -62,7 +62,7 @@ const program = new Command();
         .option(defaults[2][0], defaults[2][1])
         .action(async (str: string, options: IMealOptions) => {
             try {
-                await addManyDishes();
+                await addManyDishes(str, options, planner);
             } catch (error) {
                 console.error('Error adding dishes: ', error);
             }
