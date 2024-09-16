@@ -5,6 +5,7 @@ import MealPlannerService from "src/services/MealPlanner";
 import { removeDish } from "./removeDish";
 import { showDishes } from "./showDishes";
 import updateDish from "./updateDish";
+import { addManyDishes } from "./addManyDishes";
 
 export const startInteractive = async (planner: MealPlannerService) => {
     let runProgram = true;
@@ -35,14 +36,11 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 break;
             case "Add multiple dishes":
                 console.clear();
-                // Build a string of dish names
-                
-                // Offer options of where they mostly live
+                const dishes = await question("Please type out the name of the dishes. \nYou'll separate by comma (e.g, Tacos,Nachos, etc.): ");
+                console.log("Next we'll offer options for where these dishes should go.\nFor example if you select a day, all dishes will go on that day, otherwise leave them blank.");
+                await wait(1500);
                 const mulitpleDishOptions = await offerOptions();
-
-                // Build and go through
-
-                // Save and return to menu.
+                await addManyDishes(dishes, mulitpleDishOptions, planner);
                 break;
             case "Remove a dish":
                 console.clear();
