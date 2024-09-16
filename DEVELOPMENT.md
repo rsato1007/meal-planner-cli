@@ -2,13 +2,12 @@
 This section captures my thoughts and plans while coding this project for future reference.
 
 # Current Status
-- Developing functionality to allow adding multiple entries at once (e.g., add-many).
+- We are adding a remove many option to make changes easier.
 
 # Planned Features
 ## Additional Commands
 - Goal: Add new commands to improve usability and flexibility.
 - Potential Commands:
-    - add-many: Allows adding multiple meals at once (still evaluating if this enhances UX).
     - remove-many: Supports removing multiple meals simultaneously.
     - print: Generates a file containing a formatted view of meal data. This may be combined with the "Pretty View" feature to allow users to select output formats (e.g., HTML, CSV).
 

@@ -38,6 +38,7 @@ export interface IMealOptions {
 
 export interface ICompletedOptions {
     day: DayKey,
+    time: MealTypeKey,
     mealType: DishKey
 }
 

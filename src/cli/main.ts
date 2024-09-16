@@ -6,6 +6,7 @@ import { Command } from 'commander';
 import MealPlannerService from '../services/MealPlanner';
 import { createOrGetDataFile } from '../utils/fileUtils';
 import { addDish } from './commands/addDish';
+import { addManyDishes } from './commands/addManyDishes';
 import { removeDish } from './commands/removeDish';
 import { showDishes } from './commands/showDishes';
 import updateDish from './commands/updateDish';
@@ -50,6 +51,20 @@ const program = new Command();
                 await addDish(str, options, planner);
             } catch (error) {
                 console.error('Error adding dish: ', error);
+            }
+        });
+    
+    program.command('addMany')
+        .description('Add multiple dishes to your meal planner')
+        .argument('<string>', 'names of dishes seperated by a comma')
+        .option(defaults[0][0], defaults[0][1])
+        .option(defaults[1][0], defaults[1][1])
+        .option(defaults[2][0], defaults[2][1])
+        .action(async (str: string, options: IMealOptions) => {
+            try {
+                await addManyDishes(str, options, planner);
+            } catch (error) {
+                console.error('Error adding dishes: ', error);
             }
         });
 
