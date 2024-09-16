@@ -32,6 +32,7 @@ Side note: The CLI will ensure you don't miss any important flags for certain co
 
 ## Available commands:
 - add: Adds a meal.
+- addMany: Allows you to add multiple meals at once. The flags will allow you to avoid selecting that option for each individual dish.
 - remove: Removes a meal. If no flags are provided, the app will start on Monday and search for the first instance of the meal. You can use flags to specify the exact meal if there are duplicates.
 - update: Updates a meal by replacing it with a new name. Similar to remove, you can specify flags if there are duplicate entries.
 - show: Displays the planned meals in the console. You can use flags to filter the view by day, meal time, or dish type.
