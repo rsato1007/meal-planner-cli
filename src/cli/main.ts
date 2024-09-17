@@ -13,6 +13,7 @@ import updateDish from './commands/updateDish';
 import { startInteractive } from './commands/startInteractive';
 
 import { IMealOptions } from '../../types/index';
+import { removeManyDishes } from './commands/removeManyDishes';
 
 const program = new Command();
 
@@ -85,7 +86,7 @@ const program = new Command();
         .option(defaults[2][0], defaults[2][1])
         .action(async (options: IMealOptions) => {
             try {
-
+                await removeManyDishes(options, planner);
             } catch (e) {
                 console.error("Unable to remove dishes: ", e);
             }
