@@ -21,6 +21,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 "Add a dish",
                 "Add multiple dishes",
                 "Remove a dish",
+                "Remove many dishes",
                 "Update a dish",
                 "Show planned dishes",
                 "Exit"
@@ -48,6 +49,10 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const removeOptions = await offerOptions();
                 await removeDish(dishToRemove, removeOptions, planner);
                 await wait(1000);
+                break;
+            case "Remove many dishes":
+                console.clear();
+                // Insert code
                 break;
             case "Update a dish":
                 console.clear();
