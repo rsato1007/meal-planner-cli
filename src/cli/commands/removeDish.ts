@@ -1,6 +1,6 @@
 import MealService from "src/services/MealService";
 import MealPlannerService from "../../services/MealPlanner";
-import { updateFile } from "@utils/fileUtils";
+import { updateFile } from "../../utils/fileUtils";
 import {
     findDishByAll,
     findDishByDay,
@@ -8,7 +8,7 @@ import {
     translateInput,
     validateOptionsInput 
 } from "../../utils/cliUtils";
-import { wait } from "@utils/misc";
+import { wait } from "../../utils/misc";
 
 import { IMealOptions } from "types";
 

@@ -1,5 +1,5 @@
-import { question, offerOptions, getValidChoice } from "@utils/inputCli";
-import { wait } from "@utils/misc";
+import { question, offerOptions, getValidChoice } from "../../utils/inputCli";
+import { wait } from "../../utils/misc";
 import { addDish } from "./addDish";
 import MealPlannerService from "src/services/MealPlanner";
 import { removeDish } from "./removeDish";

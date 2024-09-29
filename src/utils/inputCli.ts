@@ -26,7 +26,7 @@ export const question = (query: string): Promise<string> => {
  */
 export const getValidChoice = async <T>(obj: {query: string, choices: string[]}): Promise<T> => {
     let validChoice = false;
-    let res = "";
+    let res: unknown = "";
 
     let options = obj.query + "\n";
     obj.choices.forEach((option, idx) => {
