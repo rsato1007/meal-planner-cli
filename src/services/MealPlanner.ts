@@ -2,7 +2,7 @@ import DailyMeals from "../models/DailyMeals";
 import MealPlanner from "../models/MealPlanner";
 import DailyMealsService from "./DailyMealService";
 
-import { DayKey } from "../../types/index";
+import { DayKey, IMealOptions } from "../../types/index";
 
 /**
  * Handles all business logic for Meal Planner
@@ -33,32 +33,22 @@ export default class MealPlannerService {
         return this.planner;
     }
 
-    /**
-     * Removes all meals for a specific day.
-     * @param day The day of the week (e.g., Monday, Tuesday)
-     * @returns boolean indicating success or failure
-     */
-    public removeMealsByDay(day: DayKey): boolean {
-        try {
-            this.planner[day] = new DailyMeals();
-            return true;
-        } catch (e: unknown) {
-            console.error("Unable to remove meals by day: ", e);
-            return false;
-        }
-    }
-
-    /**
-     * Resets the meal planner.
-     * @returns boolean indicating success or failure
-     */
-    public resetPlanner(): boolean {
-        try {
+    public removeMeals(options: IMealOptions) {
+        if (!options.day && !options.time && !options.mealType) {
             this.planner = new MealPlanner();
             return true;
-        } catch (e: unknown) {
-            console.error("Unable to reset meal planner: ", e);
-            return false;
+        } else if (options.day) {
+            const t = new DailyMealsService(this.planner[options.day]);
+            t.removeMeals(options.time, options.mealType)
+            this.planner[options.day] = t.getAllMealsForDay();
+            return true;
+        } else {
+            MealPlannerService.days.forEach((day) => {
+                const t = new DailyMealsService(this.planner[day as DayKey]);
+                t.removeMeals(options.time, options.mealType)
+                this.planner[day as DayKey] = t.getAllMealsForDay();
+            })
+            return true;
         }
     }
 }

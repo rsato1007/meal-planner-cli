@@ -1,8 +1,7 @@
 import DailyMeals from "../models/DailyMeals";
 import MealService from "./MealService";
-import Meal from "../models/Meal";
 
-import { MealTypeKey } from "../../types/index";
+import { MealTypeKey, DishKey } from "../../types/index";
 
 /**
  * Handles all business logic for DailyMeals object.
@@ -42,32 +41,36 @@ export default class DailyMealsService {
         return this.dailyMeals;
     }
 
-    /**
-     * Removes all dishes for a specific time of day.
-     * @param time The time of day (e.g., breakfast, lunch, dinner)
-     * @returns boolean indicating success or failure
-     */
-    public removeDishesByTime(time: MealTypeKey): boolean {
-        try {
-            this.dailyMeals[time] = new Meal();
-            return true;
-        } catch (e: unknown) {
-            console.error("Unable to remove dishes by time: ", e);
-            return false;
-        }
-    }
-
-    /**
-     * Removes all meals for the day.
-     * @returns The new DailyMeals instance
-     */
-    public removeMealsForDay(): DailyMeals {
-        try {
+    public removeMeals(time: MealTypeKey | undefined, mealType: DishKey | undefined) {
+        if (!time && !mealType) {
             this.dailyMeals = new DailyMeals();
-            return this.dailyMeals;
-        } catch (e: unknown) {
-            console.error("Unable to remove all meals for the day: ", e);
-            return this.dailyMeals; // Return the current state even if there's an error
+            return true;
+        } else if (time) {
+            if (mealType) {
+                const temp = new MealService(this.dailyMeals[time]);
+                temp.removeDishesByDishType(mealType);                
+                this.dailyMeals[time] = temp.getAllDishes();
+                return true;
+            } else {
+                const temp = new MealService(this.dailyMeals[time]);
+                temp.removeAllDishes();
+                this.dailyMeals[time] = temp.getAllDishes();
+                return true;
+            }
+        } else {
+            DailyMealsService.mealTimes.forEach((mealTime) => {
+                if (mealType) {
+                    const temp = new MealService(this.dailyMeals[mealTime as MealTypeKey]);
+                    temp.removeDishesByDishType(mealType);                
+                    this.dailyMeals[mealTime as MealTypeKey] = temp.getAllDishes();
+                    return true;
+                } else {
+                    const temp = new MealService(this.dailyMeals[mealTime as MealTypeKey]);
+                    temp.removeAllDishes();
+                    this.dailyMeals[mealTime as MealTypeKey] = temp.getAllDishes();
+                    return true;
+                }
+            })
         }
     }
 }
