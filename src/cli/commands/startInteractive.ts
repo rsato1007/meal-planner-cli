@@ -6,6 +6,7 @@ import { removeDish } from "./removeDish";
 import { showDishes } from "./showDishes";
 import updateDish from "./updateDish";
 import { addManyDishes } from "./addManyDishes";
+import { removeManyDishes } from "./removeManyDishes";
 
 export const startInteractive = async (planner: MealPlannerService) => {
     let runProgram = true;
@@ -52,7 +53,10 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 break;
             case "Remove many dishes":
                 console.clear();
-                // Insert code
+                console.log("You can specify which meals to remove using the proceeding options.");
+                const removeManyOptions = await offerOptions();
+                await removeManyDishes(removeManyOptions, planner);
+                await wait(1000);
                 break;
             case "Update a dish":
                 console.clear();

@@ -33,6 +33,11 @@ export default class MealPlannerService {
         return this.planner;
     }
 
+    /**
+     * Allows user to remove multiple meals.
+     * @param options 
+     * @returns boolean representing whether operation was successful.
+     */
     public removeMeals(options: IMealOptions) {
         if (!options.day && !options.time && !options.mealType) {
             this.planner = new MealPlanner();
