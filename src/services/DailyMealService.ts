@@ -44,33 +44,22 @@ export default class DailyMealsService {
     public removeMeals(time: MealTypeKey | undefined, mealType: DishKey | undefined) {
         if (!time && !mealType) {
             this.dailyMeals = new DailyMeals();
-            return true;
-        } else if (time) {
-            if (mealType) {
-                const temp = new MealService(this.dailyMeals[time]);
-                temp.removeDishesByDishType(mealType);                
-                this.dailyMeals[time] = temp.getAllDishes();
-                return true;
-            } else {
-                const temp = new MealService(this.dailyMeals[time]);
-                temp.removeAllDishes();
-                this.dailyMeals[time] = temp.getAllDishes();
-                return true;
-            }
         } else {
-            DailyMealsService.mealTimes.forEach((mealTime) => {
+            const times = time ? [time] : DailyMealsService.mealTimes as MealTypeKey[];
+    
+            times.forEach((mealTime) => {
+                const temp = new MealService(this.dailyMeals[mealTime]);
+    
                 if (mealType) {
-                    const temp = new MealService(this.dailyMeals[mealTime as MealTypeKey]);
-                    temp.removeDishesByDishType(mealType);                
-                    this.dailyMeals[mealTime as MealTypeKey] = temp.getAllDishes();
-                    return true;
+                    temp.removeDishesByDishType(mealType);
                 } else {
-                    const temp = new MealService(this.dailyMeals[mealTime as MealTypeKey]);
                     temp.removeAllDishes();
-                    this.dailyMeals[mealTime as MealTypeKey] = temp.getAllDishes();
-                    return true;
                 }
-            })
+    
+                this.dailyMeals[mealTime] = temp.getAllDishes();
+            });
         }
+    
+        return true;
     }
 }

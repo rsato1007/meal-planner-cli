@@ -39,21 +39,23 @@ export default class MealPlannerService {
      * @returns boolean representing whether operation was successful.
      */
     public removeMeals(options: IMealOptions) {
+        let daysToProcess: DayKey[] = [];
+
         if (!options.day && !options.time && !options.mealType) {
             this.planner = new MealPlanner();
             return true;
         } else if (options.day) {
-            const t = new DailyMealsService(this.planner[options.day]);
-            t.removeMeals(options.time, options.mealType)
-            this.planner[options.day] = t.getAllMealsForDay();
-            return true;
+            daysToProcess = [options.day];
         } else {
-            MealPlannerService.days.forEach((day) => {
-                const t = new DailyMealsService(this.planner[day as DayKey]);
-                t.removeMeals(options.time, options.mealType)
-                this.planner[day as DayKey] = t.getAllMealsForDay();
-            })
-            return true;
+            daysToProcess = MealPlannerService.days as DayKey[];
         }
+    
+        daysToProcess.forEach((day) => {
+            const t = new DailyMealsService(this.planner[day]);
+            t.removeMeals(options.time, options.mealType);
+            this.planner[day] = t.getAllMealsForDay();
+        });
+    
+        return true;
     }
 }
