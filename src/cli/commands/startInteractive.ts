@@ -8,7 +8,6 @@ import updateDish from "./updateDish";
 import { addManyDishes } from "./addManyDishes";
 import { removeManyDishes } from "./removeManyDishes";
 
-// Noticing a weird bug with interactive mode to review.
 export const startInteractive = async (planner: MealPlannerService) => {
     let runProgram = true;
 
@@ -36,6 +35,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 console.clear();
                 const dishName = await question("What's the name of dish you wish to add? ");
                 await addDish(dishName, {}, planner);
+                console.clear();
                 break;
             case "Add multiple dishes":
                 console.clear();
@@ -44,6 +44,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 await wait(1500);
                 const mulitpleDishOptions = await offerOptions();
                 await addManyDishes(dishes, mulitpleDishOptions, planner);
+                console.clear();
                 break;
             case "Remove a dish":
                 console.clear();
@@ -51,6 +52,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const removeOptions = await offerOptions();
                 await removeDish(dishToRemove, removeOptions, planner);
                 await wait(1000);
+                console.clear();
                 break;
             case "Remove many dishes":
                 console.clear();
@@ -58,6 +60,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const removeManyOptions = await offerOptions();
                 await removeManyDishes(removeManyOptions, planner);
                 await wait(1000);
+                console.clear();
                 break;
             case "Update a dish":
                 console.clear();
@@ -66,6 +69,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const updateOptions = await offerOptions();
                 await updateDish({cur: dishToUpdate, new: newName, options: updateOptions}, planner);
                 await wait(1000);
+                console.clear();
                 break;
             case "Show planned dishes":
                 console.clear();

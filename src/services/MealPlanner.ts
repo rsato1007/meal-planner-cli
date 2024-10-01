@@ -33,6 +33,12 @@ export default class MealPlannerService {
         return this.planner;
     }
 
+    public reset() {
+        for (const day of MealPlannerService.days as DayKey[]) {
+            this.planner[day] = new DailyMeals();
+        }
+    }
+
     /**
      * Allows user to remove multiple meals.
      * @param options 
@@ -42,7 +48,7 @@ export default class MealPlannerService {
         let daysToProcess: DayKey[] = [];
 
         if (!options.day && !options.time && !options.mealType) {
-            this.planner = new MealPlanner();
+            this.reset();
             return true;
         } else if (options.day) {
             daysToProcess = [options.day];
