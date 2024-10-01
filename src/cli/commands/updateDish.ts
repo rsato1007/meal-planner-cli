@@ -7,7 +7,7 @@ import {
     findDishByTime
 } from "../../utils/cliUtils";
 import MealService from "../../services/MealService";
-import { updateFile } from "@utils/fileUtils";
+import { updateFile } from "../../utils/fileUtils";
 
 import { IMealOptions, IUpdateDishData } from "../../../types/index";
 

@@ -1,8 +1,7 @@
 import DailyMeals from "../models/DailyMeals";
 import MealService from "./MealService";
-import Meal from "../models/Meal";
 
-import { MealTypeKey } from "../../types/index";
+import { MealTypeKey, DishKey } from "../../types/index";
 
 /**
  * Handles all business logic for DailyMeals object.
@@ -42,32 +41,25 @@ export default class DailyMealsService {
         return this.dailyMeals;
     }
 
-    /**
-     * Removes all dishes for a specific time of day.
-     * @param time The time of day (e.g., breakfast, lunch, dinner)
-     * @returns boolean indicating success or failure
-     */
-    public removeDishesByTime(time: MealTypeKey): boolean {
-        try {
-            this.dailyMeals[time] = new Meal();
-            return true;
-        } catch (e: unknown) {
-            console.error("Unable to remove dishes by time: ", e);
-            return false;
-        }
-    }
-
-    /**
-     * Removes all meals for the day.
-     * @returns The new DailyMeals instance
-     */
-    public removeMealsForDay(): DailyMeals {
-        try {
+    public removeMeals(time: MealTypeKey | undefined, mealType: DishKey | undefined) {
+        if (!time && !mealType) {
             this.dailyMeals = new DailyMeals();
-            return this.dailyMeals;
-        } catch (e: unknown) {
-            console.error("Unable to remove all meals for the day: ", e);
-            return this.dailyMeals; // Return the current state even if there's an error
+        } else {
+            const times = time ? [time] : DailyMealsService.mealTimes as MealTypeKey[];
+    
+            times.forEach((mealTime) => {
+                const temp = new MealService(this.dailyMeals[mealTime]);
+    
+                if (mealType) {
+                    temp.removeDishesByDishType(mealType);
+                } else {
+                    temp.removeAllDishes();
+                }
+    
+                this.dailyMeals[mealTime] = temp.getAllDishes();
+            });
         }
+    
+        return true;
     }
 }

@@ -1,7 +1,7 @@
-import { getMissingOptions, validateOptionsInput } from "@utils/cliUtils";
-import { updateFile } from "@utils/fileUtils";
+import { getMissingOptions, validateOptionsInput } from "../../utils//cliUtils";
+import { updateFile } from "../../utils/fileUtils";
 import MealPlannerService from "src/services/MealPlanner";
-import { wait } from "@utils/misc";
+import { wait } from "../../utils/misc";
 
 import { IMealOptions } from "types";
 

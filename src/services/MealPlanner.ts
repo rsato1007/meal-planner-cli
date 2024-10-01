@@ -2,7 +2,7 @@ import DailyMeals from "../models/DailyMeals";
 import MealPlanner from "../models/MealPlanner";
 import DailyMealsService from "./DailyMealService";
 
-import { DayKey } from "../../types/index";
+import { DayKey, IMealOptions } from "../../types/index";
 
 /**
  * Handles all business logic for Meal Planner
@@ -33,32 +33,35 @@ export default class MealPlannerService {
         return this.planner;
     }
 
-    /**
-     * Removes all meals for a specific day.
-     * @param day The day of the week (e.g., Monday, Tuesday)
-     * @returns boolean indicating success or failure
-     */
-    public removeMealsByDay(day: DayKey): boolean {
-        try {
+    public reset() {
+        for (const day of MealPlannerService.days as DayKey[]) {
             this.planner[day] = new DailyMeals();
-            return true;
-        } catch (e: unknown) {
-            console.error("Unable to remove meals by day: ", e);
-            return false;
         }
     }
 
     /**
-     * Resets the meal planner.
-     * @returns boolean indicating success or failure
+     * Allows user to remove multiple meals.
+     * @param options 
+     * @returns boolean representing whether operation was successful.
      */
-    public resetPlanner(): boolean {
-        try {
-            this.planner = new MealPlanner();
+    public removeMeals(options: IMealOptions) {
+        let daysToProcess: DayKey[] = [];
+
+        if (!options.day && !options.time && !options.mealType) {
+            this.reset();
             return true;
-        } catch (e: unknown) {
-            console.error("Unable to reset meal planner: ", e);
-            return false;
+        } else if (options.day) {
+            daysToProcess = [options.day];
+        } else {
+            daysToProcess = MealPlannerService.days as DayKey[];
         }
+    
+        daysToProcess.forEach((day) => {
+            const t = new DailyMealsService(this.planner[day]);
+            t.removeMeals(options.time, options.mealType);
+            this.planner[day] = t.getAllMealsForDay();
+        });
+    
+        return true;
     }
 }

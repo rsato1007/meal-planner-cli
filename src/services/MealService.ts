@@ -200,8 +200,8 @@ export default class MealService {
      * Retrieves all dishes in the meal object.
      * @returns An object containing all dishes
      */
-    public getAllDishes(): { [key in DishKey]: string[] } {
-        return this.meal.dishes;
+    public getAllDishes(): IMeal {
+        return this.meal;
     }
 
     /**

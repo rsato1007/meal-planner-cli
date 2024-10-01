@@ -13,6 +13,7 @@ import updateDish from './commands/updateDish';
 import { startInteractive } from './commands/startInteractive';
 
 import { IMealOptions } from '../../types/index';
+import { removeManyDishes } from './commands/removeManyDishes';
 
 const program = new Command();
 
@@ -77,6 +78,19 @@ const program = new Command();
         .action(async (str: string, options: IMealOptions) => {
             await removeDish(str, options, planner);
         });
+    
+    program.command('removeMany')
+        .description('Allows users to remove multiple recipes at a time, flags are used to specify what group of dishes to remove')
+        .option(defaults[0][0], defaults[0][1])
+        .option(defaults[1][0], defaults[1][1])
+        .option(defaults[2][0], defaults[2][1])
+        .action(async (options: IMealOptions) => {
+            try {
+                await removeManyDishes(options, planner);
+            } catch (e) {
+                console.error("Unable to remove dishes: ", e);
+            }
+        })
 
     program.command('update')
         .description('Allows user to update a recipe, flags can be used to specify where the recipe lives exactly')

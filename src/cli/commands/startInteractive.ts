@@ -1,11 +1,12 @@
-import { question, offerOptions, getValidChoice } from "@utils/inputCli";
-import { wait } from "@utils/misc";
+import { question, offerOptions, getValidChoice } from "../../utils/inputCli";
+import { wait } from "../../utils/misc";
 import { addDish } from "./addDish";
 import MealPlannerService from "src/services/MealPlanner";
 import { removeDish } from "./removeDish";
 import { showDishes } from "./showDishes";
 import updateDish from "./updateDish";
 import { addManyDishes } from "./addManyDishes";
+import { removeManyDishes } from "./removeManyDishes";
 
 export const startInteractive = async (planner: MealPlannerService) => {
     let runProgram = true;
@@ -21,6 +22,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 "Add a dish",
                 "Add multiple dishes",
                 "Remove a dish",
+                "Remove many dishes",
                 "Update a dish",
                 "Show planned dishes",
                 "Exit"
@@ -33,14 +35,16 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 console.clear();
                 const dishName = await question("What's the name of dish you wish to add? ");
                 await addDish(dishName, {}, planner);
+                console.clear();
                 break;
             case "Add multiple dishes":
                 console.clear();
-                const dishes = await question("Please type out the name of the dishes. \nYou'll separate by comma (e.g, Tacos,Nachos, etc.): ");
+                const dishes = await question("Please type out the name of the dishes. \nYou'll separate by comma (e.g, Tacos, Nachos, etc.): ");
                 console.log("Next we'll offer options for where these dishes should go.\nFor example if you select a day, all dishes will go on that day, otherwise leave them blank.");
                 await wait(1500);
                 const mulitpleDishOptions = await offerOptions();
                 await addManyDishes(dishes, mulitpleDishOptions, planner);
+                console.clear();
                 break;
             case "Remove a dish":
                 console.clear();
@@ -48,6 +52,15 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const removeOptions = await offerOptions();
                 await removeDish(dishToRemove, removeOptions, planner);
                 await wait(1000);
+                console.clear();
+                break;
+            case "Remove many dishes":
+                console.clear();
+                console.log("You can specify which meals to remove using the proceeding options.");
+                const removeManyOptions = await offerOptions();
+                await removeManyDishes(removeManyOptions, planner);
+                await wait(1000);
+                console.clear();
                 break;
             case "Update a dish":
                 console.clear();
@@ -56,6 +69,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const updateOptions = await offerOptions();
                 await updateDish({cur: dishToUpdate, new: newName, options: updateOptions}, planner);
                 await wait(1000);
+                console.clear();
                 break;
             case "Show planned dishes":
                 console.clear();
