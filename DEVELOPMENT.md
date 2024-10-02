@@ -2,13 +2,23 @@
 This section captures my thoughts and plans while coding this project for future reference.
 
 # Current Status
-- We are adding a remove many option to make changes easier.
+- Currently I am coding the ability to print your planned meals to a file. It's only to a txt file for now. I will eventually build out other options.
+- Additionally, I am building out the ability to create custom templates. This gives me a chance to learn the basics of templating engines.
+- SEE PRINT SECTION FOR GAMEPLAN.
 
 # Planned Features
+## Print
+- GAMEPLAN:
+    - Start by building out ability to print out.
+    - Next implement the basic templating engine.
+        - Render function that takes in template and data. We can probably get away with simple regex as my templates won't be crazy complex.
+- Resources:
+    - string.replace: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+    - https://hackernoon.com/how-to-create-new-template-engine-using-javascript-8f26313p
+
 ## Additional Commands
 - Goal: Add new commands to improve usability and flexibility.
 - Potential Commands:
-    - remove-many: Supports removing multiple meals simultaneously.
     - print: Generates a file containing a formatted view of meal data. This may be combined with the "Pretty View" feature to allow users to select output formats (e.g., HTML, CSV).
 
 # Pretty View Option
@@ -50,7 +60,6 @@ This section captures my thoughts and plans while coding this project for future
 # Refactoring & Optimization
 - Refactor type assertions to make the codebase cleaner and easier to maintain.
 - Refactor the show command to return strings for better testability and modularity.
-- Refactor the remove command to use shared functions from the update command to reduce redundancy.
 - Expand test coverage to ensure edge cases are handled effectively, particularly for complex commands like add-many and pretty view.
 
 # Bugs and Known Issues

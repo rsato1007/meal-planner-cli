@@ -7,6 +7,7 @@ import { showDishes } from "./showDishes";
 import updateDish from "./updateDish";
 import { addManyDishes } from "./addManyDishes";
 import { removeManyDishes } from "./removeManyDishes";
+import { printDishes } from "./printDishes";
 
 export const startInteractive = async (planner: MealPlannerService) => {
     let runProgram = true;
@@ -25,6 +26,7 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 "Remove many dishes",
                 "Update a dish",
                 "Show planned dishes",
+                "Print planned dishes",
                 "Exit"
             ]
         });
@@ -76,6 +78,10 @@ export const startInteractive = async (planner: MealPlannerService) => {
                 const showOptions = await offerOptions();
                 await showDishes(showOptions, planner);
                 await question("Hit enter when you are ready to go back!");
+                console.clear();
+                break;
+            case "Print planned dishes":
+                await printDishes(planner);
                 console.clear();
                 break;
             case "Exit":

@@ -10,6 +10,7 @@ import { addManyDishes } from './commands/addManyDishes';
 import { removeDish } from './commands/removeDish';
 import { showDishes } from './commands/showDishes';
 import updateDish from './commands/updateDish';
+import { printDishes } from './commands/printDishes';
 import { startInteractive } from './commands/startInteractive';
 
 import { IMealOptions } from '../../types/index';
@@ -121,16 +122,17 @@ const program = new Command();
             await showDishes(options, planner);
         });
 
+    program.command('print')
+        .description('Prints out the current meal planner as a text file.')
+        .action(async () => {
+            await printDishes(planner);
+        })
+
     program.command('run')
         .description('Launch the meal planner in interactive mode, allowing you to continuously add, remove, update, or view meals.')
         .action(async () => {
             await startInteractive(planner);
         })
-
-    /*
-        For our default setting situation
-    */
-    // program.command ('config')
 
     program.parse(process.argv);
 })();
