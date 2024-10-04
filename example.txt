@@ -1,0 +1,51 @@
+----------
+Monday
+----------
+Breakfast: 
+Lunch: 
+   Entrees: Buffalo Chicken Wrap
+   Sides: Side Salad
+Dinner: 
+   Entrees: Test, Test2
+----------
+Tuesday
+----------
+Breakfast: 
+Lunch: 
+Dinner: 
+   Entrees: Nachos
+   Sides: Tortilla Chips
+----------
+Wednesday
+----------
+Breakfast: 
+Lunch: 
+   Entrees: Asian Turkey Meatballs
+   Sides: Rice, Broccoli
+Dinner: 
+----------
+Thursday
+----------
+Breakfast: 
+Lunch: 
+Dinner: 
+   Entrees: Spicy Korean Chicken
+----------
+Friday
+----------
+Breakfast: 
+Lunch: 
+Dinner: 
+----------
+Saturday
+----------
+Breakfast: 
+Lunch: 
+Dinner: 
+----------
+Sunday
+----------
+Breakfast: 
+Lunch: 
+Dinner: 
+   Entrees: BBQ Whole Chicken

@@ -1,5 +1,6 @@
 import MealPlannerService from "../../services/MealPlanner";
-import { validateOptionsInput, formatMealData } from "../../utils/cliUtils";
+import { validateOptionsInput } from "../../utils/cliUtils";
+import { formatMealData } from "../../utils/displayCLI";
 
 export const showDishes = async (options: any, planner: MealPlannerService) => {
     try {
