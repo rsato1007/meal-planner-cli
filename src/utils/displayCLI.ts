@@ -6,7 +6,9 @@ import DailyMealsService from '../services/DailyMealService';
 import { 
     IDailyMeals,
     IMealPlanner,
-    DishKey
+    DishKey,
+    DayKey,
+    MealTypeKey
 } from '../../types/index.js';
 
 /**
@@ -42,4 +44,22 @@ export const formatMealData = (data: MealPlannerService | DailyMealsService | Me
     } else if (Array.isArray(data) && data.every(item => typeof item === 'string')) {
         console.log(`Planned Dishes: ${data.join(", ")}`);
     }
+}
+
+export const renderTextFile = (template: string, data: MealPlannerService): string => {
+    let rendered_template = "";
+    for (const day of MealPlannerService.days) {
+        let dayTemplate = "";
+        const mealsByDay = data.getMealsByDay(day as DayKey);
+        dayTemplate = template.replace(/\{\{day\}\}/g, capitalizeFirst(day));
+        for (const time of DailyMealsService.mealTimes) {
+            const mealsByTime = mealsByDay.getDishesByTime(time as MealTypeKey);
+            for (const type of MealService.dishTypes) {
+                const regex = new RegExp(`\\{\\{${time}.${type}\\}\\}`, "g");
+                dayTemplate = dayTemplate.replace(regex, mealsByTime.getDishesByDishType(type as DishKey).join(", "))
+            }
+        }
+        rendered_template += dayTemplate + "\n" 
+    }
+    return rendered_template;
 }

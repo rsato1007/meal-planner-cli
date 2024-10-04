@@ -1,0 +1,32 @@
+===========================
+Planned Meals for {{day}}
+===========================
+
+---------------------------
+Breakfast
+---------------------------
+   Entrees: {{breakfast.entrees}}
+   Sides: {{breakfast.sides}}
+   Drinks: {{breakfast.drinks}}
+   Appetizers: {{breakfast.appetizers}}
+   Desserts: {{breakfast.desserts}}
+
+---------------------------
+Lunch
+---------------------------
+   Entrees: {{lunch.entrees}}
+   Sides: {{lunch.sides}}
+   Drinks: {{lunch.drinks}}
+   Appetizers: {{lunch.appetizers}}
+   Desserts: {{lunch.desserts}}
+
+---------------------------
+Dinner
+---------------------------
+   Entrees: {{dinner.entrees}}
+   Sides: {{dinner.sides}}
+   Drinks: {{dinner.drinks}}
+   Appetizers: {{dinner.appetizers}}
+   Desserts: {{dinner.desserts}}
+
+=================================================

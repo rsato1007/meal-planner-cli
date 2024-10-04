@@ -1,5 +1,5 @@
 {
     "print_feature": {
-        "printed_file_path": "{{PRINT_PATH}}" /* Specify where the planned meals file should be printed to. */
+        "printed_file_path": "{{PRINT_PATH}}"
     }
 }
