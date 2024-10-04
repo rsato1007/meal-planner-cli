@@ -7,13 +7,17 @@ import settings from "../../settings";
 
 import { DayKey, DishKey, MealTypeKey } from "types";
 
+/**
+ * Allows users to save planned meals to a written txt file. Eventually we'll allow revamp to allow for custom templates.
+ * Specifically, something akin to templating engines.
+ */
 export const printDishes = async (planner: MealPlannerService) => {
-    console.log("Printing dishes");
     let output = ""
     for (let day of MealPlannerService.days) {
         const mealsByDay = planner.getMealsByDay(day as DayKey);
         output += `----------\n${capitalizeFirst(day)}\n----------\n`
         for (let time of DailyMealsService.mealTimes) {
+            // Think meals for either: breakfast, lunch, or dinner
             const mealsByTime = mealsByDay.getDishesByTime(time as MealTypeKey)["meal"]["dishes"];
             output += `${capitalizeFirst(time)}: `;
             output += "\n";
@@ -26,12 +30,12 @@ export const printDishes = async (planner: MealPlannerService) => {
         output += "\n";
     }
 
-    fs.writeFile(settings["print"]["file_path"], output, 'utf8', (err) => {
+    fs.writeFile(settings["print_feature"]["printed_file_path"], output, 'utf8', (err) => {
         if (err) {
-            console.error('Error writing to file:', err);
+            console.error('Unable to create file with planned meals, see following error for detail:', err);
             return;
         }
-        console.log('File has been written successfully!');
+        console.log('Meal file created successfully to following location: ', settings["print_feature"]["printed_file_path"]);
     });
 
     return;
