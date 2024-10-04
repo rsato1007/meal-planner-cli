@@ -3,6 +3,7 @@ import fs from "fs";
 import DailyMealsService from "../../services/DailyMealService";
 import MealPlannerService from "../../services/MealPlanner";
 import { capitalizeFirst } from "../../utils/primitiveDataUtils";
+import settings from "../../settings";
 
 import { DayKey, DishKey, MealTypeKey } from "types";
 
@@ -22,9 +23,10 @@ export const printDishes = async (planner: MealPlannerService) => {
                 }
             }
         }
+        output += "\n";
     }
 
-    fs.writeFile('example.txt', output, 'utf8', (err) => {
+    fs.writeFile(settings["print"]["file_path"], output, 'utf8', (err) => {
         if (err) {
             console.error('Error writing to file:', err);
             return;
